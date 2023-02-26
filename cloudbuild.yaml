@@ -1,5 +1,14 @@
 steps:
   - name: 'python:3.9'
+    entrypoint: 'python3'
+    args:
+      - '-m'
+      - 'venv'
+      - 'fried_venv'
+  - name: 'source'
+    args:
+      - 'fried_venv/bin/activate'
+  - name: 'python:3.9'
     entrypoint: 'python'
     args:
       - '-m'
