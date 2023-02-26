@@ -1,5 +1,3 @@
-import asyncio
-
 import discord
 from discord import Activity, ActivityType, Status, app_commands, ButtonStyle, SelectOption
 from discord.ext import commands
@@ -10,9 +8,16 @@ import requests
 from tierlist import get_restaurants_info ,tier_colour_hex_dict, get_first_tier_indexes, MANUAL_EMBED_RESTAURANTS
 from pathlib import Path
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+token = os.getenv("token")
+key = os.getenv("key")
 
 TIERLIST_IMAGE = 'tierlist.png'
-gmaps = googlemaps.Client(key='AIzaSyAwoUam-gVyFg1RfmFZ6PuqgIPHewvTArE')
+gmaps = googlemaps.Client(key=key)
 
 RESTAURANTS = get_restaurants_info()
 
@@ -285,9 +290,4 @@ def reformat_opening_hours(opening_hours):
     """
     return "\n".join([opening_hour.replace('\u2009', ' ').replace('\u202f', ' ') for opening_hour in opening_hours])
 
-if __name__ == '__main__':
-    # client.run('MTA3NzM2NDE5MTQ5NDY2ODQyMA.GZ7omN.RB7sQFw_O57p41yXVddJrr-1Z5K3ul7Nvuygz8')
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(client.start('MTA3NzM2NDE5MTQ5NDY2ODQyMA.GZ7omN.RB7sQFw_O57p41yXVddJrr-1Z5K3ul7Nvuygz8'))
-    loop.close()
-
+client.run(token)

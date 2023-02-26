@@ -31,3 +31,4 @@ trio==0.22.0
 urllib3==1.26.14
 wsproto==1.2.0
 yarl==1.8.2
+python-dotenv==0.19.2
