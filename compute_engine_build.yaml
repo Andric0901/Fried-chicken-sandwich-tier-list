@@ -5,7 +5,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute scp --recurse . my-instance:~
+        gcloud compute scp --recurse . instance-1:~
   # SSH into Compute Engine instance and run the application
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
