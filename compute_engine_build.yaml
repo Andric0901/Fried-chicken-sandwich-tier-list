@@ -5,11 +5,11 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute scp --recurse . instance-1:~
+        gcloud compute scp --zone northamerica-northeast2-a --recurse . instance-1:~
   # SSH into Compute Engine instance and run the application
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        gcloud compute ssh instance-1 --command='source env/bin/activate && python3 main.py'
+        gcloud compute ssh instance-1 --zone northamerica-northeast2-a --command='source env/bin/activate && python3 main.py'
