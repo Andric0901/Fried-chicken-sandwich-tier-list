@@ -10,12 +10,6 @@ steps:
   - name: 'python:3.9'
     entrypoint: 'python3'
     args:
-      - 'pip'
-      - 'install'
-      - 'virtualenv'
-  - name: 'python:3.9'
-    entrypoint: 'python3'
-    args:
       - '-m'
       - 'virtualenv'
       - 'venv'
