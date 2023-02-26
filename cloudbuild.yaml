@@ -1,16 +1,16 @@
 steps:
   - name: 'python:3.9'
-    entrypoint: 'python'
+    entrypoint: 'python3'
     args:
       - '-m'
       - 'venv'
-      - 'fried_venv'
-  - name: 'python:3.9'
+      - 'fried-venv'
+  - name: 'bash'
     args:
       - 'source'
-      - 'fried_venv/bin/activate'
+      - 'fried-venv/bin/activate'
   - name: 'python:3.9'
-    entrypoint: 'python'
+    entrypoint: 'python3'
     args:
       - '-m'
       - 'pip'
@@ -18,7 +18,6 @@ steps:
       - '-r'
       - 'requirements.txt'
   - name: 'python:3.9'
-    entrypoint: 'python'
+    entrypoint: 'python3'
     args:
       - 'main.py'
-
