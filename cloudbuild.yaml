@@ -3,20 +3,12 @@ steps:
     entrypoint: 'python'
     args:
       - '-m'
-      - 'pip'
-      - 'install'
-      - '--user'
-      - 'pipenv'
+      - 'venv'
+      - 'fried_venv'
   - name: 'python:3.9'
-    entrypoint: 'python'
     args:
-        - '-m'
-        - 'pipenv'
-        - 'install'
-        - '--deploy'
-        - '--system'
-        - '--dev'
-        - '--ignore-pipfile'
+      - 'source'
+      - 'fried_venv/bin/activate'
   - name: 'python:3.9'
     entrypoint: 'python'
     args:
@@ -29,5 +21,4 @@ steps:
     entrypoint: 'python'
     args:
       - 'main.py'
-
 
