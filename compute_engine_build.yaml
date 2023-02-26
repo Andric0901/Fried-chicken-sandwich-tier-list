@@ -1,0 +1,15 @@
+steps:
+  # Copy files to Compute Engine instance
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud compute scp --recurse . my-instance:~
+  # SSH into Compute Engine instance and run the application
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud compute ssh my-instance --command='source env/bin/activate && python3 main.py'
