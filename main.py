@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 TIERLIST_IMAGE = 'tierlist.png'
 gmaps = googlemaps.Client(key='AIzaSyAwoUam-gVyFg1RfmFZ6PuqgIPHewvTArE')
 
+RESTAURANTS = get_restaurants_info()
+
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
@@ -26,7 +28,7 @@ TIER_PREFIX = {
     'F': "Freakin' Raw"
 }
 tiers = ['S', 'A', 'B', 'C', 'D', 'E', 'F']
-restaurant_names = [restaurant[0][6:-4] for restaurant in get_restaurants_info()]
+restaurant_names = [restaurant[0][6:-4] for restaurant in RESTAURANTS]
 
 
 class PaginationView(discord.ui.View):
@@ -34,14 +36,14 @@ class PaginationView(discord.ui.View):
         super().__init__(timeout=None)
         self.page = current_page
         self.min_page = 0
-        self.max_page = len(get_restaurants_info()) - 1
+        self.max_page = len(RESTAURANTS) - 1
         self.previous_restaurant_name, self.next_restaurant_name = None, None
         self.update_previous_and_next()
         self.thumbnail_file, self.embed = create_embed(self.page)
 
     def update_previous_and_next(self):
-        self.previous_restaurant_name = get_restaurants_info()[self.page - 1][0][6:-4] if self.page > 0 else None
-        self.next_restaurant_name = get_restaurants_info()[self.page + 1][0][
+        self.previous_restaurant_name = RESTAURANTS[self.page - 1][0][6:-4] if self.page > 0 else None
+        self.next_restaurant_name = RESTAURANTS[self.page + 1][0][
                                     6:-4] if self.page < self.max_page else None
 
     @discord.ui.button(label='⏮️', style=ButtonStyle.green, disabled=True, custom_id='first')
@@ -145,20 +147,19 @@ async def list_command(interaction):
 
 def create_embed(current_page):
     # [link to logo image, price range, address, description (catchphrase), tier]
-    restaurants_info = get_restaurants_info()
-    title = restaurants_info[current_page][0][6:-4]
+    title = RESTAURANTS[current_page][0][6:-4]
     if title in MANUAL_EMBED_RESTAURANTS:
-        return create_manual_embed(current_page, restaurants_info)
-    description = restaurants_info[current_page][3]
-    address = restaurants_info[current_page][2]
-    price_range = restaurants_info[current_page][1]
-    tier = restaurants_info[current_page][4]
+        return create_manual_embed(current_page, RESTAURANTS)
+    description = RESTAURANTS[current_page][3]
+    address = RESTAURANTS[current_page][2]
+    price_range = RESTAURANTS[current_page][1]
+    tier = RESTAURANTS[current_page][4]
 
     gmaps_info = get_gmaps_info(title, address)
 
     embed = discord.Embed(title=title, description=description, color=tier_colour_hex_dict[tier],
                           url=gmaps_info[1])
-    thumbnail_file = get_thumbnail_file(current_page, restaurants_info)
+    thumbnail_file = get_thumbnail_file(current_page, RESTAURANTS)
     embed.set_thumbnail(url='attachment://image.jpg')
     embed.set_author(name=TIER_PREFIX[tier])
     embed.add_field(name='Address', value=address, inline=True)
