@@ -12,4 +12,4 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute ssh my-instance --command='source env/bin/activate && python3 main.py'
+        gcloud compute ssh instance-1 --command='source env/bin/activate && python3 main.py'
