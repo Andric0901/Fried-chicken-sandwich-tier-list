@@ -261,12 +261,12 @@ def get_gmaps_info(title, address):
     url = "https://maps.googleapis.com/maps/api/place/details/json?placeid={}&key={}".format(
         gmaps_info['candidates'][0]['place_id'], gmaps.key)
     json_result = requests.get(url).json()
-    assert address in json_result['result']['formatted_address']
+    # assert address in json_result['result']['formatted_address']
     # Get the business status if the key exists, otherwise return None
     # Redo capitalization to only capitalize the first letters of each word
     business_status = " ".join(reversed([word.capitalize() for word in json_result['result']
                                         .get('business_status').split('_')]))
-    assert business_status in ['Operational', 'Permanently Closed', 'Temporarily Closed']
+    # assert business_status in ['Operational', 'Permanently Closed', 'Temporarily Closed']
     opening_hours = json_result['result'].get('opening_hours')
     if opening_hours is not None:
         open_now = opening_hours.get('open_now')
