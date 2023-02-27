@@ -15,7 +15,8 @@ import pymongo
 
 load_dotenv()
 
-client = pymongo.MongoClient("mongodb://localhost:27017")
+connection_string = os.getenv("connection")
+client = pymongo.MongoClient(connection_string)
 db = client["fried-chicken-sandwich-bot"]
 collection = db["gmaps_infos"]
 
