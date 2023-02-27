@@ -10,9 +10,11 @@ from pathlib import Path
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
+from keep_alive import keep_alive
 
 load_dotenv()
 
+keep_alive()
 token = os.getenv("token")
 key = os.getenv("key")
 
