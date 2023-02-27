@@ -11,8 +11,13 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
 from keep_alive import keep_alive
+import pymongo
 
 load_dotenv()
+
+client = pymongo.MongoClient("mongodb://localhost:27017")
+db = client["fried-chicken-sandwich-bot"]
+collection = db["gmaps_infos"]
 
 keep_alive()
 token = os.getenv("token")
@@ -39,6 +44,22 @@ TIER_PREFIX = {
 tiers = ['S', 'A', 'B', 'C', 'D', 'E', 'F']
 restaurant_names = [restaurant[0][6:-4] for restaurant in RESTAURANTS]
 
+def setup_db():
+    for i in range(len(restaurant_names)):
+        restaurant = restaurant_names[i]
+        if restaurant in MANUAL_EMBED_RESTAURANTS:
+            collection.update_one({"index": i}, {"$set": {"json": None}}, upsert=True)
+        else:
+            restaurant_name, restaurant_address = RESTAURANTS[i][0][6:-4], RESTAURANTS[i][2]
+            place_id = \
+            places.find_place(gmaps, restaurant_name + ' ' + restaurant_address, 'textquery')['candidates'][0][
+                'place_id']
+            url = "https://maps.googleapis.com/maps/api/place/details/json?placeid={}&key={}".format(place_id, key)
+            response = requests.get(url)
+            data = response.json()
+            collection.update_one({"index": i}, {"$set": {"json": data}}, upsert=True)
+
+setup_db()
 
 class PaginationView(discord.ui.View):
     def __init__(self, current_page=0):
@@ -164,7 +185,7 @@ def create_embed(current_page):
     price_range = RESTAURANTS[current_page][1]
     tier = RESTAURANTS[current_page][4]
 
-    gmaps_info = get_gmaps_info(title, address)
+    gmaps_info = get_gmaps_info(current_page)
 
     embed = discord.Embed(title=title, description=description, color=tier_colour_hex_dict[tier],
                           url=gmaps_info[1])
@@ -245,22 +266,16 @@ def ceil_dt(dt, delta):
     return dt + (datetime.min - dt) % delta
 
 
-def get_gmaps_info(title, address):
+def get_gmaps_info(current_page):
     """Return open status, link to google maps link, and the website, if available.
 
     Args:
-        title (str): The title of the restaurant
-        address (str): The address of the restaurant
+        current_page (int): The current page of the embed
 
     Returns:
         [str, str, str, str]: [open status, link to google maps link, website, opening hours]
     """
-    if title in MANUAL_EMBED_RESTAURANTS:
-        return
-    gmaps_info = places.find_place(gmaps, title + " " + address, 'textquery')
-    url = "https://maps.googleapis.com/maps/api/place/details/json?placeid={}&key={}".format(
-        gmaps_info['candidates'][0]['place_id'], gmaps.key)
-    json_result = requests.get(url).json()
+    json_result = dict(collection.find_one({"index": current_page}))["json"]
     # assert address in json_result['result']['formatted_address']
     # Get the business status if the key exists, otherwise return None
     # Redo capitalization to only capitalize the first letters of each word
