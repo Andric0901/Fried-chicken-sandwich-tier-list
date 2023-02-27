@@ -12,11 +12,12 @@ from dotenv import load_dotenv
 import os
 from keep_alive import keep_alive
 import pymongo
+import certifi
 
 load_dotenv()
 
 connection_string = os.getenv("connection")
-client = pymongo.MongoClient(connection_string)
+client = pymongo.MongoClient(connection_string, tlsCAFile=certifi.where())
 db = client["fried-chicken-sandwich-bot"]
 collection = db["gmaps_infos"]
 
