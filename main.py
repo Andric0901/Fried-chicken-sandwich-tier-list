@@ -354,7 +354,6 @@ def reformat_opening_hours(opening_hours):
     """Reformat the opening hours to be human readable.
     The parameter contains \u2009 or \u202f characters, which are unicode characters. Remove them.
     """
-    days_dict = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"}
     plain_list = [opening_hour.replace('\u2009', ' ').replace('\u202f', ' ') for opening_hour in opening_hours]
     current_day = datetime.now().weekday()
     modified_list = ["**" + plain_list[opening_hour] + "**" if opening_hour == current_day
