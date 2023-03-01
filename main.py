@@ -334,14 +334,31 @@ def current_date_and_time():
         dict: {"day": int, "time": str}
     """
     current_datetime = datetime.now()
-    current_day = current_datetime.weekday()
+    current_day = get_current_day()
     current_time = current_datetime.strftime("%H%M")
     return {"day": current_day, "time": current_time}
 
+def get_current_day():
+    """Return the current day of the week.
+
+    This follows the Google Maps API format, where 0 is Sunday and 6 is Saturday.
+
+    Returns:
+        str: The current day of the week
+    """
+    current_day = datetime.now().weekday() + 1
+    if current_day == 7:
+        current_day = 0
+    return current_day
 def reformat_opening_hours(opening_hours):
     """Reformat the opening hours to be human readable.
     The parameter contains \u2009 or \u202f characters, which are unicode characters. Remove them.
     """
-    return "\n".join([opening_hour.replace('\u2009', ' ').replace('\u202f', ' ') for opening_hour in opening_hours])
+    days_dict = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"}
+    plain_list = [opening_hour.replace('\u2009', ' ').replace('\u202f', ' ') for opening_hour in opening_hours]
+    current_day = datetime.now().weekday()
+    modified_list = ["**" + plain_list[opening_hour] + "**" if opening_hour == current_day
+                     else plain_list[opening_hour] for opening_hour in range(len(plain_list))]
+    return "\n".join(modified_list)
 
 client.run(token)
