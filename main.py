@@ -61,7 +61,7 @@ def setup_db():
             data = response.json()
             collection.update_one({"index": i}, {"$set": {"json": data}}, upsert=True)
 
-setup_db()
+# setup_db()
 
 class PaginationView(discord.ui.View):
     def __init__(self, current_page=0):
@@ -284,9 +284,9 @@ def get_gmaps_info(current_page):
     business_status = " ".join(reversed([word.capitalize() for word in json_result['result']
                                         .get('business_status').split('_')]))
     # assert business_status in ['Operational', 'Permanently Closed', 'Temporarily Closed']
-    opening_hours = json_result['result'].get('opening_hours')
+    opening_hours = json_result['result'].get('opening_hours').get('periods')
     if opening_hours is not None:
-        open_now = opening_hours.get('open_now')
+        open_now = is_open_now(opening_hours)
     else:
         open_now = None
     if business_status == 'Permanently Closed' or business_status == 'Temporarily Closed' or open_now is None:
@@ -302,6 +302,41 @@ def get_gmaps_info(current_page):
         json_result['result'].get('opening_hours').get('weekday_text'))
     return [open_status, gmaps_link, website, human_readable_opening_hours]
 
+def is_open_now(opening_hours):
+    """Return True if the restaurant is open now, False otherwise.
+
+    Args:
+        opening_hours (dict): The opening hours of the restaurant
+
+    Returns:
+        bool: True if the restaurant is open now, False otherwise
+    """
+    if len(opening_hours) == 1 and opening_hours[0]["open"]["day"] == 0 and opening_hours[0]["open"]["time"] == "0000":
+        return True
+    time_date_dict = current_date_and_time()
+    current_day, current_time = time_date_dict["day"], time_date_dict["time"]
+    opening_hours_today = opening_hours[current_day]
+    opening_day_and_time, closing_day_and_time = opening_hours_today["open"], opening_hours_today["close"]
+    opening_day, opening_time = opening_day_and_time["day"], opening_day_and_time["time"]
+    closing_day, closing_time = closing_day_and_time["day"], closing_day_and_time["time"]
+    if opening_day == closing_day:
+        return opening_time <= current_time <= closing_time
+    else:
+        return opening_time <= current_time or current_time <= closing_time
+def current_date_and_time():
+    """Return the current date and time in the format of Google Maps API opening hours.
+
+    This should return a dict containing two keys:
+    - day: The day of the week: 0 (Sunday) to 6 (Saturday)
+    - time: The time of day in 24-hour hhmm format.
+
+    Returns:
+        dict: {"day": int, "time": str}
+    """
+    current_datetime = datetime.now()
+    current_day = current_datetime.weekday()
+    current_time = current_datetime.strftime("%H%M")
+    return {"day": current_day, "time": current_time}
 
 def reformat_opening_hours(opening_hours):
     """Reformat the opening hours to be human readable.
