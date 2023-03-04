@@ -13,6 +13,7 @@ import os
 from keep_alive import keep_alive
 import pymongo
 import certifi
+import pytz
 
 load_dotenv()
 
@@ -45,6 +46,8 @@ TIER_PREFIX = {
 }
 tiers = ['S', 'A', 'B', 'C', 'D', 'E', 'F']
 restaurant_names = [restaurant[0][6:-4] for restaurant in RESTAURANTS]
+
+TIMEZONE = pytz.timezone('America/Toronto')
 
 def setup_db():
     for i in range(len(restaurant_names)):
@@ -333,7 +336,7 @@ def current_date_and_time():
     Returns:
         dict: {"day": int, "time": str}
     """
-    current_datetime = datetime.now()
+    current_datetime = datetime.now(TIMEZONE)
     current_day = get_current_day()
     current_time = current_datetime.strftime("%H%M")
     return {"day": current_day, "time": current_time}
@@ -346,7 +349,7 @@ def get_current_day():
     Returns:
         str: The current day of the week
     """
-    current_day = datetime.now().weekday() + 1
+    current_day = datetime.now(TIMEZONE).weekday() + 1
     if current_day == 7:
         current_day = 0
     return current_day
@@ -355,7 +358,7 @@ def reformat_opening_hours(opening_hours):
     The parameter contains \u2009 or \u202f characters, which are unicode characters. Remove them.
     """
     plain_list = [opening_hour.replace('\u2009', ' ').replace('\u202f', ' ') for opening_hour in opening_hours]
-    current_day = datetime.now().weekday()
+    current_day = datetime.now(TIMEZONE).weekday()
     modified_list = ["**" + plain_list[opening_hour] + "**" if opening_hour == current_day
                      else plain_list[opening_hour] for opening_hour in range(len(plain_list))]
     return "\n".join(modified_list)
