@@ -194,6 +194,7 @@ def append_dummy_hours(opening_hours):
     """
     opening_hours = opening_hours.copy()
     for i in range(7):
+        # TODO: potential error if the place is closed on Saturdays
         if opening_hours[i]['open']['day'] != i:
             opening_hours.insert(i, None)
     return opening_hours
@@ -256,6 +257,7 @@ def reformat_opening_hours(opening_hours):
     The parameter contains \u2009 or \u202f characters, which are unicode characters. Remove them.
     """
     plain_list = [opening_hour.replace('\u2009', ' ').replace('\u202f', ' ') for opening_hour in opening_hours]
+    # TODO: What if a restaurant is open until 2AM on a weekday? There is a gap between the two days
     current_day = datetime.now(TIMEZONE).weekday()
     modified_list = ["**" + plain_list[opening_hour] + "**" if opening_hour == current_day
                      else plain_list[opening_hour] for opening_hour in range(len(plain_list))]
