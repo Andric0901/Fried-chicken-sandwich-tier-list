@@ -194,8 +194,7 @@ def append_dummy_hours(opening_hours):
     """
     opening_hours = opening_hours.copy()
     for i in range(7):
-        # TODO: potential error if the place is closed on Saturdays
-        if opening_hours[i]['open']['day'] != i:
+        if i > len(opening_hours) - 1 or opening_hours[i]['open']['day'] != i:
             opening_hours.insert(i, None)
     return opening_hours
 
@@ -208,14 +207,12 @@ def is_open_now(opening_hours):
     Returns:
         bool: True if the restaurant is open now, False otherwise
     """
+    # TODO: Critical flaw in the logic
     if len(opening_hours) == 1 and opening_hours[0]["open"]["day"] == 0 and opening_hours[0]["open"]["time"] == "0000":
         return True
     time_date_dict = current_date_and_time()
     current_day, current_time = time_date_dict["day"], time_date_dict["time"]
-    if len(opening_hours) == 7:
-        opening_hours_today = opening_hours[current_day]
-    else:
-        opening_hours_today = append_dummy_hours(opening_hours)[current_day]
+    opening_hours_today = append_dummy_hours(opening_hours)[current_day]
     if opening_hours_today is None:
         return False
     opening_day_and_time, closing_day_and_time = opening_hours_today["open"], opening_hours_today["close"]
@@ -252,11 +249,12 @@ def get_current_day():
     if current_day == 7:
         current_day = 0
     return current_day
-def reformat_opening_hours(opening_hours):
+def reformat_opening_hours(opening_hours_text):
     """Reformat the opening hours to be human readable.
     The parameter contains \u2009 or \u202f characters, which are unicode characters. Remove them.
     """
-    plain_list = [opening_hour.replace('\u2009', ' ').replace('\u202f', ' ') for opening_hour in opening_hours]
+    plain_list = [opening_hour.replace('\u2009', ' ').replace('\u202f', ' ') for opening_hour in opening_hours_text]
+    plain_list = [plain_list[-1]] + plain_list[:-1]
     # TODO: What if a restaurant is open until 2AM on a weekday? There is a gap between the two days
     current_day = datetime.now(TIMEZONE).weekday()
     modified_list = ["**" + plain_list[opening_hour] + "**" if opening_hour == current_day
