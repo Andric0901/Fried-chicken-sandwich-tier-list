@@ -180,8 +180,9 @@ def get_gmaps_info(current_page):
     gmaps_link = json_result['result'].get('url')
     website = json_result['result'].get('website')
     if opening_hours is not None:
-        human_readable_opening_hours = reformat_opening_hours(
-            json_result['result'].get('opening_hours').get('weekday_text'))
+        human_readable_opening_hours = reformat_opening_hours_text(
+            json_result['result'].get('opening_hours').get('weekday_text'),
+            append_dummy_hours(opening_hours))
     else:
         human_readable_opening_hours = None
     return [open_status, gmaps_link, website, human_readable_opening_hours]
@@ -198,6 +199,64 @@ def append_dummy_hours(opening_hours):
             opening_hours.insert(i, None)
     return opening_hours
 
+def codify_opening_hours(opening_hours):
+    """Return a list of opening hours in the format [(open, close)].
+
+    open and close should have the format "DHHMM", where D is the day of the week (0-6),
+    HH is the hour (00-23), and MM is the minute (00-59).
+
+    If a restaurant is open 24 hours, return the same element without modification.
+
+    append_dummy_hours() should be called before this function.
+
+    Optionally, the element can be None if the restaurant is closed on that day.
+
+    Args:
+        opening_hours (dict): The opening hours of the restaurant
+
+    Returns:
+        list: A list of opening hours in the format [(open, close)]
+    """
+    assert len(opening_hours) == 7
+    codified_opening_hours = []
+    if all(opening_hours[i] is None for i in range(1, 7)) and opening_hours[0] is not None:
+        return opening_hours
+    for day in opening_hours:
+        if day is None:
+            codified_opening_hours.append(None)
+        else:
+            codified_opening_hours.append((str(day["open"]["day"]) + day["open"]["time"],
+                                           str(day["close"]["day"]) + day["close"]["time"]))
+    return codified_opening_hours
+
+def get_maps_current_day(codified_opening_hours, codified_date_time):
+    """Return the day that it would appear as the current day on Google Maps.
+
+    For example, if a restaurant is open until 2am on Monday, and it is currently 1am on Tuesday,
+    then the current day would appear as open on Monday on Google Maps.
+
+    Args:
+        codified_opening_hours (list): The codified opening hours of the restaurant
+        codified_date_time (str): The codified date and time
+
+    Returns:
+        int: The day that it would appear as the current day on Google Maps
+    """
+    current_day = int(codified_date_time[0])
+    if codified_opening_hours[current_day] is None or codified_opening_hours[current_day - 1] is None:
+        return current_day
+    if current_day != 0:
+        if codified_opening_hours[current_day - 1][1] > codified_date_time:
+            return current_day - 1
+        else:
+            return current_day
+    else:
+        _, close_hours_previous = codified_opening_hours[6]
+        if close_hours_previous[0] == "0" and codified_date_time < close_hours_previous:
+            return 6
+        else:
+            return 0
+
 def is_open_now(opening_hours):
     """Return True if the restaurant is open now, False otherwise.
 
@@ -207,21 +266,22 @@ def is_open_now(opening_hours):
     Returns:
         bool: True if the restaurant is open now, False otherwise
     """
-    # TODO: Critical flaw in the logic
     if len(opening_hours) == 1 and opening_hours[0]["open"]["day"] == 0 and opening_hours[0]["open"]["time"] == "0000":
         return True
     time_date_dict = current_date_and_time()
-    current_day, current_time = time_date_dict["day"], time_date_dict["time"]
-    opening_hours_today = append_dummy_hours(opening_hours)[current_day]
-    if opening_hours_today is None:
+    current_day = time_date_dict["day"]
+    codified_date_time = str(current_day) + time_date_dict["time"]
+    codified_opening_hours = codify_opening_hours(append_dummy_hours(opening_hours))
+    maps_current_day = get_maps_current_day(codified_opening_hours, codified_date_time)
+    if codified_opening_hours[maps_current_day] is None:
         return False
-    opening_day_and_time, closing_day_and_time = opening_hours_today["open"], opening_hours_today["close"]
-    opening_day, opening_time = opening_day_and_time["day"], opening_day_and_time["time"]
-    closing_day, closing_time = closing_day_and_time["day"], closing_day_and_time["time"]
-    if opening_day == closing_day:
-        return opening_time <= current_time <= closing_time
+    open_time, close_time = codified_opening_hours[maps_current_day]
+    if maps_current_day != 6 or (maps_current_day == 6 and current_day == 6):
+        return open_time <= codified_date_time < close_time
     else:
-        return opening_time <= current_time or current_time <= closing_time
+        assert maps_current_day == 6 and current_day == 0
+        return codified_date_time < close_time
+
 def current_date_and_time():
     """Return the current date and time in the format of Google Maps API opening hours.
 
@@ -249,15 +309,29 @@ def get_current_day():
     if current_day == 7:
         current_day = 0
     return current_day
-def reformat_opening_hours(opening_hours_text):
-    """Reformat the opening hours to be human readable.
+
+def reformat_opening_hours_text(opening_hours_text, opening_hours):
+    """Reformat the opening hours text to be human readable.
     The parameter contains \u2009 or \u202f characters, which are unicode characters. Remove them.
+
+    append_dummy_hours(opening_hours) should be called before this function.
+
+    Args:
+        opening_hours_text (list): The opening hours text of the restaurant
+        opening_hours (dict): The opening hours of the restaurant
+
+    Returns:
+        str: The reformatted opening hours text
     """
+    assert len(opening_hours) == 7
     plain_list = [opening_hour.replace('\u2009', ' ').replace('\u202f', ' ') for opening_hour in opening_hours_text]
     plain_list = [plain_list[-1]] + plain_list[:-1]
-    # TODO: What if a restaurant is open until 2AM on a weekday? There is a gap between the two days
-    current_day = datetime.now(TIMEZONE).weekday()
-    modified_list = ["**" + plain_list[opening_hour] + "**" if opening_hour == current_day
+    time_date_dict = current_date_and_time()
+    current_day = time_date_dict["day"]
+    codified_date_time = str(current_day) + time_date_dict["time"]
+    codified_opening_hours = codify_opening_hours(opening_hours)
+    maps_current_day = get_maps_current_day(codified_opening_hours, codified_date_time)
+    modified_list = ["**" + plain_list[opening_hour] + "**" if opening_hour == maps_current_day
                      else plain_list[opening_hour] for opening_hour in range(len(plain_list))]
     return "\n".join(modified_list)
 
