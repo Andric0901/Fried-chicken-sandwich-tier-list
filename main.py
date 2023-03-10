@@ -116,21 +116,17 @@ FACTS = [
     "Fried chicken sandwiches can be served on a variety of breads, including ciabatta, focaccia, and baguette."
 ]
 
-# class ListPagesView(discord.ui.View):
-#     def __init__(self, current_page=0):
-#         super().__init__(timeout=None)
-#         self.page = current_page
-#         self.min_page = 0
-#         self.max_page = len(RESTAURANTS) - 1
+
 
 class PaginationView(discord.ui.View, metaclass=abc.ABCMeta):
-    def __init__(self, current_page=0, timeout=None):
+    def __init__(self, current_page=0, timeout=None, interaction=None):
         super().__init__(timeout=timeout)
         self.page = current_page
         self.min_page = 0
         self.max_page = len(RESTAURANTS) - 1
         self.thumbnail_file, self.embed = None, None
         self.update_buttons()
+        self.interaction = interaction
 
     @discord.ui.button(label='⏮', style=ButtonStyle.green, custom_id='first')
     async def first(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -166,6 +162,32 @@ class PaginationView(discord.ui.View, metaclass=abc.ABCMeta):
         self.children[2].disabled = self.page == self.max_page
         self.children[3].disabled = self.page == self.max_page
 
+class ListPagesView(PaginationView):
+    def __init__(self, current_page=0, interaction=None):
+        super().__init__(current_page=current_page)
+        self.restaurants_list, self.embed = create_list_embed(self.page)
+        self.max_page = (len(RESTAURANTS) - 1) // 10
+        self.interaction = interaction
+
+    async def update_interaction(self, interaction: discord.Interaction):
+        self.restaurants_list, self.embed = create_list_embed(self.page)
+        await interaction.message.edit(embed=self.embed, attachments=[])
+        self.update_buttons()
+        self.children[4].options = [
+            SelectOption(label=element, value=element)
+            for element in get_current_restaurants_list(self.page)
+        ]
+
+    @discord.ui.select(placeholder='Look at...', options=[
+                       SelectOption(label=element, value=element)
+        for element in get_current_restaurants_list(0)])
+    async def select(self, interaction: discord.Interaction, select: discord.ui.Select):
+        restaurant = interaction.data['values'][0].split(maxsplit=1)[-1]
+        index = restaurant_names.index(restaurant)
+        view = RestaurantsPagesAfterListView(current_page=index)
+        await interaction.response.defer()
+        await interaction.message.edit(embeds=[view.embed], view=view, attachments=[view.thumbnail_file])
+
 class RestaurantsPagesView(PaginationView):
     def __init__(self, current_page=0):
         super().__init__(current_page=current_page)
@@ -184,6 +206,18 @@ class RestaurantsPagesView(PaginationView):
         self.thumbnail_file, self.embed = create_restaurants_embed(self.page)
         await interaction.message.edit(embed=self.embed, attachments=[self.thumbnail_file])
         self.update_buttons()
+
+class RestaurantsPagesAfterListView(RestaurantsPagesView):
+    def __init__(self, current_page=0):
+        super().__init__(current_page=current_page)
+
+    @discord.ui.button(label='Go back to compendium', style=ButtonStyle.blurple, custom_id='compendium')
+    async def compendium(self, interaction: discord.Interaction, button: discord.ui.Button):
+        index = self.page // 10
+        view = ListPagesView(current_page=index, interaction=interaction)
+        await interaction.response.defer()
+        await view.update_interaction(interaction)
+        await interaction.message.edit(view=view, embed=view.embed, attachments=[])
 
 @client.event
 async def on_ready():
@@ -221,5 +255,11 @@ async def restaurants_command(interaction):
     view = RestaurantsPagesView()
     thumbnail_file, embed = create_restaurants_embed(view.page)
     await interaction.response.send_message(embed=embed, file=thumbnail_file, view=view)
+
+@tree.command(name='list', description='Show a list of all restaurants')
+async def list_command(interaction):
+    view = ListPagesView()
+    _, embed = create_list_embed(view.page)
+    await interaction.response.send_message(embed=embed, view=view)
 
 client.run(token)

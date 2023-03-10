@@ -3,7 +3,7 @@ from discord import app_commands
 import googlemaps
 from googlemaps import places
 import requests
-from tierlist import get_restaurants_info ,tier_colour_hex_dict, MANUAL_EMBED_RESTAURANTS
+from tierlist import *
 from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
@@ -59,6 +59,26 @@ def setup_db():
             response = requests.get(url)
             data = response.json()
             collection.update_one({"index": i}, {"$set": {"json": data}}, upsert=True)
+
+def create_list_embed(current_page):
+    title = "Fried chicken sandwich compendium"
+    restaurants_formatted = []
+    if current_page != (len(RESTAURANTS) - 1) // 10 or len(RESTAURANTS) % 10 == 0:
+        for i in range(10):
+            restaurant_name = RESTAURANTS[current_page * 10 + i][0][6:-4]
+            restaurants_formatted.append("**{}.** {}".format(current_page * 10 + i + 1, restaurant_name))
+    else:
+        for i in range(len(RESTAURANTS) % 10):
+            restaurant_name = RESTAURANTS[current_page * 10 + i][0][6:-4]
+            restaurants_formatted.append("**{}.** {}".format(current_page * 10 + i + 1, restaurant_name))
+    description = "\n".join(restaurants_formatted)
+    embed = discord.Embed(title=title, description=description, color=0xd4af37)
+    return restaurants_formatted, embed
+
+def get_current_restaurants_list(current_page):
+    # remove star signs from each element and return
+    # return create_list_embed(current_page)[0]
+    return [element.replace("*", "") for element in create_list_embed(current_page)[0]]
 
 def create_restaurants_embed(current_page):
     # [link to logo image, price range, address, description (catchphrase), tier]
