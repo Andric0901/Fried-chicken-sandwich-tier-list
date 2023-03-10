@@ -1,5 +1,3 @@
-import os
-
 from PIL import Image, ImageDraw, ImageFont
 import json
 
@@ -144,11 +142,3 @@ def get_first_tier_indexes():
             first_tier_indexes[tier] = first_tier_indexes[tiers[tiers.index(tier) - 1]] + \
                                        len(tier_dict[tiers[tiers.index(tier) - 1]])
     return first_tier_indexes
-
-if __name__ == '__main__':
-    # Count the number of images under the directory logos
-    count = sum([len(files) for _, _, files in os.walk('logos')])
-    assert count == sum([len(tier_dict[tier]) for tier in tier_dict])
-    tierlist = make_tierlist()
-    tierlist.save('tierlist.png')
-

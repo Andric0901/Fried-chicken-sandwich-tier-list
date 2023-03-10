@@ -13,7 +13,6 @@ import certifi
 import pytz
 
 load_dotenv()
-
 connection_string = os.getenv("connection")
 client = pymongo.MongoClient(connection_string, tlsCAFile=certifi.where())
 db = client["fried-chicken-sandwich-bot"]
@@ -356,4 +355,12 @@ def reformat_opening_hours_text(opening_hours_text, opening_hours):
     return "\n".join(modified_list)
 
 if __name__ == '__main__':
-    setup_db()
+    print(collection.count_documents({}))
+    print(len(get_restaurants_info()))
+    if collection.count_documents({}) != len(get_restaurants_info()):
+        setup_db()
+    # Count the number of images under the directory logos
+    count = sum([len(files) for _, _, files in os.walk('logos')])
+    assert count == sum([len(tier_dict[tier]) for tier in tier_dict])
+    tierlist = make_tierlist()
+    tierlist.save('tierlist.png')
