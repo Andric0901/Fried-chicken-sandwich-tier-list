@@ -60,7 +60,7 @@ def setup_db():
             data = response.json()
             collection.update_one({"index": i}, {"$set": {"json": data}}, upsert=True)
 
-def create_embed(current_page):
+def create_restaurants_embed(current_page):
     # [link to logo image, price range, address, description (catchphrase), tier]
     title = RESTAURANTS[current_page][0][6:-4]
     if title in MANUAL_EMBED_RESTAURANTS:

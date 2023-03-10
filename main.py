@@ -1,5 +1,6 @@
 import time
 
+import discord.ui
 from discord import Activity, ActivityType, Status, ButtonStyle, SelectOption
 from tierlist import get_first_tier_indexes
 from helper import *
@@ -114,49 +115,55 @@ FACTS = [
     "Fried chicken sandwiches can be served on a variety of breads, including ciabatta, focaccia, and baguette."
 ]
 
-class PaginationView(discord.ui.View):
+# class ListPagesView(discord.ui.View):
+#     def __init__(self, current_page=0):
+#         super().__init__(timeout=None)
+#         self.page = current_page
+#         self.min_page = 0
+#         self.max_page = len(RESTAURANTS) - 1
+
+
+class RestaurantsPagesView(discord.ui.View):
     def __init__(self, current_page=0):
         super().__init__(timeout=None)
         self.page = current_page
         self.min_page = 0
         self.max_page = len(RESTAURANTS) - 1
-        self.previous_restaurant_name, self.next_restaurant_name = None, None
-        self.update_previous_and_next()
-        self.thumbnail_file, self.embed = create_embed(self.page)
+        # self.previous_restaurant_name, self.next_restaurant_name = None, None
+        # self.update_previous_and_next()
+        self.thumbnail_file, self.embed = create_restaurants_embed(self.page)
+        self.update_buttons()
 
-    def update_previous_and_next(self):
-        self.previous_restaurant_name = RESTAURANTS[self.page - 1][0][6:-4] if self.page > 0 else None
-        self.next_restaurant_name = RESTAURANTS[self.page + 1][0][
-                                    6:-4] if self.page < self.max_page else None
+    # def update_previous_and_next(self):
+    #     self.previous_restaurant_name = RESTAURANTS[self.page - 1][0][6:-4] if self.page > 0 else None
+    #     self.next_restaurant_name = RESTAURANTS[self.page + 1][0][
+    #                                 6:-4] if self.page < self.max_page else None
 
-    @discord.ui.button(label='⏮️', style=ButtonStyle.green, disabled=True, custom_id='first')
+    @discord.ui.button(label='⏮', style=ButtonStyle.green, custom_id='first')
     async def first(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page = 0
-        self.update_previous_and_next()
+        # self.update_previous_and_next()
         await self.update_interaction(interaction)
         await interaction.response.edit_message(view=self)
 
-    @discord.ui.button(label='◀️', style=ButtonStyle.blurple, disabled=True, custom_id='previous')
+    @discord.ui.button(label='◀', style=ButtonStyle.blurple, custom_id='previous')
     async def previous_page(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page -= 1
-        self.update_previous_and_next()
+        # self.update_previous_and_next()
         await self.update_interaction(interaction)
         await interaction.response.edit_message(view=self)
 
-    # TODO: Change label manually when there is a change in S tier order
-    @discord.ui.button(label='▶️ Penny\'s Hot Chicken', style=ButtonStyle.blurple, disabled=False, custom_id='next')
+    @discord.ui.button(label='▶', style=ButtonStyle.blurple, custom_id='next')
     async def next_page(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page += 1
-        if self.page == 0:
-            assert self.children[1].label[3:] == self.next_restaurant_name
-        self.update_previous_and_next()
+        # self.update_previous_and_next()
         await self.update_interaction(interaction)
         await interaction.response.edit_message(view=self)
 
-    @discord.ui.button(label='⏭️', style=ButtonStyle.green, disabled=False, custom_id='last')
+    @discord.ui.button(label='⏭', style=ButtonStyle.green, custom_id='last')
     async def last(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page = self.max_page
-        self.update_previous_and_next()
+        # self.update_previous_and_next()
         await self.update_interaction(interaction)
         await interaction.response.edit_message(view=self)
 
@@ -170,7 +177,7 @@ class PaginationView(discord.ui.View):
         await interaction.response.edit_message(view=self)
 
     async def update_interaction(self, interaction: discord.Interaction):
-        self.thumbnail_file, self.embed = create_embed(self.page)
+        self.thumbnail_file, self.embed = create_restaurants_embed(self.page)
         await interaction.message.edit(embed=self.embed, attachments=[self.thumbnail_file])
         self.update_buttons()
 
@@ -179,15 +186,15 @@ class PaginationView(discord.ui.View):
         self.children[1].disabled = self.page == 0
         self.children[2].disabled = self.page == self.max_page
         self.children[3].disabled = self.page == self.max_page
-        self.update_previous_and_next()
-        if self.children[1].disabled:
-            self.children[1].label = '◀️'
-        else:
-            self.children[1].label = '◀️ {}'.format(self.previous_restaurant_name)
-        if self.children[2].disabled:
-            self.children[2].label = '▶️'
-        else:
-            self.children[2].label = '{} ▶️'.format(self.next_restaurant_name)
+        # self.update_previous_and_next()
+        # if self.children[1].disabled:
+        #     self.children[1].label = '◀️'
+        # else:
+        #     self.children[1].label = '◀️ {}'.format(self.previous_restaurant_name)
+        # if self.children[2].disabled:
+        #     self.children[2].label = '▶️'
+        # else:
+        #     self.children[2].label = '{} ▶️'.format(self.next_restaurant_name)
 
 
 @client.event
@@ -223,8 +230,8 @@ async def tierlist_command(interaction):
 
 @tree.command(name='restaurants', description='Show each restaurant in the tierlist')
 async def restaurants_command(interaction):
-    view = PaginationView()
-    thumbnail_file, embed = create_embed(view.page)
+    view = RestaurantsPagesView(current_page=6)
+    thumbnail_file, embed = create_restaurants_embed(view.page)
     await interaction.response.send_message(embed=embed, file=thumbnail_file, view=view)
 
 client.run(token)
