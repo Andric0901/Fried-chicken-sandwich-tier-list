@@ -5,6 +5,7 @@ from discord import Activity, ActivityType, Status, ButtonStyle, SelectOption
 from tierlist import get_first_tier_indexes
 from helper import *
 import random
+import abc
 
 FACTS = [
     "The first fried chicken sandwich was created in 1946 by the founder of Chick-fil-A.",
@@ -122,50 +123,53 @@ FACTS = [
 #         self.min_page = 0
 #         self.max_page = len(RESTAURANTS) - 1
 
-
-class RestaurantsPagesView(discord.ui.View):
-    def __init__(self, current_page=0):
-        super().__init__(timeout=None)
+class PaginationView(discord.ui.View, metaclass=abc.ABCMeta):
+    def __init__(self, current_page=0, timeout=None):
+        super().__init__(timeout=timeout)
         self.page = current_page
         self.min_page = 0
         self.max_page = len(RESTAURANTS) - 1
-        # self.previous_restaurant_name, self.next_restaurant_name = None, None
-        # self.update_previous_and_next()
-        self.thumbnail_file, self.embed = create_restaurants_embed(self.page)
+        self.thumbnail_file, self.embed = None, None
         self.update_buttons()
-
-    # def update_previous_and_next(self):
-    #     self.previous_restaurant_name = RESTAURANTS[self.page - 1][0][6:-4] if self.page > 0 else None
-    #     self.next_restaurant_name = RESTAURANTS[self.page + 1][0][
-    #                                 6:-4] if self.page < self.max_page else None
 
     @discord.ui.button(label='⏮', style=ButtonStyle.green, custom_id='first')
     async def first(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page = 0
-        # self.update_previous_and_next()
         await self.update_interaction(interaction)
         await interaction.response.edit_message(view=self)
 
     @discord.ui.button(label='◀', style=ButtonStyle.blurple, custom_id='previous')
     async def previous_page(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page -= 1
-        # self.update_previous_and_next()
         await self.update_interaction(interaction)
         await interaction.response.edit_message(view=self)
 
     @discord.ui.button(label='▶', style=ButtonStyle.blurple, custom_id='next')
     async def next_page(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page += 1
-        # self.update_previous_and_next()
         await self.update_interaction(interaction)
         await interaction.response.edit_message(view=self)
 
     @discord.ui.button(label='⏭', style=ButtonStyle.green, custom_id='last')
     async def last(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page = self.max_page
-        # self.update_previous_and_next()
         await self.update_interaction(interaction)
         await interaction.response.edit_message(view=self)
+
+    @abc.abstractmethod
+    async def update_interaction(self, interaction: discord.Interaction):
+        pass
+
+    def update_buttons(self):
+        self.children[0].disabled = self.page == 0
+        self.children[1].disabled = self.page == 0
+        self.children[2].disabled = self.page == self.max_page
+        self.children[3].disabled = self.page == self.max_page
+
+class RestaurantsPagesView(PaginationView):
+    def __init__(self, current_page=0):
+        super().__init__(current_page=current_page)
+        self.thumbnail_file, self.embed = create_restaurants_embed(self.page)
 
     @discord.ui.select(placeholder='Jump to...', options=[
         SelectOption(label=TIER_PREFIX[tier], value=tier) for tier in tiers])
@@ -180,22 +184,6 @@ class RestaurantsPagesView(discord.ui.View):
         self.thumbnail_file, self.embed = create_restaurants_embed(self.page)
         await interaction.message.edit(embed=self.embed, attachments=[self.thumbnail_file])
         self.update_buttons()
-
-    def update_buttons(self):
-        self.children[0].disabled = self.page == 0
-        self.children[1].disabled = self.page == 0
-        self.children[2].disabled = self.page == self.max_page
-        self.children[3].disabled = self.page == self.max_page
-        # self.update_previous_and_next()
-        # if self.children[1].disabled:
-        #     self.children[1].label = '◀️'
-        # else:
-        #     self.children[1].label = '◀️ {}'.format(self.previous_restaurant_name)
-        # if self.children[2].disabled:
-        #     self.children[2].label = '▶️'
-        # else:
-        #     self.children[2].label = '{} ▶️'.format(self.next_restaurant_name)
-
 
 @client.event
 async def on_ready():
@@ -230,7 +218,7 @@ async def tierlist_command(interaction):
 
 @tree.command(name='restaurants', description='Show each restaurant in the tierlist')
 async def restaurants_command(interaction):
-    view = RestaurantsPagesView(current_page=6)
+    view = RestaurantsPagesView()
     thumbnail_file, embed = create_restaurants_embed(view.page)
     await interaction.response.send_message(embed=embed, file=thumbnail_file, view=view)
 
