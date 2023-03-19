@@ -148,6 +148,4 @@ if __name__ == '__main__':
         setup_db()
     count = sum([len(files) for _, _, files in os.walk('logos')])
     assert count == sum([len(tier_dict[tier]) for tier in tier_dict])
-    tierlist = make_tierlist()
-    tierlist.save('tierlist.png')
     client.run(token)
