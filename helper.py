@@ -1,9 +1,9 @@
+"""A helper file containing functions used by tierlist.py and main.py"""
+
 import discord
-from discord import app_commands
 import googlemaps
 from googlemaps import places
 import requests
-from tierlist import *
 from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
@@ -11,25 +11,59 @@ import os
 import pymongo
 import certifi
 import pytz
+import json
 
+##############################################
+# Set up environment variables
+##############################################
 load_dotenv()
 connection_string = os.getenv("connection")
+token = os.getenv("token")
+key = os.getenv("key")
+try:
+    gmaps = googlemaps.Client(key=key)
+except ValueError:
+    # Likely tierlist.py has been called without defined key in the env file
+    pass
 client = pymongo.MongoClient(connection_string, tlsCAFile=certifi.where())
 db = client["fried-chicken-sandwich-bot"]
 collection = db["gmaps_infos"]
 
-token = os.getenv("token")
-key = os.getenv("key")
+tier_dict = json.load(open('tier_dict.json'))
 
-TIERLIST_IMAGE = 'tierlist.png'
-gmaps = googlemaps.Client(key=key)
+##############################################
+# Tierlist helper functions
+##############################################
+def get_restaurants_info():
+    """Get the list of restaurants and their price ranges"""
+    restaurants_info = []
+    for tier in tier_dict:
+        for restaurant_info in tier_dict[tier]:
+            assert len(restaurant_info) == 5
+            restaurants_info.append(restaurant_info)
+    return restaurants_info
 
+def get_first_tier_indexes():
+    """Get the first index of each tier"""
+    first_tier_indexes = {"S": 0}
+    tiers = list(tier_dict.keys())
+    for tier in tier_dict:
+        if tier == "S":
+            pass
+        else:
+            first_tier_indexes[tier] = first_tier_indexes[tiers[tiers.index(tier) - 1]] + \
+                                       len(tier_dict[tiers[tiers.index(tier) - 1]])
+    return first_tier_indexes
+
+##############################################
+# Set up constants
+##############################################
 RESTAURANTS = get_restaurants_info()
-
-intents = discord.Intents.default()
-intents.message_content = True
-client = discord.Client(intents=intents)
-tree = app_commands.CommandTree(client)
+MANUAL_EMBED_RESTAURANTS = ["Bubba's Crispy Fried Chicken", "Foodie"]
+TIERLIST_IMAGE = 'tierlist.png'
+TIMEZONE = pytz.timezone('America/Toronto')
+TIERS = ['S', 'A', 'B', 'C', 'D', 'E', 'F']
+RESTAURANT_NAMES = [restaurant[0][6:-4] for restaurant in RESTAURANTS]
 TIER_PREFIX = {
     'S': 'Spectacular',
     'A': 'Acclaimed',
@@ -39,14 +73,22 @@ TIER_PREFIX = {
     'E': 'Enervating',
     'F': "Freakin' Raw"
 }
-tiers = ['S', 'A', 'B', 'C', 'D', 'E', 'F']
-restaurant_names = [restaurant[0][6:-4] for restaurant in RESTAURANTS]
+TIER_COLOUR_HEX_DICT = {
+    'S': "#ff7f7f",
+    'A': "#ffbf7f",
+    'B': "#ffff7f",
+    'C': "#7fff7f",
+    'D': "#7fbfff",
+    'E': "#7f7fff",
+    'F': "#ff7fff"
+}
 
-TIMEZONE = pytz.timezone('America/Toronto')
-
+##############################################
+# Set up the database
+##############################################
 def setup_db():
-    for i in range(len(restaurant_names)):
-        restaurant = restaurant_names[i]
+    for i in range(len(RESTAURANT_NAMES)):
+        restaurant = RESTAURANT_NAMES[i]
         if restaurant in MANUAL_EMBED_RESTAURANTS:
             collection.update_one({"index": i}, {"$set": {"json": None}}, upsert=True)
         else:
@@ -59,6 +101,9 @@ def setup_db():
             data = response.json()
             collection.update_one({"index": i}, {"$set": {"json": data}}, upsert=True)
 
+##############################################
+# Discord bot helper functions
+##############################################
 def create_list_embed(current_page):
     title = "Fried chicken sandwich compendium"
     restaurants_formatted = []
@@ -91,7 +136,7 @@ def create_restaurants_embed(current_page):
 
     gmaps_info = get_gmaps_info(current_page)
 
-    embed = discord.Embed(title=title, description=description, color=tier_colour_hex_dict[tier],
+    embed = discord.Embed(title=title, description=description, color=discord.Color.from_str(TIER_COLOUR_HEX_DICT[tier]),
                           url=gmaps_info[1])
     thumbnail_file = get_thumbnail_file(current_page, RESTAURANTS)
     embed.set_thumbnail(url='attachment://image.jpg')
@@ -140,7 +185,7 @@ def create_manual_embed(current_page, restaurants_info):
 def _bubbas_embed(current_page, restaurants_info):
     embed = discord.Embed(title='Bubba\'s Crispy Fried Chicken',
                           description="Bubba's (and everyone's) past favorite",
-                          color=tier_colour_hex_dict['S'])
+                          color=discord.Color.from_str(TIER_COLOUR_HEX_DICT['S']))
     thumbnail_file = get_thumbnail_file(current_page, restaurants_info)
     embed.set_thumbnail(url='attachment://image.jpg')
     embed.set_author(name=TIER_PREFIX['S'])
@@ -155,7 +200,7 @@ def _bubbas_embed(current_page, restaurants_info):
 def _foodie_embed(current_page, restaurants_info):
     embed = discord.Embed(title='Foodie',
                           description="UofT's only pink truck",
-                          color=tier_colour_hex_dict['C'])
+                          color=discord.Color.from_str(TIER_COLOUR_HEX_DICT['C']))
     thumbnail_file = get_thumbnail_file(current_page, restaurants_info)
     embed.set_thumbnail(url='attachment://image.jpg')
     embed.set_author(name=TIER_PREFIX['C'])
@@ -354,13 +399,5 @@ def reformat_opening_hours_text(opening_hours_text, opening_hours):
                      else plain_list[opening_hour] for opening_hour in range(len(plain_list))]
     return "\n".join(modified_list)
 
-if __name__ == '__main__':
-    print(collection.count_documents({}))
-    print(len(get_restaurants_info()))
-    if collection.count_documents({}) != len(get_restaurants_info()):
-        setup_db()
-    # Count the number of images under the directory logos
-    count = sum([len(files) for _, _, files in os.walk('logos')])
-    assert count == sum([len(tier_dict[tier]) for tier in tier_dict])
-    tierlist = make_tierlist()
-    tierlist.save('tierlist.png')
+if __name__ == "__main__":
+    setup_db()

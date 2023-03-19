@@ -1,5 +1,7 @@
+"""A Python file with Tierlist configurations."""
+
 from PIL import Image, ImageDraw, ImageFont
-import json
+from helper import tier_dict, TIER_COLOUR_HEX_DICT
 
 DEFAULT_WIDTH = 200
 DEFAULT_GAP = 20
@@ -9,26 +11,7 @@ GAPS_BETWEEN_RESTAURANTS = 10
 # TODO: Change the width if needed
 BACKGROUND_WIDTH = 1800
 BACKGROUND_COLOUR = (26, 26, 26)
-tier_colour_dict = {
-    'S': (255, 127, 127),
-    'A': (255, 191, 127),
-    'B': (255, 255, 127),
-    'C': (127, 255, 127),
-    'D': (127, 191, 255),
-    'E': (127, 127, 255),
-    'F': (255, 127, 255)
-}
-
-tier_colour_hex_dict = {
-    'S': 0xff7f7f,
-    'A': 0xffbf7f,
-    'B': 0xffff7f,
-    'C': 0x7fff7f,
-    'D': 0x7fbfff,
-    'E': 0x7f7fff,
-    'F': 0xff7fff
-}
-
+# TODO: Change tier_num_rows to be variable, not hard-coded
 tier_num_rows = {
     'S': 1,
     'A': 1,
@@ -38,10 +21,6 @@ tier_num_rows = {
     'E': 1,
     'F': 1
 }
-
-MANUAL_EMBED_RESTAURANTS = ["Bubba's Crispy Fried Chicken", "Foodie"]
-
-tier_dict = json.load(open('tier_dict.json'))
 
 def total_num_restaurants():
     return sum(tier_num_rows[tier] for tier in tier_num_rows)
@@ -99,7 +78,7 @@ def make_tier_restaurants(tier):
 
 def make_one_complete_tier(tier):
     """Make a tier image"""
-    tier_indicator = make_tier_indicator(tier, tier_colour_dict[tier])
+    tier_indicator = make_tier_indicator(tier, TIER_COLOUR_HEX_DICT[tier])
     tier_restaurants = make_tier_restaurants(tier)
     tier_img = Image.new('RGB', (tier_indicator.size[0] + tier_restaurants.size[0] + DEFAULT_GAP,
                                  DEFAULT_WIDTH * tier_num_rows[tier] +
@@ -122,23 +101,6 @@ def make_tierlist():
         y_offset += tier_img.size[1] + DEFAULT_GAP
     return tierlist
 
-def get_restaurants_info():
-    """Get the list of restaurants and their price ranges"""
-    restaurants_info = []
-    for tier in tier_dict:
-        for restaurant_info in tier_dict[tier]:
-            assert len(restaurant_info) == 5
-            restaurants_info.append(restaurant_info)
-    return restaurants_info
-
-def get_first_tier_indexes():
-    """Get the first index of each tier"""
-    first_tier_indexes = {"S": 0}
-    tiers = list(tier_dict.keys())
-    for tier in tier_dict:
-        if tier == "S":
-            pass
-        else:
-            first_tier_indexes[tier] = first_tier_indexes[tiers[tiers.index(tier) - 1]] + \
-                                       len(tier_dict[tiers[tiers.index(tier) - 1]])
-    return first_tier_indexes
+if __name__ == "__main__":
+    tierlist = make_tierlist()
+    tierlist.save('tierlist.png')

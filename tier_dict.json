@@ -27,7 +27,6 @@
         ["logos/Burger King.jpg", "1", "267 College St", "Not the best King of burgers I have tried", "C"],
         ["logos/A&W.jpg", "1", "500 Bloor St W", "A 24-hr generic burger chain", "C"],
         ["logos/Mary Brown's.jpg", "1", "636 Bloor St W", "Mary Brown's? More like Dry and Frowned", "C"],
-        ["logos/Popeyes.jpg", "1", "553 Bloor St W", "Makes your eyes pop? idk", "C"],
         ["logos/Chick-Fil-A.jpg", "1", "709 Yonge St", "More like Chicks-Fill-C", "C"],
         ["logos/Foodie.jpg", "1", "255 Huron St", "UofT's only pink truck", "C"],
         ["logos/The Burgernator.jpg", "1", "269 Augusta Ave", "We're doomed! He's gonna get us!", "C"],
@@ -39,6 +38,7 @@
     "D": [
         ["logos/Tim Hortons.jpg", "1", "334 Bloor St W", "Maybe focus on making better coffee instead...", "D"],
         ["logos/Top Gun Burgers.jpg", "1", "490 Bloor St W", "The chickens were threatened with a gun", "D"],
+        ["logos/Popeyes.jpg", "1", "553 Bloor St W", "Makes your eyes pop? idk", "D"],
         ["logos/PG Clucks.jpg", "2", "610 College St", "Not a PG-13 taste", "D"],
         ["logos/Simple Burger.jpg", "2", "735 Bloor St W", "Too simple that it lost its originality", "D"],
         ["logos/W Burger Bar.jpg", "2", "10 College St", "More like L burger bar", "D"]
