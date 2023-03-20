@@ -131,8 +131,8 @@ async def ping_command(interaction):
 async def tierlist_command(interaction):
     embed = discord.Embed(title='Tierlist', description='Still in progress!', color=0x00ff00)
     image = open(TIERLIST_IMAGE, 'rb')
-    embed.set_image(url='attachment://tierlist.png')
-    await interaction.response.send_message(embed=embed, file=discord.File(image, 'tierlist.png'))
+    embed.set_image(url='attachment://{}'.format(TIERLIST_IMAGE))
+    await interaction.response.send_message(embed=embed, file=discord.File(image, TIERLIST_IMAGE))
 
 @tree.command(name='list', description='Show a list of all restaurants')
 async def list_command(interaction):
@@ -141,7 +141,6 @@ async def list_command(interaction):
     await interaction.response.send_message(embed=embed, view=view)
 
 if __name__ == '__main__':
-    from tierlist import make_tierlist
     print(collection.count_documents({}))
     print(len(get_restaurants_info()))
     if collection.count_documents({}) != len(get_restaurants_info()):

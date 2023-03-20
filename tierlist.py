@@ -1,7 +1,7 @@
 """A Python file with Tierlist configurations."""
 
 from PIL import Image, ImageDraw, ImageFont
-from helper import tier_dict, TIER_COLOUR_HEX_DICT
+from helper import tier_dict, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE
 
 DEFAULT_WIDTH = 200
 DEFAULT_GAP = 20
@@ -103,4 +103,4 @@ def make_tierlist():
 
 if __name__ == "__main__":
     tierlist = make_tierlist()
-    tierlist.save('tierlist.png')
+    tierlist.save(TIERLIST_IMAGE)
