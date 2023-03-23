@@ -130,9 +130,9 @@ async def ping_command(interaction):
 @tree.command(name='tierlist', description='Shows the tierlist in an embed')
 async def tierlist_command(interaction):
     embed = discord.Embed(title='Tierlist', description='Still in progress!', color=0x00ff00)
-    image = open(TIERLIST_IMAGE, 'rb')
-    embed.set_image(url='attachment://{}'.format(TIERLIST_IMAGE))
-    await interaction.response.send_message(embed=embed, file=discord.File(image, TIERLIST_IMAGE))
+    image = open(TIERLIST_IMAGE_NAME, 'rb')
+    embed.set_image(url='attachment://{}'.format(TIERLIST_IMAGE_NAME))
+    await interaction.response.send_message(embed=embed, file=discord.File(image, TIERLIST_IMAGE_NAME))
 
 @tree.command(name='list', description='Show a list of all restaurants')
 async def list_command(interaction):
@@ -146,5 +146,5 @@ if __name__ == '__main__':
     if collection.count_documents({}) != len(get_restaurants_info()):
         setup_db()
     count = sum([len(files) for _, _, files in os.walk('logos')])
-    assert count == sum([len(tier_dict[tier]) for tier in tier_dict])
+    assert count == sum([len(TIER_DICT[tier]) for tier in TIER_DICT])
     client.run(token)

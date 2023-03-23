@@ -1,7 +1,7 @@
 """A Python file with Tierlist configurations."""
 
 from PIL import Image, ImageDraw, ImageFont
-from helper import tier_dict, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE
+from helper import TIER_DICT, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE_NAME
 
 DEFAULT_WIDTH = 200
 DEFAULT_GAP = 20
@@ -49,7 +49,7 @@ def make_tier_restaurants(tier):
     """Make a tier image"""
     tier_img = make_tier_background(tier)
     restaurants = []
-    for restaurant_info in tier_dict[tier]:
+    for restaurant_info in TIER_DICT[tier]:
         assert len(restaurant_info) == 5
         restaurant, price_range = restaurant_info[0], restaurant_info[1]
         # get the image of the restaurant
@@ -95,7 +95,7 @@ def make_tierlist():
         (sum_of_num_rows - 7) * GAPS_BETWEEN_RESTAURANTS
     tierlist = Image.new('RGB', (image_width, image_height), (0, 0, 0))
     y_offset = DEFAULT_GAP
-    for tier in tier_dict:
+    for tier in TIER_DICT:
         tier_img = make_one_complete_tier(tier)
         tierlist.paste(tier_img, (DEFAULT_GAP, y_offset))
         y_offset += tier_img.size[1] + DEFAULT_GAP
@@ -103,4 +103,4 @@ def make_tierlist():
 
 if __name__ == "__main__":
     tierlist = make_tierlist()
-    tierlist.save(TIERLIST_IMAGE)
+    tierlist.save(TIERLIST_IMAGE_NAME)

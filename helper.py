@@ -29,20 +29,20 @@ client = pymongo.MongoClient(connection_string, tlsCAFile=certifi.where())
 db = client["fried-chicken-sandwich-bot"]
 collection = db["gmaps_infos"]
 
-tier_dict = json.load(open('tier_dict.json'))
+TIER_DICT = json.load(open('tier_dict.json'))
 
 ##############################################
 # Tierlist helper functions
 ##############################################
-def get_restaurants_info() -> list:
+def get_restaurants_info() -> list[tuple]:
     """Get the list of restaurants and their related information.
 
     Returns:
-        list: A list of tuples of the form (link to logo image, price range, address, catchphrase, tier)
+        list[tuple]: A list of tuples of the form (link to logo image, price range, address, catchphrase, tier)
     """
     restaurants_info = []
-    for tier in tier_dict:
-        for restaurant_info in tier_dict[tier]:
+    for tier in TIER_DICT:
+        for restaurant_info in TIER_DICT[tier]:
             assert len(restaurant_info) == 5
             restaurants_info.append(restaurant_info)
     return restaurants_info
@@ -54,24 +54,29 @@ def get_first_tier_indexes() -> dict:
         dict: A dictionary of the form {tier: first index}
     """
     first_tier_indexes = {"S": 0}
-    tiers = list(tier_dict.keys())
-    for tier in tier_dict:
+    tiers = list(TIER_DICT.keys())
+    for tier in TIER_DICT:
         if tier == "S":
             pass
         else:
             first_tier_indexes[tier] = first_tier_indexes[tiers[tiers.index(tier) - 1]] + \
-                                       len(tier_dict[tiers[tiers.index(tier) - 1]])
+                                       len(TIER_DICT[tiers[tiers.index(tier) - 1]])
     return first_tier_indexes
 
 ##############################################
 # Set up constants
 ##############################################
 RESTAURANTS = get_restaurants_info()
+RESTAURANT_NAMES = [restaurant[0][6:-4] for restaurant in RESTAURANTS]
+RESTAURANT_PRICE_RANGES = [restaurant[1] for restaurant in RESTAURANTS]
+RESTAURANT_ADDRESSES = [restaurant[2] for restaurant in RESTAURANTS]
+RESTAURANT_DESCRIPTIONS = [restaurant[3] for restaurant in RESTAURANTS]
+RESTAURANT_TIERS = [restaurant[4] for restaurant in RESTAURANTS]
 MANUAL_EMBED_RESTAURANTS = ["Bubba's Crispy Fried Chicken", "Foodie"]
-TIERLIST_IMAGE = 'tierlist.png'
+TIERLIST_IMAGE_NAME = 'tierlist.png'
 TIMEZONE = pytz.timezone('America/Toronto')
 TIERS = ['S', 'A', 'B', 'C', 'D', 'E', 'F']
-RESTAURANT_NAMES = [restaurant[0][6:-4] for restaurant in RESTAURANTS]
+
 TIER_PREFIX = {
     'S': 'Spectacular',
     'A': 'Acclaimed',
@@ -101,7 +106,8 @@ def setup_db() -> None:
         if restaurant in MANUAL_EMBED_RESTAURANTS:
             collection.update_one({"index": i}, {"$set": {"json": None}}, upsert=True)
         else:
-            restaurant_name, restaurant_address = RESTAURANTS[i][0][6:-4], RESTAURANTS[i][2]
+            # restaurant_name, restaurant_address = RESTAURANTS[i][0][6:-4], RESTAURANTS[i][2]
+            restaurant_name, restaurant_address = RESTAURANT_NAMES[i], RESTAURANT_ADDRESSES[i]
             place_id = \
             places.find_place(gmaps, restaurant_name + ' ' + restaurant_address, 'textquery')['candidates'][0][
                 'place_id']
@@ -128,11 +134,13 @@ def create_list_embed(current_page) -> tuple:
     restaurants_formatted = []
     if current_page != (len(RESTAURANTS) - 1) // 10 or len(RESTAURANTS) % 10 == 0:
         for i in range(10):
-            restaurant_name = RESTAURANTS[current_page * 10 + i][0][6:-4]
+            # restaurant_name = RESTAURANTS[current_page * 10 + i][0][6:-4]
+            restaurant_name = RESTAURANT_NAMES[current_page * 10 + i]
             restaurants_formatted.append("**{}.** {}".format(current_page * 10 + i + 1, restaurant_name))
     else:
         for i in range(len(RESTAURANTS) % 10):
-            restaurant_name = RESTAURANTS[current_page * 10 + i][0][6:-4]
+            # restaurant_name = RESTAURANTS[current_page * 10 + i][0][6:-4]
+            restaurant_name = RESTAURANT_NAMES[current_page * 10 + i]
             restaurants_formatted.append("**{}.** {}".format(current_page * 10 + i + 1, restaurant_name))
     description = "\n".join(restaurants_formatted)
     embed = discord.Embed(title=title, description=description, color=0xd4af37)
@@ -158,15 +166,13 @@ def create_restaurants_embed(current_page) -> tuple:
     Returns:
         (discord.File, discord.Embed): A tuple of the thumbnail file and the embed for the restaurant.
     """
-    # RESTAURANTS has the format:
-    # [link to logo image, price range, address, description (catchphrase), tier]
-    title = RESTAURANTS[current_page][0][6:-4]
+    title = RESTAURANT_NAMES[current_page]
     if title in MANUAL_EMBED_RESTAURANTS:
         return create_manual_embed(current_page)
-    description = RESTAURANTS[current_page][3]
-    address = RESTAURANTS[current_page][2]
-    price_range = RESTAURANTS[current_page][1]
-    tier = RESTAURANTS[current_page][4]
+    description = RESTAURANT_DESCRIPTIONS[current_page]
+    address = RESTAURANT_ADDRESSES[current_page]
+    price_range = RESTAURANT_PRICE_RANGES[current_page]
+    tier = RESTAURANT_TIERS[current_page]
 
     gmaps_info = get_gmaps_info(current_page)
 
@@ -201,7 +207,6 @@ def create_restaurants_embed(current_page) -> tuple:
     embed.add_field(name='Tier', value="**" + tier + "**", inline=True)
     return (thumbnail_file, embed)
 
-
 def get_thumbnail_file(current_page) -> discord.File:
     """Gets the thumbnail file (logo image) for the current restaurant.
 
@@ -214,7 +219,6 @@ def get_thumbnail_file(current_page) -> discord.File:
     thumbnail_path = Path(__file__).parent / RESTAURANTS[current_page][0]
     thumbnail_file = discord.File(thumbnail_path, 'image.jpg')
     return thumbnail_file
-
 
 def create_manual_embed(current_page) -> tuple:
     """Creates manual embeds for restaurants that require special formatting.
@@ -233,7 +237,6 @@ def create_manual_embed(current_page) -> tuple:
     elif restaurant_name == "Foodie":
         return _foodie_embed(current_page)
 
-
 def _bubbas_embed(current_page) -> tuple:
     """Creates a manual embed for Bubba's Crispy Fried Chicken.
 
@@ -251,7 +254,6 @@ def _bubbas_embed(current_page) -> tuple:
     embed.add_field(name='Website', value='https://www.bubbascrispyfriedchicken.com/', inline=False)
     embed.add_field(name='Tier', value='**S**', inline=True)
     return (thumbnail_file, embed)
-
 
 def _foodie_embed(current_page) -> tuple:
     """Creates a manual embed for Foodie.
