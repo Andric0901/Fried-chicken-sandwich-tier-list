@@ -210,6 +210,28 @@ class RestaurantsPagesView(PaginationView):
         await view.update_interaction(interaction)
         await interaction.message.edit(view=view, embed=view.embed, attachments=[])
 
+class FeedbackModal(discord.ui.Modal):
+    """A modal for feedback forms.
+
+    Allows user to write a feedback and submit it, which will be sent to the bot owner.
+    """
+    def __init__(self):
+        super().__init__(title='Feedback Forms')
+
+    name = discord.ui.TextInput(label='Name (Optional)', style=discord.TextStyle.short, required=False)
+    answer = discord.ui.TextInput(label='Answer', style=discord.TextStyle.paragraph)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        dm_title = "Anonymous" if self.name.value == "" else self.name.value
+        dm_embed = discord.Embed(title=f'Feedback from {dm_title}',
+                                 description=self.answer.value)
+        author = await client.fetch_user(author_id)
+        await author.send(embed=dm_embed)
+        response_embed = discord.Embed(title='Thank you!',
+                                       description='Your feedback has been submitted. '
+                                                   'We really appreciate it!')
+        await interaction.response.send_message(embed=response_embed, ephemeral=True)
+
 ##############################################
 # Bot commands / events
 ##############################################
@@ -273,6 +295,16 @@ async def list_command(interaction: discord.Interaction) -> None:
     view = CompendiumPagesView()
     _, embed = create_list_embed(view.page)
     await interaction.response.send_message(embed=embed, view=view)
+
+@tree.command(name='feedback', description='Fill out a feedback form')
+async def feedback_command(interaction: discord.Interaction) -> None:
+    """Shows a feedback form for users to fill out.
+
+    Args:
+        interaction (discord.Interaction): The interaction that triggered this command.
+    """
+    modal = FeedbackModal()
+    await interaction.response.send_modal(modal)
 
 if __name__ == '__main__':
     print(collection.count_documents({}))

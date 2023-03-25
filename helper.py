@@ -20,6 +20,7 @@ load_dotenv()
 connection_string = os.getenv("connection")
 token = os.getenv("token")
 key = os.getenv("key")
+author_id = os.getenv("author_id")
 try:
     gmaps = googlemaps.Client(key=key)
 except ValueError:
