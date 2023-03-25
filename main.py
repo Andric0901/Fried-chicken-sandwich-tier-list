@@ -210,6 +210,9 @@ class RestaurantsPagesView(PaginationView):
         await view.update_interaction(interaction)
         await interaction.message.edit(view=view, embed=view.embed, attachments=[])
 
+##############################################
+# Class for feedback forms
+##############################################
 class FeedbackModal(discord.ui.Modal):
     """A modal for feedback forms.
 
