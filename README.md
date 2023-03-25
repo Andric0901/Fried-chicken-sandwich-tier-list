@@ -1,5 +1,5 @@
 # Greater Toronto Area Fried Chicken Sandwich Tierlist + Discord Bot
-*Last Updated: March 19th, 2023*
+*Last Updated: March 25th, 2023*
 
 *This project is still under development!*
 
@@ -20,4 +20,5 @@ Main commands:
 * `/help`: Coming soon!
 * `/tierlist`: Shows the tierlist image
 * `/list`: Shows all the restaurants in a list with details
+* `/feedback`: Shows a feedback form to be filled out (about bugs, command suggestions, restaurants suggestions, anything!)
 * More to come!
