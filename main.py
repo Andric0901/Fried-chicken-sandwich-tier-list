@@ -251,34 +251,6 @@ async def on_ready() -> None:
     await client.change_presence(status=Status.online, activity=activity)
     await tree.sync()
 
-@tree.command(name='hello', description='Says hello!')
-async def hello_command(interaction: discord.Interaction) -> None:
-    """Says hello!
-
-    Args:
-        interaction (discord.Interaction): The interaction that triggered this command.
-    """
-    await interaction.response.send_message('Hello!')
-
-@tree.command(name='goodbye', description='Says goodbye!')
-async def goodbye_command(interaction: discord.Interaction) -> None:
-    """Says goodbye!
-
-    Args:
-        interaction (discord.Interaction): The interaction that triggered this command.
-    """
-    await interaction.response.send_message('Goodbye!')
-
-@tree.command(name='ping', description='Pings the bot')
-async def ping_command(interaction: discord.Interaction) -> None:
-    """Says pong!
-
-    Args:
-        interaction (discord.Interaction): The interaction that triggered this command.
-    """
-    await interaction.response.send_message('Pong!')
-
-
 @tree.command(name='tierlist', description='Shows the tierlist in an embed')
 async def tierlist_command(interaction: discord.Interaction) -> None:
     """Shows the tierlist image in an embed.
