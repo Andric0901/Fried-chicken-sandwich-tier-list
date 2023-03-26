@@ -225,6 +225,11 @@ class FeedbackModal(discord.ui.Modal):
     answer = discord.ui.TextInput(label='Answer', style=discord.TextStyle.paragraph)
 
     async def on_submit(self, interaction: discord.Interaction):
+        """Send the feedback to the bot owner and send a confirmation message to the user.
+
+        Args:
+            interaction (discord.Interaction): The interaction that triggered this button.
+        """
         dm_title = "Anonymous" if self.name.value == "" else self.name.value
         dm_embed = discord.Embed(title=f'Feedback from {dm_title}',
                                  description=self.answer.value)
