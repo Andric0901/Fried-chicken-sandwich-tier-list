@@ -49,31 +49,30 @@ def make_tier_restaurants(tier):
     """Make a tier image"""
     tier_img = make_tier_background(tier)
     restaurants = []
-    for restaurant_info in TIER_DICT[tier]:
-        assert len(restaurant_info) == 5
-        restaurant, price_range = restaurant_info[0], restaurant_info[1]
+    for restaurant_name in TIER_DICT[tier]:
+        restaurant_info = TIER_DICT[tier][restaurant_name]
+        restaurant_logo, price = restaurant_info["path_to_logo_image"], restaurant_info["price"]
         # get the image of the restaurant
-        img, price_img = Image.open(restaurant), Image.open("assets/{}.png".format(price_range))
+        logo_img, price_img = Image.open(restaurant_logo), Image.open("assets/{}.png".format(price))
         # get the width and height of the restaurant's logo
-        width, height = img.size
+        width, height = logo_img.size
         price_width, price_height = price_img.size
         # resize the logo, preserving the aspect ratio, so that the height is 100 pixels
-        img = img.resize((int(width * DEFAULT_WIDTH / height), DEFAULT_WIDTH))
+        logo_img = logo_img.resize((int(width * DEFAULT_WIDTH / height), DEFAULT_WIDTH))
         price_img = price_img.resize((int(price_width * DEFAULT_WIDTH / (price_height * 5)),
                                       int(DEFAULT_WIDTH / 5)))
-        img.paste(price_img,
-                         (img.size[0] - price_img.size[0], 0), price_img)
+        logo_img.paste(price_img, (logo_img.size[0] - price_img.size[0], 0), price_img)
         # append the logo to the list of restaurants
-        restaurants.append(img)
+        restaurants.append(logo_img)
     # paste the restaurants into the tier image, with a gap between each
     x_offset, y_offset = 0, 0
-    for restaurant in restaurants:
-        restaurant_width, restaurant_height = restaurant.size
+    for restaurant_logo in restaurants:
+        restaurant_width, restaurant_height = restaurant_logo.size
         if x_offset + restaurant_width > BACKGROUND_WIDTH:
             x_offset = 0
             y_offset += restaurant_height + GAPS_BETWEEN_RESTAURANTS
-        tier_img.paste(restaurant, (x_offset, y_offset))
-        x_offset += restaurant.size[0] + GAPS_BETWEEN_RESTAURANTS
+        tier_img.paste(restaurant_logo, (x_offset, y_offset))
+        x_offset += restaurant_logo.size[0] + GAPS_BETWEEN_RESTAURANTS
     return tier_img
 
 def make_one_complete_tier(tier):

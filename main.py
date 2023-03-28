@@ -33,7 +33,7 @@ class PaginationView(discord.ui.View, metaclass=abc.ABCMeta):
         super().__init__(timeout=timeout)
         self.page = current_page
         self.min_page = 0
-        self.max_page = len(RESTAURANTS) - 1
+        self.max_page = len(RESTAURANT_NAMES) - 1
         self.thumbnail_file, self.embed = None, None
         self.update_buttons()
         self.interaction = interaction
@@ -115,7 +115,7 @@ class CompendiumPagesView(PaginationView):
     def __init__(self, current_page: int = 0, interaction: Optional[discord.Interaction] = None) -> None:
         super().__init__(current_page=current_page)
         self.restaurants_list, self.embed = create_list_embed(self.page)
-        self.max_page = (len(RESTAURANTS) - 1) // 10
+        self.max_page = (len(RESTAURANT_NAMES) - 1) // 10
         self.interaction = interaction
 
     async def update_interaction(self, interaction: discord.Interaction):
@@ -288,9 +288,9 @@ async def feedback_command(interaction: discord.Interaction) -> None:
 
 if __name__ == '__main__':
     print(collection.count_documents({}))
-    print(len(get_restaurants_info()))
-    if collection.count_documents({}) != len(get_restaurants_info()):
+    print(len(RESTAURANT_NAMES))
+    if collection.count_documents({}) != len(RESTAURANT_NAMES):
         setup_db()
     count = sum([len(files) for _, _, files in os.walk('logos')])
-    assert count == sum([len(TIER_DICT[tier]) for tier in TIER_DICT])
+    assert count == len(RESTAURANT_NAMES)
     client.run(token)

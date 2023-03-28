@@ -35,19 +35,6 @@ TIER_DICT = json.load(open('tier_dict.json'))
 ##############################################
 # Tierlist helper functions
 ##############################################
-def get_restaurants_info() -> list[tuple]:
-    """Get the list of restaurants and their related information.
-
-    Returns:
-        list[tuple]: A list of tuples of the form (link to logo image, price range, address, catchphrase, tier)
-    """
-    restaurants_info = []
-    for tier in TIER_DICT:
-        for restaurant_info in TIER_DICT[tier]:
-            assert len(restaurant_info) == 5
-            restaurants_info.append(restaurant_info)
-    return restaurants_info
-
 def get_first_tier_indexes() -> dict:
     """Get the first index of each tier.
 
@@ -56,23 +43,27 @@ def get_first_tier_indexes() -> dict:
     """
     first_tier_indexes = {"S": 0}
     tiers = list(TIER_DICT.keys())
+    lengths = [len(TIER_DICT[tier]) for tier in tiers]
     for tier in TIER_DICT:
         if tier == "S":
             pass
         else:
-            first_tier_indexes[tier] = first_tier_indexes[tiers[tiers.index(tier) - 1]] + \
-                                       len(TIER_DICT[tiers[tiers.index(tier) - 1]])
+            first_tier_indexes[tier] = sum(lengths[:tiers.index(tier)])
     return first_tier_indexes
 
 ##############################################
 # Set up constants
 ##############################################
-RESTAURANTS = get_restaurants_info()
-RESTAURANT_NAMES = [restaurant[0][6:-4] for restaurant in RESTAURANTS]
-RESTAURANT_PRICE_RANGES = [restaurant[1] for restaurant in RESTAURANTS]
-RESTAURANT_ADDRESSES = [restaurant[2] for restaurant in RESTAURANTS]
-RESTAURANT_DESCRIPTIONS = [restaurant[3] for restaurant in RESTAURANTS]
-RESTAURANT_TIERS = [restaurant[4] for restaurant in RESTAURANTS]
+RESTAURANT_NAMES = [restaurant_name for tier in TIER_DICT for restaurant_name in TIER_DICT[tier]]
+RESTAURANT_PATH_TO_LOGO_IMAGES = [TIER_DICT[tier][restaurant_name]["path_to_logo_image"]
+                                  for tier in TIER_DICT for restaurant_name in TIER_DICT[tier]]
+RESTAURANT_PRICE_RANGES = [TIER_DICT[tier][restaurant_name]["price"]
+                           for tier in TIER_DICT for restaurant_name in TIER_DICT[tier]]
+RESTAURANT_ADDRESSES = [TIER_DICT[tier][restaurant_name]["address"]
+                        for tier in TIER_DICT for restaurant_name in TIER_DICT[tier]]
+RESTAURANT_DESCRIPTIONS = [TIER_DICT[tier][restaurant_name]["description"]
+                           for tier in TIER_DICT for restaurant_name in TIER_DICT[tier]]
+RESTAURANT_TIERS = [tier for tier in TIER_DICT for _ in TIER_DICT[tier]]
 MANUAL_EMBED_RESTAURANTS = ["Bubba's Crispy Fried Chicken", "Foodie"]
 TIERLIST_IMAGE_NAME = 'tierlist.png'
 TIMEZONE = pytz.timezone('America/Toronto')
@@ -133,13 +124,13 @@ def create_list_embed(current_page) -> tuple:
     """
     title = "Fried chicken sandwich compendium"
     restaurants_formatted = []
-    if current_page != (len(RESTAURANTS) - 1) // 10 or len(RESTAURANTS) % 10 == 0:
+    if current_page != (len(RESTAURANT_NAMES) - 1) // 10 or len(RESTAURANT_NAMES) % 10 == 0:
         for i in range(10):
             # restaurant_name = RESTAURANTS[current_page * 10 + i][0][6:-4]
             restaurant_name = RESTAURANT_NAMES[current_page * 10 + i]
             restaurants_formatted.append("**{}.** {}".format(current_page * 10 + i + 1, restaurant_name))
     else:
-        for i in range(len(RESTAURANTS) % 10):
+        for i in range(len(RESTAURANT_NAMES) % 10):
             # restaurant_name = RESTAURANTS[current_page * 10 + i][0][6:-4]
             restaurant_name = RESTAURANT_NAMES[current_page * 10 + i]
             restaurants_formatted.append("**{}.** {}".format(current_page * 10 + i + 1, restaurant_name))
@@ -217,7 +208,7 @@ def get_thumbnail_file(current_page) -> discord.File:
     Returns:
         discord.File: The thumbnail file.
     """
-    thumbnail_path = Path(__file__).parent / RESTAURANTS[current_page][0]
+    thumbnail_path = Path(__file__).parent / RESTAURANT_PATH_TO_LOGO_IMAGES[current_page]
     thumbnail_file = discord.File(thumbnail_path, 'image.jpg')
     return thumbnail_file
 
@@ -232,7 +223,7 @@ def create_manual_embed(current_page) -> tuple:
     Returns:
         (discord.File, discord.Embed): A tuple of the thumbnail file and the embed for the current restaurant.
     """
-    restaurant_name = RESTAURANTS[current_page][0][6:-4]
+    restaurant_name = RESTAURANT_NAMES[current_page]
     if restaurant_name == "Bubba's Crispy Fried Chicken":
         return _bubbas_embed(current_page)
     elif restaurant_name == "Foodie":

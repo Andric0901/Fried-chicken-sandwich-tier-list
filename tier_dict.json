@@ -1,56 +1,256 @@
 {
-    "S": [
-        ["logos/Sunny Taiwanese Breakfast.jpg", "1", "915 Bay St", "How to travel to Taiwan without going to Taiwan", "S"],
-        ["logos/Bubba's Crispy Fried Chicken.jpg", "2", "521 Bloor St W", "Bubba's (and everyone's) past favorite", "S"],
-        ["logos/Penny's Hot Chicken.jpg", "2", "372 Yonge St", "Hotter than Hooters", "S"],
-        ["logos/Porchetta & Co.jpg", "2", "545 King St W", "Plentiful & Crispy", "S"]
-    ],
-    "A": [
-        ["logos/El Furniture Warehouse Group.jpg", "1", "410 Bloor St W", "The most unique burger I've tried", "A"],
-        ["logos/The Burger's Priest.jpg", "1", "406 Bloor St W", "Even The Pope would love it", "A"],
-        ["logos/Cabano's Comfort Food.jpg", "2", "75 St Nicholas St #104", "Comforting just like home", "A"],
-        ["logos/Tokyo Hot Fried Chicken.jpg", "2", "656 College St", "Try the taste of Tokyo and wasabi mayo", "A"],
-        ["logos/Burgers n' Fries Forever.jpg", "3", "106 John St Unit 2", "Nothing lasts forever other than this burger", "A"]
-    ],
-    "B": [
-        ["logos/Jollibee.jpg", "1", "334 Yonge St", "Philippine fast food classics", "B"],
-        ["logos/Shamrock Burger.jpg", "2", "6109 Kingston Rd", "Brings you much luck", "B"],
-        ["logos/South St. Burger.jpg", "2", "55 Avenue Rd", "Didn't taste much like a Southern burger but more like a Savoury burger", "B"],
-        ["logos/The Heartbreak Chef.jpg", "2", "823 Dundas St W", "Broke up with your GF? Have HBC", "B"],
-        ["logos/Knockout Chicken.jpg", "2", "207 Augusta Ave", "Try not to get knocked out", "B"],
-        ["logos/CampusOne.jpg", "2", "253 College St", "Way better than I expected, not the NumberOne burger though", "B"],
-        ["logos/Happy Burger.jpg", "2", "76 Lippincott St", "Best place to make you happy", "B"],
-        ["logos/Chica's Chicken.jpg", "2", "495 Bloor St W", "Hot nashville taste from Texas", "B"]
-    ],
-    "C": [
-        ["logos/Burger Factory.jpg", "1", "437 Yonge St", "Build your own burger!", "C"],
-        ["logos/Burger King.jpg", "1", "267 College St", "Not the best King of burgers I have tried", "C"],
-        ["logos/A&W.jpg", "1", "500 Bloor St W", "A 24-hr generic burger chain", "C"],
-        ["logos/Mary Brown's.jpg", "1", "636 Bloor St W", "Mary Brown's? More like Dry and Frowned", "C"],
-        ["logos/Chick-Fil-A.jpg", "1", "709 Yonge St", "More like Chicks-Fill-C", "C"],
-        ["logos/Foodie.jpg", "1", "255 Huron St", "UofT's only pink truck", "C"],
-        ["logos/The Burgernator.jpg", "1", "269 Augusta Ave", "We're doomed! He's gonna get us!", "C"],
-        ["logos/The Dirtybird Chicken & Waffles.jpg", "2", "79 Kensington Ave", "No birds were harmed in naming this restaurant", "C"],
-        ["logos/Hero Certified Burgers.jpg", "2", "100 Queen St W", "A self-proclaimed Hero", "C"],
-        ["logos/Monga Fried Chicken.jpg", "2", "692 Yonge St", "Monga would not be so proud", "C"],
-        ["logos/Light Cafe.jpg", "2", "23 Baldwin Street", "They could not enlighten me with their sandwich", "C"],
-        ["logos/Hooters.jpg", "3", "280 Adelaide St W", "Why is there an owl in the logo?", "C"]
-    ],
-    "D": [
-        ["logos/Tim Hortons.jpg", "1", "334 Bloor St W", "Maybe focus on making better coffee instead...", "D"],
-        ["logos/Top Gun Burgers.jpg", "1", "490 Bloor St W", "The chickens were threatened with a gun", "D"],
-        ["logos/Popeyes.jpg", "1", "553 Bloor St W", "Makes your eyes pop? idk", "D"],
-        ["logos/PG Clucks.jpg", "2", "610 College St", "Not a PG-13 taste", "D"],
-        ["logos/Simple Burger.jpg", "2", "735 Bloor St W", "Too simple that it lost its originality", "D"],
-        ["logos/W Burger Bar.jpg", "2", "10 College St", "More like L burger bar", "D"]
-    ],
-    "E": [
-        ["logos/McDonald's.jpg", "1", "196 Bloor St W", "Ew", "E"],
-        ["logos/Union Chicken.jpg", "4", "65 Front St W", "It tastes like throwing your money on the street", "E"]
-    ],
-    "F": [
-        ["logos/Subway.jpg", "1", "1102 Bay St", "It's soggy, maybe they didn't squeeze it after the underwater subway trip", "F"],
-        ["logos/7-Eleven.jpg", "1", "260 College St", "It'll kill you on the way to Heaven Eleven", "F"],
-        ["logos/Church's Texas Chicken.jpg", "2", "531 Yonge St", "It's not a church, it's a chicken sandwich.", "F"]
-    ]
+    "S": {
+        "Sunny Taiwanese Breakfast": {
+            "path_to_logo_image": "logos/Sunny Taiwanese Breakfast.jpg",
+            "price": "1",
+            "address": "915 Bay St",
+            "description": "How to travel to Taiwan without going to Taiwan"
+        },
+        "Bubba's Crispy Fried Chicken": {
+            "path_to_logo_image": "logos/Bubba's Crispy Fried Chicken.jpg",
+            "price": "2",
+            "address": "521 Bloor St W",
+            "description": "Bubba's (and everyone's) past favorite"
+        },
+        "Penny's Hot Chicken": {
+            "path_to_logo_image": "logos/Penny's Hot Chicken.jpg",
+            "price": "2",
+            "address": "372 Yonge St",
+            "description": "Hotter than Hooters"
+        },
+        "Porchetta & Co": {
+            "path_to_logo_image": "logos/Porchetta & Co.jpg",
+            "price": "2",
+            "address": "545 King St W",
+            "description": "Plentiful & Crispy"
+        }
+    },
+    "A": {
+        "El Furniture Warehouse Group": {
+            "path_to_logo_image": "logos/El Furniture Warehouse Group.jpg",
+            "price": "1",
+            "address": "410 Bloor St W",
+            "description": "The most unique burger I've tried"
+        },
+        "The Burger's Priest": {
+            "path_to_logo_image": "logos/The Burger's Priest.jpg",
+            "price": "1",
+            "address": "406 Bloor St W",
+            "description": "Even The Pope would love it"
+        },
+        "Cabano's Comfort Food": {
+            "path_to_logo_image": "logos/Cabano's Comfort Food.jpg",
+            "price": "2",
+            "address": "75 St Nicholas St #104",
+            "description": "Comforting just like home"
+        },
+        "Tokyo Hot Fried Chicken": {
+            "path_to_logo_image": "logos/Tokyo Hot Fried Chicken.jpg",
+            "price": "2",
+            "address": "656 College St",
+            "description": "Try the taste of Tokyo and wasabi mayo"
+        },
+        "Burgers n' Fries Forever": {
+            "path_to_logo_image": "logos/Burgers n' Fries Forever.jpg",
+            "price": "3",
+            "address": "106 John St Unit 2",
+            "description": "Nothing lasts forever other than this burger"
+        }
+    },
+    "B": {
+        "Jollibee": {
+            "path_to_logo_image": "logos/Jollibee.jpg",
+            "price": "1",
+            "address": "334 Yonge St",
+            "description": "Philippine fast food classics"
+        },
+        "Shamrock Burger": {
+            "path_to_logo_image": "logos/Shamrock Burger.jpg",
+            "price": "2",
+            "address": "6109 Kingston Rd",
+            "description": "Brings you much luck"
+        },
+        "South St. Burger": {
+            "path_to_logo_image": "logos/South St. Burger.jpg",
+            "price": "2",
+            "address": "55 Avenue Rd",
+            "description": "Didn't taste much like a Southern burger but more like a Savoury burger"
+        },
+        "The Heartbreak Chef": {
+            "path_to_logo_image": "logos/The Heartbreak Chef.jpg",
+            "price": "2",
+            "address": "823 Dundas St W",
+            "description": "Broke up with your GF? Have HBC"
+        },
+        "Knockout Chicken": {
+            "path_to_logo_image": "logos/Knockout Chicken.jpg",
+            "price": "2",
+            "address": "207 Augusta Ave",
+            "description": "Try not to get knocked out"
+        },
+        "CampusOne": {
+            "path_to_logo_image": "logos/CampusOne.jpg",
+            "price": "2",
+            "address": "253 College St",
+            "description": "Way better than I expected, not the NumberOne burger though"
+        },
+        "Happy Burger": {
+            "path_to_logo_image": "logos/Happy Burger.jpg",
+            "price": "2",
+            "address": "76 Lippincott St",
+            "description": "Best place to make you happy"
+        },
+        "Chica's Chicken": {
+            "path_to_logo_image": "logos/Chica's Chicken.jpg",
+            "price": "2",
+            "address": "495 Bloor St W",
+            "description": "Hot nashville taste from Texas"
+        }
+    },
+    "C": {
+        "Burger Factory": {
+            "path_to_logo_image": "logos/Burger Factory.jpg",
+            "price": "1",
+            "address": "437 Yonge St",
+            "description": "Build your own burger!"
+        },
+        "Burger King": {
+            "path_to_logo_image": "logos/Burger King.jpg",
+            "price": "1",
+            "address": "267 College St",
+            "description": "Not the best King of burgers I have tried"
+        },
+        "A&W": {
+            "path_to_logo_image": "logos/A&W.jpg",
+            "price": "1",
+            "address": "500 Bloor St W",
+            "description": "A 24-hr generic burger chain"
+        },
+        "Mary Brown's": {
+            "path_to_logo_image": "logos/Mary Brown's.jpg",
+            "price": "1",
+            "address": "636 Bloor St W",
+            "description": "Mary Brown's? More like Dry and Frowned"
+        },
+        "Chick-Fil-A": {
+            "path_to_logo_image": "logos/Chick-Fil-A.jpg",
+            "price": "1",
+            "address": "709 Yonge St",
+            "description": "More like Chicks-Fill-C"
+        },
+        "Foodie": {
+            "path_to_logo_image": "logos/Foodie.jpg",
+            "price": "1",
+            "address": "255 Huron St",
+            "description": "UofT's only pink truck"
+        },
+        "The Burgernator": {
+            "path_to_logo_image": "logos/The Burgernator.jpg",
+            "price": "1",
+            "address": "269 Augusta Ave",
+            "description": "We're doomed! He's gonna get us!"
+        },
+        "The Dirtybird Chicken & Waffles": {
+            "path_to_logo_image": "logos/The Dirtybird Chicken & Waffles.jpg",
+            "price": "2",
+            "address": "79 Kensington Ave",
+            "description": "No birds were harmed in naming this restaurant"
+        },
+        "Hero Certified Burgers": {
+            "path_to_logo_image": "logos/Hero Certified Burgers.jpg",
+            "price": "2",
+            "address": "100 Queen St W",
+            "description": "A self-proclaimed Hero"
+        },
+        "Monga Fried Chicken": {
+            "path_to_logo_image": "logos/Monga Fried Chicken.jpg",
+            "price": "2",
+            "address": "692 Yonge St",
+            "description": "Monga would not be so proud"
+        },
+        "Light Cafe": {
+            "path_to_logo_image": "logos/Light Cafe.jpg",
+            "price": "2",
+            "address": "23 Baldwin Street",
+            "description": "They could not enlighten me with their sandwich"
+        },
+        "Hooters": {
+            "path_to_logo_image": "logos/Hooters.jpg",
+            "price": "3",
+            "address": "280 Adelaide St W",
+            "description": "Why is there an owl in the logo?"
+        }
+    },
+    "D": {
+        "Tim Hortons": {
+            "path_to_logo_image": "logos/Tim Hortons.jpg",
+            "price": "1",
+            "address": "334 Bloor St W",
+            "description": "Maybe focus on making better coffee instead..."
+        },
+        "Top Gun Burgers": {
+            "path_to_logo_image": "logos/Top Gun Burgers.jpg",
+            "price": "1",
+            "address": "490 Bloor St W",
+            "description": "The chickens were threatened with a gun"
+        },
+        "Popeyes": {
+            "path_to_logo_image": "logos/Popeyes.jpg",
+            "price": "1",
+            "address": "553 Bloor St W",
+            "description": "Makes your eyes pop? idk"
+        },
+        "PG Clucks": {
+            "path_to_logo_image": "logos/PG Clucks.jpg",
+            "price": "2",
+            "address": "610 College St",
+            "description": "Not a PG-13 taste"
+        },
+        "Simple Burger": {
+            "path_to_logo_image": "logos/Simple Burger.jpg",
+            "price": "2",
+            "address": "735 Bloor St W",
+            "description": "Too simple that it lost its originality"
+        },
+        "W Burger Bar": {
+            "path_to_logo_image": "logos/W Burger Bar.jpg",
+            "price": "2",
+            "address": "10 College St",
+            "description": "More like L burger bar"
+        }
+    },
+    "E": {
+        "McDonald's": {
+            "path_to_logo_image": "logos/McDonald's.jpg",
+            "price": "1",
+            "address": "196 Bloor St W",
+            "description": "Ew"
+        },
+        "Union Chicken": {
+            "path_to_logo_image": "logos/Union Chicken.jpg",
+            "price": "4",
+            "address": "65 Front St W",
+            "description": "It tastes like throwing your money on the street"
+        }
+    },
+    "F": {
+        "Subway": {
+            "path_to_logo_image": "logos/Subway.jpg",
+            "price": "1",
+            "address": "1102 Bay St",
+            "description": "It's soggy, maybe they didn't squeeze it after the underwater subway trip"
+        },
+        "7-Eleven": {
+            "path_to_logo_image": "logos/7-Eleven.jpg",
+            "price": "1",
+            "address": "260 College St",
+            "description": "It'll kill you on the way to Heaven Eleven"
+        },
+        "Church's Texas Chicken": {
+            "path_to_logo_image": "logos/Church's Texas Chicken.jpg",
+            "price": "2",
+            "address": "531 Yonge St",
+            "description": "It's not a church, it's a chicken sandwich."
+        }
+    }
 }
