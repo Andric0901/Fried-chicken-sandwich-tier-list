@@ -55,6 +55,12 @@
             "price": "3",
             "address": "106 John St Unit 2",
             "description": "Nothing lasts forever other than this burger"
+        },
+        "Duke of York": {
+            "path_to_logo_image": "logos/Duke of York.jpg",
+            "price": "4",
+            "address": "39 Prince Arthur Ave",
+            "description": "Tastes like British (not derogatory, rather celebratory)"
         }
     },
     "B": {
