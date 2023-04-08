@@ -206,6 +206,12 @@
             "address": "553 Bloor St W",
             "description": "Makes your eyes pop? idk"
         },
+        "Slab Burgers": {
+            "path_to_logo_image": "logos/Slab Burgers.jpg",
+            "price": "1",
+            "address": "47 Charles St W",
+            "description": "They should be slapped instead"
+        },
         "PG Clucks": {
             "path_to_logo_image": "logos/PG Clucks.jpg",
             "price": "2",
