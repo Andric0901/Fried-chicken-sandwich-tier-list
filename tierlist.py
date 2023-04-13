@@ -15,7 +15,7 @@ BACKGROUND_COLOUR = (26, 26, 26)
 tier_num_rows = {
     'S': 1,
     'A': 1,
-    'B': 1,
+    'B': 2,
     'C': 2,
     'D': 1,
     'E': 1,

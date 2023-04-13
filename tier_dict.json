@@ -64,6 +64,12 @@
         }
     },
     "B": {
+        "Fried Chicken Master": {
+            "path_to_logo_image": "logos/Fried Chicken Master.jpg",
+            "price": "1",
+            "address": "628 Yonge St",
+            "description": "Chinese fusion burger with gloves"
+        },
         "Jollibee": {
             "path_to_logo_image": "logos/Jollibee.jpg",
             "price": "1",
