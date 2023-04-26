@@ -50,6 +50,12 @@
             "address": "656 College St",
             "description": "Try the taste of Tokyo and wasabi mayo"
         },
+        "Flock Rotisserie + Greens": {
+            "path_to_logo_image": "logos/Flock Rotisserie + Greens.jpg",
+            "price": "2",
+            "address": "379 Harbord St",
+            "description": "A way to not flock your health"
+        },
         "Burgers n' Fries Forever": {
             "path_to_logo_image": "logos/Burgers n' Fries Forever.jpg",
             "price": "3",
