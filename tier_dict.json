@@ -88,6 +88,12 @@
             "address": "6109 Kingston Rd",
             "description": "Brings you much luck"
         },
+        "Matt's Burger Lab": {
+            "path_to_logo_image": "logos/Matt's Burger Lab.jpg",
+            "price": "2",
+            "address": "1205 Queen St W",
+            "description": "A revolutionary burger experiments"
+        },
         "South St. Burger": {
             "path_to_logo_image": "logos/South St. Burger.jpg",
             "price": "2",
