@@ -1,3 +1,5 @@
 .idea
 .env
 fried-chicken-sandwich-bot.rdp
+venv
+__pycache__

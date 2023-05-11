@@ -1,11 +1,5 @@
 {
     "S": {
-        "Sunny Taiwanese Breakfast": {
-            "path_to_logo_image": "logos/Sunny Taiwanese Breakfast.jpg",
-            "price": "1",
-            "address": "915 Bay St",
-            "description": "How to travel to Taiwan without going to Taiwan"
-        },
         "Bubba's Crispy Fried Chicken": {
             "path_to_logo_image": "logos/Bubba's Crispy Fried Chicken.jpg",
             "price": "2",
@@ -31,6 +25,12 @@
             "price": "1",
             "address": "410 Bloor St W",
             "description": "The most unique burger I've tried"
+        },
+        "Sunny Taiwanese Breakfast": {
+            "path_to_logo_image": "logos/Sunny Taiwanese Breakfast.jpg",
+            "price": "1",
+            "address": "915 Bay St",
+            "description": "How to travel to Taiwan without going to Taiwan"
         },
         "The Burger's Priest": {
             "path_to_logo_image": "logos/The Burger's Priest.jpg",
