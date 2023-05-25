@@ -14,7 +14,7 @@ BACKGROUND_COLOUR = (26, 26, 26)
 # TODO: Change tier_num_rows to be variable, not hard-coded
 tier_num_rows = {
     'S': 1,
-    'A': 1,
+    'A': 2,
     'B': 2,
     'C': 2,
     'D': 1,

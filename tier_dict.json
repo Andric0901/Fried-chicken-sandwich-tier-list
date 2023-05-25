@@ -56,6 +56,12 @@
             "address": "379 Harbord St",
             "description": "A way to not flock your health"
         },
+        "PG Clucks": {
+            "path_to_logo_image": "logos/PG Clucks.jpg",
+            "price": "2",
+            "address": "610 College St",
+            "description": "Not a PG-13 taste"
+        },
         "Burgers n' Fries Forever": {
             "path_to_logo_image": "logos/Burgers n' Fries Forever.jpg",
             "price": "3",
@@ -123,6 +129,12 @@
             "price": "2",
             "address": "495 Bloor St W",
             "description": "Hot nashville taste from Texas"
+        },
+        "T.O.'s Kathi Roll Eatery": {
+            "path_to_logo_image": "logos/T.O.'s Kathi Roll Eatery.jpg",
+            "price": "3",
+            "address": "465 Queen St W",
+            "description": "A dangerously spicy indian and mexican fusion"
         }
     },
     "C": {
@@ -229,12 +241,6 @@
             "price": "1",
             "address": "47 Charles St W",
             "description": "They should be slapped instead"
-        },
-        "PG Clucks": {
-            "path_to_logo_image": "logos/PG Clucks.jpg",
-            "price": "2",
-            "address": "610 College St",
-            "description": "Not a PG-13 taste"
         },
         "Simple Burger": {
             "path_to_logo_image": "logos/Simple Burger.jpg",
