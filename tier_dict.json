@@ -262,6 +262,12 @@
             "address": "196 Bloor St W",
             "description": "Ew"
         },
+        "Fran's": {
+            "path_to_logo_image": "logos/Fran's.jpg",
+            "price": "3",
+            "address": "20 College St",
+            "description": "A miserable fried chicken legacy for Fran"
+        },
         "Union Chicken": {
             "path_to_logo_image": "logos/Union Chicken.jpg",
             "price": "4",
