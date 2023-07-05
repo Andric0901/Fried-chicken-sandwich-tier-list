@@ -6,6 +6,12 @@
             "address": "521 Bloor St W",
             "description": "Bubba's (and everyone's) past favorite"
         },
+        "The Burger Bros": {
+            "path_to_logo_image": "logos/The Burger Bros.jpg",
+            "price": "2",
+            "address": "1316 Bloor St W",
+            "description": "The kind of burgers Mario Bros would love"
+        },
         "Penny's Hot Chicken": {
             "path_to_logo_image": "logos/Penny's Hot Chicken.jpg",
             "price": "2",
