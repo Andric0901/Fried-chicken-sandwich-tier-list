@@ -12,12 +12,6 @@
             "address": "1316 Bloor St W",
             "description": "The kind of burgers Mario Bros would love"
         },
-        "Penny's Hot Chicken": {
-            "path_to_logo_image": "logos/Penny's Hot Chicken.jpg",
-            "price": "2",
-            "address": "372 Yonge St",
-            "description": "Hotter than Hooters"
-        },
         "Porchetta & Co": {
             "path_to_logo_image": "logos/Porchetta & Co.jpg",
             "price": "2",
@@ -118,6 +112,12 @@
             "address": "207 Augusta Ave",
             "description": "Try not to get knocked out"
         },
+        "Penny's Hot Chicken": {
+            "path_to_logo_image": "logos/Penny's Hot Chicken.jpg",
+            "price": "2",
+            "address": "372 Yonge St",
+            "description": "Hotter than Hooters"
+        },
         "CampusOne": {
             "path_to_logo_image": "logos/CampusOne.jpg",
             "price": "2",
@@ -141,6 +141,12 @@
             "price": "3",
             "address": "465 Queen St W",
             "description": "A dangerously spicy indian and mexican fusion"
+        },
+        "Moxies": {
+            "path_to_logo_image": "logos/Moxies.jpg",
+            "price": "4",
+            "address": "70 University Ave",
+            "description": "As if Nashville was in South Korea"
         }
     },
     "C": {
