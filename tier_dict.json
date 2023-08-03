@@ -88,6 +88,18 @@
             "address": "334 Yonge St",
             "description": "Philippine fast food classics"
         },
+        "Tut's Egyptian Street Food": {
+            "path_to_logo_image": "logos/Tut's Egyptian Street Food.jpg",
+            "price": "1",
+            "address": "567 King St W",
+            "description": "Tutankha-yum"
+        },
+        "Fancy Frank's": {
+            "path_to_logo_image": "logos/Fancy Frank's.jpg",
+            "price": "1",
+            "address": "326 College St",
+            "description": "Here's how you make your Fancy fried chicken sandwich, Frank style"
+        },
         "Shamrock Burger": {
             "path_to_logo_image": "logos/Shamrock Burger.jpg",
             "price": "2",
