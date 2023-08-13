@@ -204,6 +204,12 @@
             "address": "269 Augusta Ave",
             "description": "We're doomed! He's gonna get us!"
         },
+        "Ozzy's Burgers": {
+            "path_to_logo_image": "logos/Ozzy's Burgers.jpg",
+            "price": "2",
+            "address": "66 Nassau St Unit 1/2",
+            "description": "A dizzy Ozzy burgazzy"
+        },
         "The Dirtybird Chicken & Waffles": {
             "path_to_logo_image": "logos/The Dirtybird Chicken & Waffles.jpg",
             "price": "2",
