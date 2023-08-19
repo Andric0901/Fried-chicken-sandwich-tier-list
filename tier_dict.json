@@ -159,6 +159,12 @@
             "price": "4",
             "address": "70 University Ave",
             "description": "As if Nashville was in South Korea"
+        },
+        "Ohiru Cafe": {
+            "path_to_logo_image": "logos/Ohiru Cafe.jpg",
+            "price": "4",
+            "address": "370 College St",
+            "description": "Good for brunch, not for every day"
         }
     },
     "C": {
