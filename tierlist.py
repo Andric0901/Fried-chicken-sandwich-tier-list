@@ -11,16 +11,8 @@ GAPS_BETWEEN_RESTAURANTS = 10
 # TODO: Change the width if needed
 BACKGROUND_WIDTH = 1800
 BACKGROUND_COLOUR = (26, 26, 26)
-# TODO: Change tier_num_rows to be variable, not hard-coded
-tier_num_rows = {
-    'S': 1,
-    'A': 2,
-    'B': 2,
-    'C': 2,
-    'D': 1,
-    'E': 1,
-    'F': 1
-}
+NUM_LOGOS_PER_ROW = BACKGROUND_WIDTH // (DEFAULT_WIDTH + GAPS_BETWEEN_RESTAURANTS)
+tier_num_rows = {key: (len(TIER_DICT[key]) - 1) // NUM_LOGOS_PER_ROW + 1 for key in TIER_DICT}
 
 def total_num_restaurants():
     return sum(tier_num_rows[tier] for tier in tier_num_rows)
