@@ -287,6 +287,9 @@ async def feedback_command(interaction: discord.Interaction) -> None:
     await interaction.response.send_modal(modal)
 
 if __name__ == '__main__':
+    # Check that .env file exists
+    if not os.path.exists('.env'):
+        raise FileNotFoundError('.env file not found')
     print(collection.count_documents({}))
     print(len(RESTAURANT_NAMES))
     if collection.count_documents({}) != len(RESTAURANT_NAMES):

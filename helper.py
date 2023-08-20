@@ -467,4 +467,7 @@ def reformat_opening_hours_text(opening_hours_text, opening_hours) -> str:
     return "\n".join(modified_list)
 
 if __name__ == "__main__":
+    # Check that .env file exists
+    if not os.path.exists('.env'):
+        raise FileNotFoundError('.env file not found')
     setup_db()
