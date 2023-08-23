@@ -222,6 +222,12 @@
             "address": "79 Kensington Ave",
             "description": "No birds were harmed in naming this restaurant"
         },
+        "Chicken n' Dough": {
+            "path_to_logo_image": "logos/Chicken n' Dough.jpg",
+            "price": "2",
+            "address": "410 Bathurst Street",
+            "description": "More like Chicken n' Doughnut but the chicken is silent"
+        },
         "Matt's Burger Lab": {
             "path_to_logo_image": "logos/Matt's Burger Lab.jpg",
             "price": "2",
