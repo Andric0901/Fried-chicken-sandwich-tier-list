@@ -179,11 +179,9 @@ def create_restaurants_embed(current_page) -> tuple:
     embed.add_field(name='Price Range', value="$" * int(price_range), inline=True)
     if gmaps_info[3] is not None:
         embed.add_field(name='Opening hours', value=gmaps_info[3], inline=False)
-    if title == "Cabano's Comfort Food":
-        assert gmaps_info[2] is None
+    if title == "Cabano's Comfort Food" and gmaps_info[2] is None:
         embed.add_field(name='Website', value="https://www.cabanos.ca/", inline=False)
-    elif title == "Hero Certified Burgers":
-        assert gmaps_info[2] is None
+    elif title == "Hero Certified Burgers" and gmaps_info[2] is None:
         embed.add_field(name='Website', value="https://heroburgers.com/", inline=False)
     if gmaps_info[2] is not None:
         if title == "Top Gun Burgers":
