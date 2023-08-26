@@ -88,6 +88,12 @@
             "address": "334 Yonge St",
             "description": "Philippine fast food classics"
         },
+        "ChickQueen": {
+            "path_to_logo_image": "logos/ChickQueen.jpg",
+            "price": "1",
+            "address": "247 Queen St",
+            "description": "Where's her King cuz she is delicious"
+        },
         "Tut's Egyptian Street Food": {
             "path_to_logo_image": "logos/Tut's Egyptian Street Food.jpg",
             "price": "1",
