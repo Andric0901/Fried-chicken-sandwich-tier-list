@@ -8,11 +8,16 @@ DEFAULT_GAP = 20
 DEFAULT_FONT = "arialbd.ttf"
 FONT_SIZE = 50
 GAPS_BETWEEN_RESTAURANTS = 10
+NUM_LOGOS_PER_ROW = 10
 # TODO: Change the width if needed
-BACKGROUND_WIDTH = 1800
+BACKGROUND_WIDTH = DEFAULT_WIDTH * NUM_LOGOS_PER_ROW + GAPS_BETWEEN_RESTAURANTS * (NUM_LOGOS_PER_ROW - 1)
 BACKGROUND_COLOUR = (26, 26, 26)
-NUM_LOGOS_PER_ROW = BACKGROUND_WIDTH // (DEFAULT_WIDTH + GAPS_BETWEEN_RESTAURANTS)
-tier_num_rows = {key: (len(TIER_DICT[key]) - 1) // NUM_LOGOS_PER_ROW + 1 for key in TIER_DICT}
+tier_num_rows = {}
+for key in TIER_DICT:
+    if len(TIER_DICT[key]) % NUM_LOGOS_PER_ROW == 0:
+        tier_num_rows[key] = len(TIER_DICT[key]) // NUM_LOGOS_PER_ROW
+    else:
+        tier_num_rows[key] = len(TIER_DICT[key]) // NUM_LOGOS_PER_ROW + 1
 
 def total_num_restaurants():
     return sum(tier_num_rows[tier] for tier in tier_num_rows)
