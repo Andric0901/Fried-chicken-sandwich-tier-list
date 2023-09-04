@@ -316,6 +316,12 @@
             "address": "196 Bloor St W",
             "description": "Ew"
         },
+        "Holy Chuck": {
+            "path_to_logo_image": "logos/Holy Chuck.jpg",
+            "price": "2",
+            "address": "1450 Yonge St",
+            "description": "Holy CLUCK this is bad"
+        },
         "Fran's": {
             "path_to_logo_image": "logos/Fran's.jpg",
             "price": "3",
