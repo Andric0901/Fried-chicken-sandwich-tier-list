@@ -258,7 +258,8 @@ async def tierlist_command(interaction: discord.Interaction) -> None:
     Args:
         interaction (discord.Interaction): The interaction that triggered this command.
     """
-    embed = discord.Embed(title='Tierlist', description='Still in progress!', color=0x00ff00)
+    embed_description = "There is C between B and D. That is, between Birth and Death, there is Chicken."
+    embed = discord.Embed(title='Tierlist', description=embed_description, color=0x00ff00)
     image = open(TIERLIST_IMAGE_NAME, 'rb')
     embed.set_image(url='attachment://{}'.format(TIERLIST_IMAGE_NAME))
     await interaction.response.send_message(embed=embed, file=discord.File(image, TIERLIST_IMAGE_NAME))
