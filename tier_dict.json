@@ -17,6 +17,12 @@
             "price": "2",
             "address": "545 King St W",
             "description": "Plentiful & Crispy"
+        },
+        "Union Chicken": {
+            "path_to_logo_image": "logos/Union Chicken.jpg",
+            "price": "4",
+            "address": "65 Front St W",
+            "description": "The biggest comeback in history, better than the Raptors"
         }
     },
     "A": {
@@ -327,12 +333,6 @@
             "price": "3",
             "address": "20 College St",
             "description": "A miserable fried chicken legacy for Fran"
-        },
-        "Union Chicken": {
-            "path_to_logo_image": "logos/Union Chicken.jpg",
-            "price": "4",
-            "address": "65 Front St W",
-            "description": "It tastes like throwing your money on the street"
         }
     },
     "F": {
