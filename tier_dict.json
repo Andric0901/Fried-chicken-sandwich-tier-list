@@ -183,6 +183,12 @@
             "price": "4",
             "address": "370 College St",
             "description": "Good for brunch, not for every day"
+        },
+        "WVRST": {
+            "path_to_logo_image": "logos/WVRST.jpg",
+            "price": "4",
+            "address": "65 Front St W",
+            "description": "Not the worst burger, unique curry sauce"
         }
     },
     "C": {
