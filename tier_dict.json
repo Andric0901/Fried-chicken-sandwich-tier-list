@@ -234,6 +234,12 @@
             "address": "269 Augusta Ave",
             "description": "We're doomed! He's gonna get us!"
         },
+        "Wing Machine": {
+            "path_to_logo_image": "logos/Wing Machine.jpg",
+            "price": "1",
+            "address": "1661 Eglinton Ave",
+            "description": "The Wing Machine dried out the Wings (and the bread)"
+        },
         "Ozzy's Burgers": {
             "path_to_logo_image": "logos/Ozzy's Burgers.jpg",
             "price": "2",
