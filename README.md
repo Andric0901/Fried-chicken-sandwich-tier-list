@@ -1,11 +1,14 @@
 # Greater Toronto Area Fried Chicken Sandwich Tierlist + Discord Bot
-*Last Updated: March 25th, 2023*
+*Last Updated README.md: September 20th, 2023*
 
-*This project is still under development!*
+*This project is still in progress!*
 
-A small project to rank ALL the fried chicken sandwich restaurants in GTA (Greater Toronto Area). 
+A small project to rank ALL the fried chicken sandwich restaurants in GTA (Greater Toronto Area). If you have restaurant suggestions that I may have missed in [this list](https://maps.app.goo.gl/ZWNcRqtyoahxpeXL6), feel free to raise a GitHub Issue.
 
-# Tierlist
+# Current Tier List
+![Tier List](https://github.com/Andric0901/Fried-chicken-sandwich-tier-list/blob/main/tierlist.png?raw=true)
+
+# How to run
 If you want to play with this tierlist code (requires at least Python 3.9)...
 
  1. Clone this repository.
