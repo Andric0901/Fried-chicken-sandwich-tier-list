@@ -85,6 +85,12 @@
             "price": "4",
             "address": "39 Prince Arthur Ave",
             "description": "Tastes like British (not derogatory, rather celebratory)"
+        },
+        "CRAFT Beer Market": {
+            "path_to_logo_image": "logos/CRAFT Beer Market.jpg",
+            "price": "4",
+            "address": "1 Adelaide St E",
+            "description": "Drunk? Be crafty with the sandwich"
         }
     },
     "B": {
@@ -245,6 +251,12 @@
             "price": "2",
             "address": "66 Nassau St Unit 1/2",
             "description": "A dizzy Ozzy burgazzy"
+        },
+        "RUDY": {
+            "path_to_logo_image": "logos/RUDY.jpg",
+            "price": "2",
+            "address": "69 Duncan St",
+            "description": "It was RUDY to my stomach"
         },
         "The Dirtybird Chicken & Waffles": {
             "path_to_logo_image": "logos/The Dirtybird Chicken & Waffles.jpg",
