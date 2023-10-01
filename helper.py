@@ -91,8 +91,10 @@ TIER_COLOUR_HEX_DICT = {
 ##############################################
 # Set up the database
 ##############################################
-def setup_db() -> None:
+def setup_db(force: bool = False) -> None:
     """Updates the database with the latest information from Google Maps API."""
+    if collection.count_documents({}) == len(RESTAURANT_NAMES) and not force:
+        return
     for i in range(len(RESTAURANT_NAMES)):
         restaurant = RESTAURANT_NAMES[i]
         if restaurant in MANUAL_EMBED_RESTAURANTS:
