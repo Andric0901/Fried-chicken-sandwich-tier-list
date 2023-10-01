@@ -18,6 +18,12 @@
             "address": "545 King St W",
             "description": "Plentiful & Crispy"
         },
+        "Juicy Birds": {
+            "path_to_logo_image": "logos/Juicy Birds.jpg",
+            "price": "2",
+            "address": "721 Pape Ave",
+            "description": "Stands up to their own name, the G.O.A.T"
+        },
         "Union Chicken": {
             "path_to_logo_image": "logos/Union Chicken.jpg",
             "price": "4",
