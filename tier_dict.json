@@ -166,12 +166,6 @@
             "address": "253 College St",
             "description": "Way better than I expected, not the NumberOne burger though"
         },
-        "Dublin Calling": {
-            "path_to_logo_image": "logos/Dublin Calling.jpg",
-            "price": "2",
-            "address": "250 Adelaide St W",
-            "description": "Dublin does not call for Kraft Single"
-        },
         "Happy Burger": {
             "path_to_logo_image": "logos/Happy Burger.jpg",
             "price": "2",
@@ -281,6 +275,12 @@
             "price": "2",
             "address": "410 Bathurst Street",
             "description": "More like Chicken n' Doughnut but the chicken is silent"
+        },
+        "Dublin Calling": {
+            "path_to_logo_image": "logos/Dublin Calling.jpg",
+            "price": "2",
+            "address": "250 Adelaide St W",
+            "description": "Dublin does not call for Kraft Single"
         },
         "Matt's Burger Lab": {
             "path_to_logo_image": "logos/Matt's Burger Lab.jpg",
