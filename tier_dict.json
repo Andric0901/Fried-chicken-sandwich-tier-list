@@ -240,6 +240,12 @@
             "address": "255 Huron St",
             "description": "UofT's only pink truck"
         },
+        "Super Chicken": {
+            "path_to_logo_image": "logos/Super Chicken.jpg",
+            "price": "1",
+            "address": "628 Yonge St",
+            "description": "Not so super..."
+        },
         "The Burgernator": {
             "path_to_logo_image": "logos/The Burgernator.jpg",
             "price": "1",
@@ -287,6 +293,12 @@
             "price": "2",
             "address": "1205 Queen St W",
             "description": "Rather failed burger experiments"
+        },
+        "Bahn Haus": {
+            "path_to_logo_image": "logos/Banh Haus.jpg",
+            "price": "2",
+            "address": "Lwr Lvl, 81 Huron St",
+            "description": "Banh Haus? More like Banh How"
         },
         "Hero Certified Burgers": {
             "path_to_logo_image": "logos/Hero Certified Burgers.jpg",
