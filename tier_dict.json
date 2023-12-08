@@ -201,6 +201,12 @@
             "price": "4",
             "address": "65 Front St W",
             "description": "Not the worst burger, unique curry sauce"
+        },
+        "Prenup Pub": {
+            "path_to_logo_image": "logos/Prenup Pub.jpg",
+            "price": "4",
+            "address": "191 College St",
+            "description": "Interesting take on pretzel bun, not crispy enough though"
         }
     },
     "C": {
@@ -239,6 +245,18 @@
             "price": "1",
             "address": "255 Huron St",
             "description": "UofT's only pink truck"
+        },
+        "Fatburger": {
+            "path_to_logo_image": "logos/Fatburger.jpg",
+            "price": "1",
+            "address": "565 Bloor St W",
+            "description": "FATburger? What a shame, the burger's not fat"
+        },
+        "Banquet Burger": {
+            "path_to_logo_image": "logos/Banquet Burger.jpg",
+            "price": "1",
+            "address": "940 Bloor St W",
+            "description": "NSFB (Not Safe For Banquet)"
         },
         "Super Chicken": {
             "path_to_logo_image": "logos/Super Chicken.jpg",
