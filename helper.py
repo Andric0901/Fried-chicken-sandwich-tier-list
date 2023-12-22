@@ -32,6 +32,7 @@ collection = db["gmaps_infos"]
 
 TIER_DICT = json.load(open('tier_dict.json'))
 
+
 ##############################################
 # Tierlist helper functions
 ##############################################
@@ -50,6 +51,7 @@ def get_first_tier_indexes() -> dict:
         else:
             first_tier_indexes[tier] = sum(lengths[:tiers.index(tier)])
     return first_tier_indexes
+
 
 ##############################################
 # Set up constants
@@ -88,6 +90,7 @@ TIER_COLOUR_HEX_DICT = {
     'F': "#ff7fff"
 }
 
+
 ##############################################
 # Set up the database
 ##############################################
@@ -103,12 +106,13 @@ def setup_db(force: bool = False) -> None:
             # restaurant_name, restaurant_address = RESTAURANTS[i][0][6:-4], RESTAURANTS[i][2]
             restaurant_name, restaurant_address = RESTAURANT_NAMES[i], RESTAURANT_ADDRESSES[i]
             place_id = \
-            places.find_place(gmaps, restaurant_name + ' ' + restaurant_address, 'textquery')['candidates'][0][
-                'place_id']
+                places.find_place(gmaps, restaurant_name + ' ' + restaurant_address, 'textquery')['candidates'][0][
+                    'place_id']
             url = "https://maps.googleapis.com/maps/api/place/details/json?placeid={}&key={}".format(place_id, key)
             response = requests.get(url)
             data = response.json()
             collection.update_one({"index": i}, {"$set": {"json": data}}, upsert=True)
+
 
 ##############################################
 # Discord bot helper functions
@@ -140,6 +144,7 @@ def create_list_embed(current_page) -> tuple:
     embed = discord.Embed(title=title, description=description, color=0xd4af37)
     return restaurants_formatted, embed
 
+
 def get_current_restaurants_list(current_page) -> list:
     """Gets the list of restaurants on the current page of the compendium, with removed star signs.
 
@@ -150,6 +155,7 @@ def get_current_restaurants_list(current_page) -> list:
         list: A list of strings of the form "1. Restaurant name", with the star signs removed.
     """
     return [element.replace("*", "") for element in create_list_embed(current_page)[0]]
+
 
 def create_restaurants_embed(current_page) -> tuple:
     """Creates individual restaurant embeds for PaginationView.
@@ -170,7 +176,8 @@ def create_restaurants_embed(current_page) -> tuple:
 
     gmaps_info = get_gmaps_info(current_page)
 
-    embed = discord.Embed(title=title, description=description, color=discord.Color.from_str(TIER_COLOUR_HEX_DICT[tier]),
+    embed = discord.Embed(title=title, description=description,
+                          color=discord.Color.from_str(TIER_COLOUR_HEX_DICT[tier]),
                           url=gmaps_info[1])
     thumbnail_file = get_thumbnail_file(current_page)
     embed.set_thumbnail(url='attachment://image.jpg')
@@ -197,7 +204,8 @@ def create_restaurants_embed(current_page) -> tuple:
         else:
             embed.add_field(name='Website', value=gmaps_info[2], inline=False)
     embed.add_field(name='Tier', value="**" + tier + "**", inline=True)
-    return (thumbnail_file, embed)
+    return thumbnail_file, embed
+
 
 def get_thumbnail_file(current_page) -> discord.File:
     """Gets the thumbnail file (logo image) for the current restaurant.
@@ -211,6 +219,7 @@ def get_thumbnail_file(current_page) -> discord.File:
     thumbnail_path = Path(__file__).parent / RESTAURANT_PATH_TO_LOGO_IMAGES[current_page]
     thumbnail_file = discord.File(thumbnail_path, 'image.jpg')
     return thumbnail_file
+
 
 def create_manual_embed(current_page) -> tuple:
     """Creates manual embeds for restaurants that require special formatting.
@@ -228,6 +237,7 @@ def create_manual_embed(current_page) -> tuple:
         return _bubbas_embed(current_page)
     elif restaurant_name == "Foodie":
         return _foodie_embed(current_page)
+
 
 def _bubbas_embed(current_page) -> tuple:
     """Creates a manual embed for Bubba's Crispy Fried Chicken.
@@ -247,6 +257,7 @@ def _bubbas_embed(current_page) -> tuple:
     embed.add_field(name='Tier', value='**S**', inline=True)
     return (thumbnail_file, embed)
 
+
 def _foodie_embed(current_page) -> tuple:
     """Creates a manual embed for Foodie.
 
@@ -263,6 +274,7 @@ def _foodie_embed(current_page) -> tuple:
     embed.add_field(name='Price Range', value="$", inline=True)
     embed.add_field(name='Tier', value='**C**', inline=True)
     return (thumbnail_file, embed)
+
 
 def get_gmaps_info(current_page) -> list[str]:
     """Return open status, link to google maps link, and the website, if available.
@@ -312,6 +324,7 @@ def get_gmaps_info(current_page) -> list[str]:
         human_readable_opening_hours = None
     return [open_status, gmaps_link, website, human_readable_opening_hours]
 
+
 def append_dummy_hours(opening_hours) -> list:
     """Modify the opening hours so that the opening_hours list is 7 elements long.
 
@@ -329,6 +342,7 @@ def append_dummy_hours(opening_hours) -> list:
         if i > len(opening_hours) - 1 or opening_hours[i]['open']['day'] != i:
             opening_hours.insert(i, None)
     return opening_hours
+
 
 def codify_opening_hours(opening_hours) -> list:
     """Return a list of opening hours in the format [(open, close)].
@@ -360,6 +374,7 @@ def codify_opening_hours(opening_hours) -> list:
                                            str(day["close"]["day"]) + day["close"]["time"]))
     return codified_opening_hours
 
+
 def get_maps_current_day(codified_opening_hours, codified_date_time) -> int:
     """Return the day that it would appear as the current day on Google Maps.
 
@@ -388,6 +403,7 @@ def get_maps_current_day(codified_opening_hours, codified_date_time) -> int:
         else:
             return 0
 
+
 def is_open_now(opening_hours) -> bool:
     """Return True if the restaurant is open now, False otherwise.
 
@@ -413,6 +429,7 @@ def is_open_now(opening_hours) -> bool:
         assert maps_current_day == 6 and current_day == 0
         return codified_date_time < close_time
 
+
 def current_date_and_time() -> dict:
     """Return the current date and time in the format of Google Maps API opening hours.
 
@@ -428,6 +445,7 @@ def current_date_and_time() -> dict:
     current_time = current_datetime.strftime("%H%M")
     return {"day": current_day, "time": current_time}
 
+
 def get_current_day() -> int:
     """Return the current day of the week.
 
@@ -440,6 +458,7 @@ def get_current_day() -> int:
     if current_day == 7:
         current_day = 0
     return current_day
+
 
 def reformat_opening_hours_text(opening_hours_text, opening_hours) -> str:
     """Reformat the opening hours text to be human readable.
@@ -465,6 +484,7 @@ def reformat_opening_hours_text(opening_hours_text, opening_hours) -> str:
     modified_list = ["**" + plain_list[opening_hour] + "**" if opening_hour == maps_current_day
                      else plain_list[opening_hour] for opening_hour in range(len(plain_list))]
     return "\n".join(modified_list)
+
 
 if __name__ == "__main__":
     # Check that .env file exists

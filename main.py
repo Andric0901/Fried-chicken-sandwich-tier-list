@@ -6,6 +6,7 @@ from helper import *
 from typing import Optional
 import abc
 
+
 ##############################################
 # Set up discord bot client variables
 ##############################################
@@ -13,6 +14,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
+
 
 ##############################################
 # Parent class for basic pagination
@@ -27,6 +29,7 @@ class PaginationView(discord.ui.View, metaclass=abc.ABCMeta):
 
     Optionally, a child class may implement select() method to add a dropdown menu to the view.
     """
+
     def __init__(self, current_page: int = 0,
                  timeout: Optional[float] = None,
                  interaction: Optional[discord.Interaction] = None) -> None:
@@ -104,6 +107,7 @@ class PaginationView(discord.ui.View, metaclass=abc.ABCMeta):
         self.children[2].disabled = self.page == self.max_page
         self.children[3].disabled = self.page == self.max_page
 
+
 ##############################################
 # Child class for pagination for compendium
 ##############################################
@@ -112,6 +116,7 @@ class CompendiumPagesView(PaginationView):
 
     This class also allows a transition between the compendium and the individual restaurant page.
     """
+
     def __init__(self, current_page: int = 0, interaction: Optional[discord.Interaction] = None) -> None:
         super().__init__(current_page=current_page)
         self.restaurants_list, self.embed = create_list_embed(self.page)
@@ -133,8 +138,8 @@ class CompendiumPagesView(PaginationView):
         ]
 
     @discord.ui.select(placeholder='Look at...', options=[
-                       SelectOption(label=element, value=element)
-                       for element in get_current_restaurants_list(0)])
+        SelectOption(label=element, value=element)
+        for element in get_current_restaurants_list(0)])
     async def select(self, interaction: discord.Interaction, select: discord.ui.Select):
         """Select a restaurant to look at.
 
@@ -154,6 +159,7 @@ class CompendiumPagesView(PaginationView):
         await interaction.response.defer()
         await interaction.message.edit(embeds=[view.embed], view=view, attachments=[view.thumbnail_file])
 
+
 ##############################################
 # Child class for pagination for each individual restaurant
 ##############################################
@@ -162,6 +168,7 @@ class RestaurantsPagesView(PaginationView):
 
     This class also allows a transition between the compendium and the individual restaurant page.
     """
+
     def __init__(self, current_page: int = 0) -> None:
         super().__init__(current_page=current_page)
         self.thumbnail_file, self.embed = create_restaurants_embed(self.page)
@@ -210,6 +217,7 @@ class RestaurantsPagesView(PaginationView):
         await view.update_interaction(interaction)
         await interaction.message.edit(view=view, embed=view.embed, attachments=[])
 
+
 ##############################################
 # Class for feedback forms
 ##############################################
@@ -218,6 +226,7 @@ class FeedbackModal(discord.ui.Modal):
 
     Allows user to write a feedback and submit it, which will be sent to the bot owner.
     """
+
     def __init__(self):
         super().__init__(title='Feedback Forms')
 
@@ -240,6 +249,7 @@ class FeedbackModal(discord.ui.Modal):
                                                    'We really appreciate it!')
         await interaction.response.send_message(embed=response_embed, ephemeral=True)
 
+
 ##############################################
 # Bot commands / events
 ##############################################
@@ -250,6 +260,7 @@ async def on_ready() -> None:
     activity = Activity(name='the best chicken sandwich discoveries', type=ActivityType.competing)
     await client.change_presence(status=Status.online, activity=activity)
     await tree.sync()
+
 
 @tree.command(name='tierlist', description='Shows the tierlist in an embed')
 async def tierlist_command(interaction: discord.Interaction) -> None:
@@ -264,6 +275,7 @@ async def tierlist_command(interaction: discord.Interaction) -> None:
     embed.set_image(url='attachment://{}'.format(TIERLIST_IMAGE_NAME))
     await interaction.response.send_message(embed=embed, file=discord.File(image, TIERLIST_IMAGE_NAME))
 
+
 @tree.command(name='list', description='Show a list of all restaurants')
 async def list_command(interaction: discord.Interaction) -> None:
     """Shows a list of all restaurants in an embed.
@@ -277,6 +289,7 @@ async def list_command(interaction: discord.Interaction) -> None:
     _, embed = create_list_embed(view.page)
     await interaction.response.send_message(embed=embed, view=view)
 
+
 @tree.command(name='feedback', description='Fill out a feedback form')
 async def feedback_command(interaction: discord.Interaction) -> None:
     """Shows a feedback form for users to fill out.
@@ -286,6 +299,7 @@ async def feedback_command(interaction: discord.Interaction) -> None:
     """
     modal = FeedbackModal()
     await interaction.response.send_modal(modal)
+
 
 if __name__ == '__main__':
     # Check that .env file exists
