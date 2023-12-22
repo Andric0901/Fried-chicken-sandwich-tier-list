@@ -178,6 +178,12 @@
             "address": "495 Bloor St W",
             "description": "Hot nashville taste from Texas"
         },
+        "The Gourmet Burger House": {
+            "path_to_logo_image": "logos/The Gourmet Burger House.jpg",
+            "price": "2",
+            "address": "100 St George St",
+            "description": "Gourmet? More like Gour-not... T'was okay though"
+        },
         "T.O.'s Kathi Roll Eatery": {
             "path_to_logo_image": "logos/T.O.'s Kathi Roll Eatery.jpg",
             "price": "3",
@@ -207,6 +213,12 @@
             "price": "4",
             "address": "191 College St",
             "description": "Interesting take on pretzel bun, not crispy enough though"
+        },
+        "Cafe Landwer": {
+            "path_to_logo_image": "logos/Cafe Landwer.jpg",
+            "price": "4",
+            "address": "33 Bloor St E",
+            "description": "Crispy schnitzel but rather dry"
         }
     },
     "C": {
