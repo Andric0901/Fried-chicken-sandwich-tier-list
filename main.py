@@ -311,4 +311,8 @@ if __name__ == '__main__':
         setup_db()
     count = sum([len(files) for _, _, files in os.walk('logos')])
     assert count == len(RESTAURANT_NAMES)
-    client.run(token)
+    if test_token:
+        print("Test token exists. Running test bot...")
+        client.run(test_token)
+    else:
+        client.run(token)

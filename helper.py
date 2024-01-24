@@ -19,6 +19,7 @@ import json
 load_dotenv()
 connection_string = os.getenv("connection")
 token = os.getenv("token")
+test_token = os.getenv("test_token")
 key = os.getenv("key")
 author_id = os.getenv("author_id")
 try:
