@@ -262,6 +262,22 @@ async def on_ready() -> None:
     await tree.sync()
 
 
+@tree.command(name='places', description='Shows a list of places to be prioritized')
+async def places_command(interaction: discord.Interaction) -> None:
+    """Shows a list of places to be visited first in an embed.
+
+    Uses the PlacesPagesView class to paginate the list.
+
+    Args:
+        interaction (discord.Interaction): The interaction that triggered this command.
+    """
+    embed = create_places_to_go_embed()
+    if embed is None:
+        await interaction.response.send_message('No places to go yet!', ephemeral=True)
+        return
+    await interaction.response.send_message(embed=embed)
+
+
 @tree.command(name='tierlist', description='Shows the tierlist in an embed')
 async def tierlist_command(interaction: discord.Interaction) -> None:
     """Shows the tierlist image in an embed.

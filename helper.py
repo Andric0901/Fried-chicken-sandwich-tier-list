@@ -12,6 +12,7 @@ import pymongo
 import certifi
 import pytz
 import json
+from typing import Optional
 
 ##############################################
 # Set up environment variables
@@ -32,6 +33,7 @@ db = client["fried-chicken-sandwich-bot"]
 collection = db["gmaps_infos"]
 
 TIER_DICT = json.load(open('tier_dict.json'))
+PLACES_TO_GO = json.load(open('places_to_go.json'))
 
 
 ##############################################
@@ -118,6 +120,25 @@ def setup_db(force: bool = False) -> None:
 ##############################################
 # Discord bot helper functions
 ##############################################
+def create_places_to_go_embed() -> Optional[discord.Embed]:
+    """Creates the Discord embed for the places to go list.
+
+    Returns:
+        discord.Embed: The embed for the places to go list.
+    """
+    places_json = PLACES_TO_GO["places"]
+    if places_json is None:
+        return None
+    title = "Places to go first"
+    description = ""
+    counter = 1
+    for place in places_json:
+        description += "**{}.** [{}]({})\n".format(counter, place["name"], place["link"])
+        counter += 1
+    embed = discord.Embed(title=title, description=description, color=0x7a8bde)
+    return embed
+
+
 def create_list_embed(current_page) -> tuple:
     """Creates the Discord embed for the current page of the compendium of restaurants.
 
