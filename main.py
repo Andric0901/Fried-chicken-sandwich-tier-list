@@ -266,8 +266,6 @@ async def on_ready() -> None:
 async def places_command(interaction: discord.Interaction) -> None:
     """Shows a list of places to be visited first in an embed.
 
-    Uses the PlacesPagesView class to paginate the list.
-
     Args:
         interaction (discord.Interaction): The interaction that triggered this command.
     """
