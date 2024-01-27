@@ -353,6 +353,12 @@
             "price": "3",
             "address": "280 Adelaide St W",
             "description": "Why is there an owl in the logo?"
+        },
+        "Insomnia Restaurant & Lounge": {
+            "path_to_logo_image": "logos/Insomnia Restaurant & Lounge.jpg",
+            "price": "4",
+            "address": "563 Bloor St W",
+            "description": "Loud music? Probably perfect for insomniacs"
         }
     },
     "D": {
