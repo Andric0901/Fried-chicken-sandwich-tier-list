@@ -33,7 +33,6 @@ db = client["fried-chicken-sandwich-bot"]
 collection = db["gmaps_infos"]
 
 TIER_DICT = json.load(open('tier_dict.json'))
-PLACES_TO_GO = json.load(open('places_to_go.json'))
 
 
 ##############################################
