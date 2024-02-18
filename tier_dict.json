@@ -392,6 +392,12 @@
             "address": "735 Bloor St W",
             "description": "Too simple that it lost its originality"
         },
+        "Philthy Philly's": {
+            "path_to_logo_image": "logos/Philthy Philly's.jpg",
+            "price": "2",
+            "address": "624 Queen St W",
+            "description": "Too philthy for Philly"
+        },
         "W Burger Bar": {
             "path_to_logo_image": "logos/W Burger Bar.jpg",
             "price": "2",
