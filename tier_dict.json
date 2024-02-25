@@ -154,6 +154,12 @@
             "address": "207 Augusta Ave",
             "description": "Try not to get knocked out"
         },
+        "Ding A Wing": {
+            "path_to_logo_image": "logos/Ding A Wing.jpg",
+            "price": "2",
+            "address": "397 Roncesvalles Ave",
+            "description": "It really dinged my taste buds"
+        },
         "Penny's Hot Chicken": {
             "path_to_logo_image": "logos/Penny's Hot Chicken.jpg",
             "price": "2",
