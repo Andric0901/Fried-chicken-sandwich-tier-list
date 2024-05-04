@@ -488,8 +488,45 @@ def reformat_opening_hours_text(opening_hours_text, opening_hours) -> str:
     return "\n".join(modified_list)
 
 
+def verify_restaurant_names() -> None:
+    """Verify that the restaurant names in the database match the restaurant names in the tier_dict."""
+    mismatches, potential_mismatches = [], []
+    for i in range(len(RESTAURANT_NAMES)):
+        if collection.find_one({"index": i})["json"] is None:
+            continue
+        name_in_db = collection.find_one({"index": i})["json"]["result"]["name"]
+        lower_restaurant_name, lower_name_in_db = (RESTAURANT_NAMES[i].lower(),
+                                                   str.replace(name_in_db, "’", "'").lower())
+        if lower_restaurant_name != lower_name_in_db:
+            mismatches.append((RESTAURANT_NAMES[i], name_in_db))
+            # if one string is a substring of the other, remove the appended string from mismatches and
+            # instead add to potential_mismatches
+            if lower_restaurant_name in lower_name_in_db or lower_name_in_db in lower_restaurant_name:
+                potential_mismatches.append(mismatches.pop())
+    # Write all print functions below to mismatches.txt
+    with open("mismatches.txt", "w", encoding="utf-8") as f:
+        if mismatches:
+            print()
+            print("Mismatched restaurant names:")
+            f.write("Mismatched restaurant names:\n")
+            for mismatch in mismatches:
+                print(mismatch)
+                f.write(str(mismatch[0]) + " -> " + str(mismatch[1]) + "\n")
+            print()
+            f.write("\n")
+        if potential_mismatches:
+            print("Potentially mismatched restaurant names:")
+            f.write("Potentially mismatched restaurant names:\n")
+            for mismatch in potential_mismatches:
+                print(mismatch)
+                f.write(str(mismatch[0]) + " -> " + str(mismatch[1]) + "\n")
+            print()
+            f.write("\n")
+
+
 if __name__ == "__main__":
     # Check that .env file exists
     if not os.path.exists('.env'):
         raise FileNotFoundError('.env file not found')
     setup_db()
+    verify_restaurant_names()

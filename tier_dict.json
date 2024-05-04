@@ -32,8 +32,8 @@
         }
     },
     "A": {
-        "El Furniture Warehouse Group": {
-            "path_to_logo_image": "logos/El Furniture Warehouse Group.jpg",
+        "El Furniture Warehouse": {
+            "path_to_logo_image": "logos/El Furniture Warehouse.jpg",
             "price": "1",
             "address": "410 Bloor St W",
             "description": "The most unique burger I've tried"
@@ -50,8 +50,8 @@
             "address": "406 Bloor St W",
             "description": "Even The Pope would love it"
         },
-        "Cabano's Comfort Food": {
-            "path_to_logo_image": "logos/Cabano's Comfort Food.jpg",
+        "Cabano's Cheeseburgers": {
+            "path_to_logo_image": "logos/Cabano's Cheeseburgers.jpg",
             "price": "2",
             "address": "75 St Nicholas St #104",
             "description": "Comforting just like home"
@@ -80,8 +80,8 @@
             "address": "106 John St Unit 2",
             "description": "Nothing lasts forever other than this burger"
         },
-        "JABS": {
-            "path_to_logo_image": "logos/JABS.jpg",
+        "JABS (Just Another Burger Spot)": {
+            "path_to_logo_image": "logos/JABS (Just Another Burger Spot).jpg",
             "price": "3",
             "address": "630 St Clair Ave W",
             "description": "Not Just Another Burger Spot, It's a Knockout after many JABS"
@@ -124,14 +124,14 @@
             "address": "567 King St W",
             "description": "Tutankha-yum"
         },
-        "Fancy Frank's": {
-            "path_to_logo_image": "logos/Fancy Frank's.jpg",
+        "Fancy Franks": {
+            "path_to_logo_image": "logos/Fancy Franks.jpg",
             "price": "1",
             "address": "326 College St",
             "description": "Here's how you make your Fancy fried chicken sandwich, Frank style"
         },
-        "Shamrock Burger": {
-            "path_to_logo_image": "logos/Shamrock Burger.jpg",
+        "Shamrock Burgers": {
+            "path_to_logo_image": "logos/Shamrock Burgers.jpg",
             "price": "2",
             "address": "6109 Kingston Rd",
             "description": "Brings you much luck"
@@ -154,8 +154,8 @@
             "address": "207 Augusta Ave",
             "description": "Try not to get knocked out"
         },
-        "Ding A Wing": {
-            "path_to_logo_image": "logos/Ding A Wing.jpg",
+        "Ding-a-Wing": {
+            "path_to_logo_image": "logos/Ding-a-Wing.jpg",
             "price": "2",
             "address": "397 Roncesvalles Ave",
             "description": "It really dinged my taste buds"
@@ -306,17 +306,17 @@
             "address": "69 Duncan St",
             "description": "It was RUDY to my stomach"
         },
-        "The Dirtybird Chicken & Waffles": {
-            "path_to_logo_image": "logos/The Dirtybird Chicken & Waffles.jpg",
+        "The Dirty Bird Chicken + Waffles": {
+            "path_to_logo_image": "logos/The Dirty Bird Chicken + Waffles.jpg",
             "price": "2",
             "address": "79 Kensington Ave",
             "description": "No birds were harmed in naming this restaurant"
         },
-        "Chicken n' Dough": {
-            "path_to_logo_image": "logos/Chicken n' Dough.jpg",
+        "Chicken N' Dough": {
+            "path_to_logo_image": "logos/Chicken N' Dough.jpg",
             "price": "2",
             "address": "410 Bathurst Street",
-            "description": "More like Chicken n' Doughnut but the chicken is silent"
+            "description": "More like Chicken N' Doughnut but the chicken is silent"
         },
         "Dublin Calling": {
             "path_to_logo_image": "logos/Dublin Calling.jpg",
@@ -360,8 +360,8 @@
             "address": "280 Adelaide St W",
             "description": "Why is there an owl in the logo?"
         },
-        "Insomnia Restaurant & Lounge": {
-            "path_to_logo_image": "logos/Insomnia Restaurant & Lounge.jpg",
+        "Insomnia Restaurant and Lounge": {
+            "path_to_logo_image": "logos/Insomnia Restaurant and Lounge.jpg",
             "price": "4",
             "address": "563 Bloor St W",
             "description": "Loud music? Probably perfect for insomniacs"
@@ -374,14 +374,14 @@
             "address": "334 Bloor St W",
             "description": "Maybe focus on making better coffee instead..."
         },
-        "Top Gun Burgers": {
-            "path_to_logo_image": "logos/Top Gun Burgers.jpg",
+        "Top Gun Burger": {
+            "path_to_logo_image": "logos/Top Gun Burger.jpg",
             "price": "1",
             "address": "490 Bloor St W",
             "description": "The chickens were threatened with a gun"
         },
-        "Popeyes": {
-            "path_to_logo_image": "logos/Popeyes.jpg",
+        "Popeyes Louisiana Kitchen": {
+            "path_to_logo_image": "logos/Popeyes Louisiana Kitchen.jpg",
             "price": "1",
             "address": "553 Bloor St W",
             "description": "Makes your eyes pop? idk"
@@ -424,8 +424,8 @@
             "address": "1450 Yonge St",
             "description": "Holy CLUCK this is bad"
         },
-        "Fran's": {
-            "path_to_logo_image": "logos/Fran's.jpg",
+        "Fran's Restaurant and Bar": {
+            "path_to_logo_image": "logos/Fran's Restaurant and Bar.jpg",
             "price": "3",
             "address": "20 College St",
             "description": "A miserable fried chicken legacy for Fran"
