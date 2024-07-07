@@ -125,6 +125,13 @@
             "address": "334 Yonge St",
             "description": "Philippine fast food classics"
         },
+        "Vegholic": {
+            "path_to_logo_image": "logos/Vegholic.jpg",
+            "price": "1",
+            "address": "372 Yonge St",
+            "description": "Not so much of a holic but still good",
+            "vegan": true
+        },
         "The Arbor Room": {
             "path_to_logo_image": "logos/The Arbor Room.jpg",
             "price": "1",
