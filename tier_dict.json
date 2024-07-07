@@ -252,6 +252,12 @@
             "address": "709 Yonge St",
             "description": "More like Chicks-Fill-C"
         },
+        "Harvey's": {
+            "path_to_logo_image": "logos/Harvey's.jpg",
+            "price": "1",
+            "address": "278 Jarvis St",
+            "description": "Harvey's? More like Harv-eh"
+        },
         "Foodie": {
             "path_to_logo_image": "logos/Foodie.jpg",
             "price": "1",
