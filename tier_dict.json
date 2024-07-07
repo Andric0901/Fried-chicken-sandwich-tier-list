@@ -1,5 +1,12 @@
 {
     "S": {
+        "Soy Boys": {
+            "path_to_logo_image": "logos/Soy Boys.jpg",
+            "price": "1",
+            "address": "471 Church St",
+            "description": "Never doubt in the power of Soy Boys",
+            "vegan": true
+        },
         "Bubba's Crispy Fried Chicken": {
             "path_to_logo_image": "logos/Bubba's Crispy Fried Chicken.jpg",
             "price": "2",

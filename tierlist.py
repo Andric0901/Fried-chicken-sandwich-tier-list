@@ -9,6 +9,7 @@ DEFAULT_FONT = "arialbd.ttf"
 FONT_SIZE = 50
 GAPS_BETWEEN_RESTAURANTS = 10
 
+
 def evaluate_num_logos_per_row(min_val: int = 10, threshold: int = 10) -> int:
     """Evaluate the ideal number of logos per row, such that
     the ratio between the width and height is closest to the golden ratio."""
@@ -19,13 +20,14 @@ def evaluate_num_logos_per_row(min_val: int = 10, threshold: int = 10) -> int:
         total_width = DEFAULT_WIDTH * (i + 1) + GAPS_BETWEEN_RESTAURANTS * (i - 1) + \
                       DEFAULT_GAP * 3
         total_height = sum(tier_num_rows[tier] * DEFAULT_WIDTH + \
-                             GAPS_BETWEEN_RESTAURANTS * (tier_num_rows[tier] - 1) \
-                                for tier in tier_num_rows) + DEFAULT_GAP * (len(tier_num_rows) + 1)
+                           GAPS_BETWEEN_RESTAURANTS * (tier_num_rows[tier] - 1) \
+                           for tier in tier_num_rows) + DEFAULT_GAP * (len(tier_num_rows) + 1)
         current_diff = abs(total_width / total_height - 1.618)
         if current_diff < min_difference:
             min_difference = current_diff
             num_logos_per_row = i
     return num_logos_per_row
+
 
 def get_num_rows_per_tier(num_rows: int) -> dict:
     """Get the number of rows per tier, given the number of logos per row."""
@@ -37,13 +39,16 @@ def get_num_rows_per_tier(num_rows: int) -> dict:
             tier_num_rows[k] = len(TIER_DICT[k]) // num_rows + 1
     return tier_num_rows
 
+
 NUM_LOGOS_PER_ROW = evaluate_num_logos_per_row()
 BACKGROUND_WIDTH = DEFAULT_WIDTH * NUM_LOGOS_PER_ROW + GAPS_BETWEEN_RESTAURANTS * (NUM_LOGOS_PER_ROW - 1)
 BACKGROUND_COLOUR = (26, 26, 26)
 TIER_NUM_ROWS = get_num_rows_per_tier(NUM_LOGOS_PER_ROW)
 
+
 def total_num_restaurants():
     return sum(TIER_NUM_ROWS[tier] for tier in TIER_NUM_ROWS)
+
 
 def make_tier_indicator(tier, color):
     """A tier indicator is a square of 100 x 100 pixels, with the text centered"""
@@ -57,6 +62,7 @@ def make_tier_indicator(tier, color):
     draw.text(((image_width - w) / 2, (image_height - h) / 2 - 4), tier, font=font, fill=(0, 0, 0))
     return img
 
+
 def make_tier_background(tier):
     """A tier background is a rectangle which can be extended to the right
     color: (26, 26, 26))"""
@@ -65,15 +71,20 @@ def make_tier_background(tier):
     img = Image.new('RGB', (background_width, background_height), BACKGROUND_COLOUR)
     return img
 
+
 def make_tier_restaurants(tier):
     """Make a tier image"""
     tier_img = make_tier_background(tier)
     restaurants = []
     for restaurant_name in TIER_DICT[tier]:
         restaurant_info = TIER_DICT[tier][restaurant_name]
-        restaurant_logo, price = restaurant_info["path_to_logo_image"], restaurant_info["price"]
+        restaurant_logo, price, is_vegan = (restaurant_info["path_to_logo_image"],
+                                            restaurant_info["price"],
+                                            restaurant_info.get("vegan", False))
         # get the image of the restaurant
-        logo_img, price_img = Image.open(restaurant_logo), Image.open("assets/{}.png".format(price))
+        logo_img, price_img, is_vegan_img = (Image.open(restaurant_logo),
+                                             Image.open("assets/{}.png".format(price)),
+                                             Image.open("assets/Vegan.png") if is_vegan else None)
         # get the width and height of the restaurant's logo
         width, height = logo_img.size
         price_width, price_height = price_img.size
@@ -82,6 +93,14 @@ def make_tier_restaurants(tier):
         price_img = price_img.resize((int(price_width * DEFAULT_WIDTH / (price_height * 5)),
                                       int(DEFAULT_WIDTH / 5)))
         logo_img.paste(price_img, (logo_img.size[0] - price_img.size[0], 0), price_img)
+        if is_vegan_img:
+            is_vegan_width, is_vegan_height = is_vegan_img.size
+            is_vegan_img = is_vegan_img.resize((int(is_vegan_width * DEFAULT_WIDTH / (is_vegan_height * 5)),
+                                                int(DEFAULT_WIDTH / 5)))
+            logo_img.paste(is_vegan_img, (logo_img.size[0] - is_vegan_img.size[0],
+                                          logo_img.size[1] - is_vegan_img.size[1]),
+                           is_vegan_img)
+
         # append the logo to the list of restaurants
         restaurants.append(logo_img)
     # paste the restaurants into the tier image, with a gap between each
@@ -95,6 +114,7 @@ def make_tier_restaurants(tier):
         x_offset += restaurant_logo.size[0] + GAPS_BETWEEN_RESTAURANTS
     return tier_img
 
+
 def make_one_complete_tier(tier):
     """Make a tier image"""
     tier_indicator = make_tier_indicator(tier, TIER_COLOUR_HEX_DICT[tier])
@@ -106,12 +126,13 @@ def make_one_complete_tier(tier):
     tier_img.paste(tier_restaurants, (tier_indicator.size[0] + DEFAULT_GAP, 0))
     return tier_img
 
+
 def make_tierlist():
     """Make a tierlist image, with margins equal to DEFAULT_GAP"""
     sum_of_num_rows = sum(TIER_NUM_ROWS.values())
     image_width, image_height = DEFAULT_WIDTH + BACKGROUND_WIDTH + 3 * DEFAULT_GAP, \
-        sum_of_num_rows * DEFAULT_WIDTH + 8 * DEFAULT_GAP + \
-        (sum_of_num_rows - 7) * GAPS_BETWEEN_RESTAURANTS
+                                sum_of_num_rows * DEFAULT_WIDTH + 8 * DEFAULT_GAP + \
+                                (sum_of_num_rows - 7) * GAPS_BETWEEN_RESTAURANTS
     tierlist = Image.new('RGB', (image_width, image_height), (0, 0, 0))
     y_offset = DEFAULT_GAP
     for tier in TIER_DICT:
@@ -119,6 +140,7 @@ def make_tierlist():
         tierlist.paste(tier_img, (DEFAULT_GAP, y_offset))
         y_offset += tier_img.size[1] + DEFAULT_GAP
     return tierlist
+
 
 if __name__ == "__main__":
     print("Number of logos per row: {}".format(NUM_LOGOS_PER_ROW))
