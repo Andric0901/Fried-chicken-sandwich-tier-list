@@ -196,6 +196,12 @@
             "address": "100 St George St",
             "description": "Gourmet? More like Gour-not... T'was okay though"
         },
+        "Lazy Daisy's Cafe": {
+            "path_to_logo_image": "logos/Lazy Daisy's Cafe.jpg",
+            "price": "3",
+            "address": "1515 Gerrard St E",
+            "description": "Not so lazy, but rather Daisy"
+        },
         "T.O.'s Kathi Roll Eatery": {
             "path_to_logo_image": "logos/T.O.'s Kathi Roll Eatery.jpg",
             "price": "3",
