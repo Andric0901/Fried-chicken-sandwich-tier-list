@@ -75,6 +75,12 @@
             "address": "170 Baldwin St",
             "description": "Broke up with your GF? Have HBC"
         },
+        "Beauty's Fried Chicken": {
+            "path_to_logo_image": "logos/Beauty's Fried Chicken.jpg",
+            "price": "2",
+            "address": "220 Yonge St",
+            "description": "Such a beauty"
+        },
         "Flock Rotisserie + Greens": {
             "path_to_logo_image": "logos/Flock Rotisserie + Greens.jpg",
             "price": "2",
