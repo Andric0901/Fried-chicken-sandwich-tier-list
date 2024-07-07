@@ -234,12 +234,6 @@
         }
     },
     "C": {
-        "Burger Factory": {
-            "path_to_logo_image": "logos/Burger Factory.jpg",
-            "price": "1",
-            "address": "437 Yonge St",
-            "description": "Build your own burger!"
-        },
         "Burger King": {
             "path_to_logo_image": "logos/Burger King.jpg",
             "price": "1",
@@ -385,6 +379,12 @@
             "price": "1",
             "address": "490 Bloor St W",
             "description": "The chickens were threatened with a gun"
+        },
+        "Burger Factory": {
+            "path_to_logo_image": "logos/Burger Factory.jpg",
+            "price": "1",
+            "address": "437 Yonge St",
+            "description": "Build your own burger!"
         },
         "Popeyes Louisiana Kitchen": {
             "path_to_logo_image": "logos/Popeyes Louisiana Kitchen.jpg",

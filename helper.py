@@ -524,6 +524,13 @@ def verify_restaurant_names() -> None:
             f.write("\n")
 
 
+def destroy_db(force: bool = False) -> None:
+    """Destroy the database and reset it with the latest information from Google Maps API."""
+    if force:
+        collection.delete_many({})
+        setup_db(force=True)
+
+
 if __name__ == "__main__":
     # Check that .env file exists
     if not os.path.exists('.env'):
