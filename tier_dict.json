@@ -234,18 +234,6 @@
         }
     },
     "C": {
-        "Burger King": {
-            "path_to_logo_image": "logos/Burger King.jpg",
-            "price": "1",
-            "address": "267 College St",
-            "description": "Not the best King of burgers I have tried"
-        },
-        "A&W": {
-            "path_to_logo_image": "logos/A&W.jpg",
-            "price": "1",
-            "address": "500 Bloor St W",
-            "description": "A 24-hr generic burger chain"
-        },
         "Mary Brown's": {
             "path_to_logo_image": "logos/Mary Brown's.jpg",
             "price": "1",
@@ -263,18 +251,6 @@
             "price": "1",
             "address": "255 Huron St",
             "description": "UofT's only pink truck"
-        },
-        "Fatburger": {
-            "path_to_logo_image": "logos/Fatburger.jpg",
-            "price": "1",
-            "address": "565 Bloor St W",
-            "description": "FATburger? What a shame, the burger's not fat"
-        },
-        "Banquet Burger": {
-            "path_to_logo_image": "logos/Banquet Burger.jpg",
-            "price": "1",
-            "address": "940 Bloor St W",
-            "description": "NSFB (Not Safe For Banquet)"
         },
         "Super Chicken": {
             "path_to_logo_image": "logos/Super Chicken.jpg",
@@ -385,6 +361,30 @@
             "price": "1",
             "address": "437 Yonge St",
             "description": "Build your own burger!"
+        },
+        "A&W": {
+            "path_to_logo_image": "logos/A&W.jpg",
+            "price": "1",
+            "address": "500 Bloor St W",
+            "description": "A 24-hr generic burger chain"
+        },
+        "Burger King": {
+            "path_to_logo_image": "logos/Burger King.jpg",
+            "price": "1",
+            "address": "267 College St",
+            "description": "Not the best King of burgers I have tried"
+        },
+        "Fatburger": {
+            "path_to_logo_image": "logos/Fatburger.jpg",
+            "price": "1",
+            "address": "565 Bloor St W",
+            "description": "FATburger? What a shame, the burger's not fat"
+        },
+        "Banquet Burger": {
+            "path_to_logo_image": "logos/Banquet Burger.jpg",
+            "price": "1",
+            "address": "940 Bloor St W",
+            "description": "NSFB (Not Safe For Banquet)"
         },
         "Popeyes Louisiana Kitchen": {
             "path_to_logo_image": "logos/Popeyes Louisiana Kitchen.jpg",
