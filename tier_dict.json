@@ -112,6 +112,12 @@
             "address": "334 Yonge St",
             "description": "Philippine fast food classics"
         },
+        "The Arbor Room": {
+            "path_to_logo_image": "logos/The Arbor Room.jpg",
+            "price": "1",
+            "address": "7 Hart House Cir",
+            "description": "A mid chicken burger in the heart of UofT"
+        },
         "ChickQueen": {
             "path_to_logo_image": "logos/ChickQueen.jpg",
             "price": "1",
