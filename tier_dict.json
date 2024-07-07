@@ -1,5 +1,11 @@
 {
     "S": {
+        "Birdies Fried Chicken": {
+            "path_to_logo_image": "logos/Birdies Fried Chicken.jpg",
+            "price": "1",
+            "address": "263 Coxwell Ave",
+            "description": "A huge achievement in the fried chicken world"
+        },
         "Soy Boys": {
             "path_to_logo_image": "logos/Soy Boys.jpg",
             "price": "1",
