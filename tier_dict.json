@@ -69,6 +69,12 @@
             "address": "656 College St",
             "description": "Try the taste of Tokyo and wasabi mayo"
         },
+        "The Heartbreak Chef": {
+            "path_to_logo_image": "logos/The Heartbreak Chef.jpg",
+            "price": "2",
+            "address": "170 Baldwin St",
+            "description": "Broke up with your GF? Have HBC"
+        },
         "Flock Rotisserie + Greens": {
             "path_to_logo_image": "logos/Flock Rotisserie + Greens.jpg",
             "price": "2",
@@ -154,12 +160,6 @@
             "price": "2",
             "address": "55 Avenue Rd",
             "description": "Didn't taste much like a Southern burger but more like a Savoury burger"
-        },
-        "The Heartbreak Chef": {
-            "path_to_logo_image": "logos/The Heartbreak Chef.jpg",
-            "price": "2",
-            "address": "823 Dundas St W",
-            "description": "Broke up with your GF? Have HBC"
         },
         "Knockout Chicken": {
             "path_to_logo_image": "logos/Knockout Chicken.jpg",
