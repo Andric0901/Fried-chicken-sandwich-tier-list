@@ -302,6 +302,12 @@
             "address": "269 Augusta Ave",
             "description": "We're doomed! He's gonna get us!"
         },
+        "Bodega Burgers": {
+            "path_to_logo_image": "logos/Bodega Burgers.jpg",
+            "price": "1",
+            "address": "335 Yonge St",
+            "description": "Bodega? More like Bored-ega"
+        },
         "Wing Machine": {
             "path_to_logo_image": "logos/Wing Machine.jpg",
             "price": "1",
