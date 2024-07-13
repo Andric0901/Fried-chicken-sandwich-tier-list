@@ -162,6 +162,12 @@
             "address": "567 King St W",
             "description": "Tutankha-yum"
         },
+        "Dave's Hot Chicken": {
+            "path_to_logo_image": "logos/Dave's Hot Chicken.jpg",
+            "price": "1",
+            "address": "328 Yonge St",
+            "description": "Dave's not here, but his chicken is"
+        },
         "Fancy Franks": {
             "path_to_logo_image": "logos/Fancy Franks.jpg",
             "price": "1",
