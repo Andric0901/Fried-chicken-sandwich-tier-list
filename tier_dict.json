@@ -57,6 +57,12 @@
             "address": "915 Bay St",
             "description": "How to travel to Taiwan without going to Taiwan"
         },
+        "Harry's Charbroiled": {
+            "path_to_logo_image": "logos/Harry's Charbroiled.jpg",
+            "price": "1",
+            "address": "255 Coxwell Ave",
+            "description": "Yer a wizard Harry... with a good burger"
+        },
         "The Burger's Priest": {
             "path_to_logo_image": "logos/The Burger's Priest.jpg",
             "price": "1",
