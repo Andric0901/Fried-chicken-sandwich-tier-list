@@ -308,6 +308,12 @@
             "address": "269 Augusta Ave",
             "description": "We're doomed! He's gonna get us!"
         },
+        "KFC": {
+            "path_to_logo_image": "logos/KFC.jpg",
+            "price": "1",
+            "address": "900 Dufferin St",
+            "description": "Kentucky would not be proud"
+        },
         "Bodega Burgers": {
             "path_to_logo_image": "logos/Bodega Burgers.jpg",
             "price": "1",
