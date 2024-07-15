@@ -276,31 +276,6 @@ async def tierlist_command(interaction: discord.Interaction) -> None:
     await interaction.response.send_message(embed=embed, file=discord.File(image, TIERLIST_IMAGE_NAME))
 
 
-@tree.command(name='list', description='Show a list of all restaurants')
-async def list_command(interaction: discord.Interaction) -> None:
-    """Shows a list of all restaurants in an embed.
-
-    Uses the CompendiumPagesView class to paginate the list.
-
-    Args:
-        interaction (discord.Interaction): The interaction that triggered this command.
-    """
-    view = CompendiumPagesView()
-    _, embed = create_list_embed(view.page)
-    await interaction.response.send_message(embed=embed, view=view)
-
-
-@tree.command(name='feedback', description='Fill out a feedback form')
-async def feedback_command(interaction: discord.Interaction) -> None:
-    """Shows a feedback form for users to fill out.
-
-    Args:
-        interaction (discord.Interaction): The interaction that triggered this command.
-    """
-    modal = FeedbackModal()
-    await interaction.response.send_modal(modal)
-
-
 if __name__ == '__main__':
     # Check that .env file exists
     if not os.path.exists('.env'):
