@@ -314,6 +314,12 @@
             "address": "269 Augusta Ave",
             "description": "We're doomed! He's gonna get us!"
         },
+        "The Fancy Induced Burger": {
+            "path_to_logo_image": "logos/The Fancy Induced Burger.jpg",
+            "price": "1",
+            "address": "565 Bloor St W",
+            "description": "Too induced and became greasy"
+        },
         "KFC": {
             "path_to_logo_image": "logos/KFC.jpg",
             "price": "1",
