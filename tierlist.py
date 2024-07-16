@@ -6,6 +6,7 @@ from helper import TIER_DICT, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE_NAME
 DEFAULT_WIDTH = 200
 DEFAULT_GAP = 20
 DEFAULT_FONT = "arialbd.ttf"
+DEFAULT_FONT_DIR = "./assets/arialbd.ttf"
 FONT_SIZE = 50
 GAPS_BETWEEN_RESTAURANTS = 10
 
@@ -56,7 +57,10 @@ def make_tier_indicator(tier, color):
         DEFAULT_WIDTH * TIER_NUM_ROWS[tier] + GAPS_BETWEEN_RESTAURANTS * (TIER_NUM_ROWS[tier] - 1)
     img = Image.new('RGB', (image_width, image_height), color)
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(DEFAULT_FONT, FONT_SIZE)
+    try:
+        font = ImageFont.truetype(DEFAULT_FONT, FONT_SIZE)
+    except OSError:
+        font = ImageFont.truetype(DEFAULT_FONT_DIR, FONT_SIZE)
     left, top, right, bottom = draw.textbbox((0, 0), tier, font=font)
     w, h = right - left, bottom - top
     draw.text(((image_width - w) / 2, (image_height - h) / 2 - 4), tier, font=font, fill=(0, 0, 0))
