@@ -25,6 +25,12 @@
             "address": "1316 Bloor St W",
             "description": "The kind of burgers Mario Bros would love"
         },
+        "Daddy's Chicken": {
+            "path_to_logo_image": "logos/Daddy's Chicken.jpg",
+            "price": "2",
+            "address": "1276 Queen St E",
+            "description": "Who's Your Daddy?"
+        },
         "Porchetta & Co": {
             "path_to_logo_image": "logos/Porchetta & Co.jpg",
             "price": "2",
