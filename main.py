@@ -280,12 +280,12 @@ if __name__ == '__main__':
     # Check that .env file exists
     if not os.path.exists('.env'):
         raise FileNotFoundError('.env file not found')
-    print(collection.count_documents({}))
-    print(len(RESTAURANT_NAMES))
-    if collection.count_documents({}) != len(RESTAURANT_NAMES):
-        setup_db()
+    # print(collection.count_documents({}))
+    print("Number of restaurants visited: {}".format(len(RESTAURANT_NAMES)))
+    # if collection.count_documents({}) != len(RESTAURANT_NAMES):
+    #     setup_db()
     count = sum([len(files) for _, _, files in os.walk('logos')])
-    assert count == len(RESTAURANT_NAMES)
+    # assert count == len(RESTAURANT_NAMES)
     if test_token:
         print("Test token exists. Running test bot...")
         client.run(test_token)

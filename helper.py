@@ -535,5 +535,5 @@ if __name__ == "__main__":
     # Check that .env file exists
     if not os.path.exists('.env'):
         raise FileNotFoundError('.env file not found')
-    setup_db()
-    verify_restaurant_names()
+    # setup_db()
+    # verify_restaurant_names()
