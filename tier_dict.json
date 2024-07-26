@@ -25,6 +25,12 @@
             "address": "1316 Bloor St W",
             "description": "The kind of burgers Mario Bros would love"
         },
+        "Chen Chen's Nashville Hot Chicken": {
+            "path_to_logo_image": "logos/Chen Chen's Nashville Hot Chicken.jpg",
+            "price": "2",
+            "address": "1184 Queen St W",
+            "description": "The best Nashville Hot Chicken in Toronto"
+        },
         "Daddy's Chicken": {
             "path_to_logo_image": "logos/Daddy's Chicken.jpg",
             "price": "2",
