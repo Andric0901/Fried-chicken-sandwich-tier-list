@@ -290,6 +290,13 @@
         }
     },
     "C": {
+        "Saigon Lotus": {
+            "path_to_logo_image": "logos/Saigon Lotus.jpg",
+            "price": "1",
+            "address": "6 St Andrew St",
+            "description": "A good bahn mi but an unfortunate loss for vegan chicken",
+            "vegan": true
+        },
         "Mary Brown's": {
             "path_to_logo_image": "logos/Mary Brown's.jpg",
             "price": "1",
