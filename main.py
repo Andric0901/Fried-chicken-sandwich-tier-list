@@ -12,7 +12,8 @@ import abc
 ##############################################
 intents = discord.Intents.default()
 intents.message_content = True
-client = discord.Client(intents=intents)
+activity = Activity(name='the best chicken sandwich discoveries', type=ActivityType.competing)
+client = discord.Client(intents=intents, activity=activity)
 tree = app_commands.CommandTree(client)
 
 
@@ -23,8 +24,6 @@ tree = app_commands.CommandTree(client)
 async def on_ready() -> None:
     """When the bot is ready, change the presence and sync the slash commands."""
     print(f'We have logged in as {client.user}')
-    activity = Activity(name='the best chicken sandwich discoveries', type=ActivityType.competing)
-    await client.change_presence(status=Status.online, activity=activity)
     await tree.sync()
 
 
