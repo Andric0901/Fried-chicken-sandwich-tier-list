@@ -22,7 +22,7 @@ tree = app_commands.CommandTree(client)
 ##############################################
 @client.event
 async def on_ready() -> None:
-    """When the bot is ready, change the presence and sync the slash commands."""
+    """When the bot is ready, sync the slash commands."""
     print(f'We have logged in as {client.user}')
     await tree.sync()
 
