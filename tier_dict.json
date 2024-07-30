@@ -149,6 +149,12 @@
             "address": "628 Yonge St",
             "description": "Chinese fusion burger with gloves"
         },
+        "Old.K": {
+            "path_to_logo_image": "logos/Old.K.jpg",
+            "price": "1",
+            "address": "310 College St",
+            "description": "Old but Powerful Krunch"
+        },
         "Jollibee": {
             "path_to_logo_image": "logos/Jollibee.jpg",
             "price": "1",
