@@ -4,7 +4,8 @@ venv
 __pycache__
 autorun.sh
 autodeploy.sh
+autopull.sh
 RDP.sh
-ssh-key-2024-04-27.key
-ssh-key-2024-04-27.key.pub
+ssh-key-2024-07-29.key
+ssh-key-2024-07-29.key.pub
 mismatches.txt
