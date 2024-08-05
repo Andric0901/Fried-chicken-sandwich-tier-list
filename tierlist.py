@@ -51,8 +51,9 @@ def total_num_restaurants():
     return sum(TIER_NUM_ROWS[tier] for tier in TIER_NUM_ROWS)
 
 
-def make_tier_indicator(tier, color):
+def make_tier_indicator(tier):
     """A tier indicator is a square of 100 x 100 pixels, with the text centered"""
+    color = TIER_COLOUR_HEX_DICT[tier]
     image_width, image_height = DEFAULT_WIDTH, \
         DEFAULT_WIDTH * TIER_NUM_ROWS[tier] + GAPS_BETWEEN_RESTAURANTS * (TIER_NUM_ROWS[tier] - 1)
     img = Image.new('RGB', (image_width, image_height), color)
@@ -121,7 +122,7 @@ def make_tier_restaurants(tier):
 
 def make_one_complete_tier(tier):
     """Make a tier image"""
-    tier_indicator = make_tier_indicator(tier, TIER_COLOUR_HEX_DICT[tier])
+    tier_indicator = make_tier_indicator(tier)
     tier_restaurants = make_tier_restaurants(tier)
     tier_img = Image.new('RGB', (tier_indicator.size[0] + tier_restaurants.size[0] + DEFAULT_GAP,
                                  DEFAULT_WIDTH * TIER_NUM_ROWS[tier] +
