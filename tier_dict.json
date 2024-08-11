@@ -393,6 +393,12 @@
             "address": "250 Adelaide St W",
             "description": "Dublin does not call for Kraft Single"
         },
+        "The Bullger Burger & Steak": {
+            "path_to_logo_image": "logos/The Bullger Burger & Steak.jpg",
+            "price": "2",
+            "address": "348 Queen Street East",
+            "description": "I forgot how greasy a bull can get"
+        },
         "Matt's Burger Lab": {
             "path_to_logo_image": "logos/Matt's Burger Lab.jpg",
             "price": "2",
