@@ -54,6 +54,12 @@
             "price": "4",
             "address": "65 Front St W",
             "description": "The biggest comeback in history, better than the Raptors"
+        },
+        "The Wren":  {
+            "path_to_logo_image": "logos/The Wren.jpg",
+            "price": "4",
+            "address": "1382 Danforth Ave",
+            "description": "Perfect combo of Italian and Japanese"
         }
     },
     "A": {
