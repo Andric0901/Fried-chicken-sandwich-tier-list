@@ -9,6 +9,8 @@ DEFAULT_FONT = "arialbd.ttf"
 DEFAULT_FONT_DIR = "./assets/arialbd.ttf"
 FONT_SIZE = 50
 GAPS_BETWEEN_RESTAURANTS = 10
+TAG_LARGE_SIZE_MULTIPLIER = 5  # Tag's height will be 1/5 of the logo's height
+TAG_SMALL_SIZE_MULTIPLIER = 7  # Tag's height will be 1/7 of the logo's height
 
 
 def evaluate_num_logos_per_row(min_val: int = 10, threshold: int = 10) -> int:
@@ -83,28 +85,37 @@ def make_tier_restaurants(tier):
     restaurants = []
     for restaurant_name in TIER_DICT[tier]:
         restaurant_info = TIER_DICT[tier][restaurant_name]
-        restaurant_logo, price, is_vegan = (restaurant_info["path_to_logo_image"],
-                                            restaurant_info["price"],
-                                            restaurant_info.get("vegan", False))
+        restaurant_logo, price, is_vegan, is_year = (restaurant_info["path_to_logo_image"],
+                                                     restaurant_info["price"],
+                                                     restaurant_info.get("vegan", False),
+                                                     restaurant_info.get("year", -1))
         # get the image of the restaurant
-        logo_img, price_img, is_vegan_img = (Image.open(restaurant_logo),
-                                             Image.open("assets/{}.png".format(price)),
-                                             Image.open("assets/Vegan.png") if is_vegan else None)
+        logo_img, price_img, is_vegan_img, is_year_img = (Image.open(restaurant_logo),
+                                                          Image.open("assets/{}.png".format(price)),
+                                                          Image.open("assets/Vegan.png") if is_vegan else None,
+                                                          Image.open("assets/{}.png".format(
+                                                              is_year)) if is_year != -1 else None)
         # get the width and height of the restaurant's logo
         width, height = logo_img.size
         price_width, price_height = price_img.size
         # resize the logo, preserving the aspect ratio, so that the height is 100 pixels
         logo_img = logo_img.resize((int(width * DEFAULT_WIDTH / height), DEFAULT_WIDTH))
-        price_img = price_img.resize((int(price_width * DEFAULT_WIDTH / (price_height * 5)),
-                                      int(DEFAULT_WIDTH / 5)))
+        price_img = price_img.resize((int(price_width * DEFAULT_WIDTH / (price_height * TAG_LARGE_SIZE_MULTIPLIER)),
+                                      int(DEFAULT_WIDTH / TAG_LARGE_SIZE_MULTIPLIER)))
         logo_img.paste(price_img, (logo_img.size[0] - price_img.size[0], 0), price_img)
         if is_vegan_img:
             is_vegan_width, is_vegan_height = is_vegan_img.size
-            is_vegan_img = is_vegan_img.resize((int(is_vegan_width * DEFAULT_WIDTH / (is_vegan_height * 5)),
-                                                int(DEFAULT_WIDTH / 5)))
+            is_vegan_img = is_vegan_img.resize((int(is_vegan_width * DEFAULT_WIDTH / (is_vegan_height * TAG_SMALL_SIZE_MULTIPLIER)),
+                                                int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
             logo_img.paste(is_vegan_img, (logo_img.size[0] - is_vegan_img.size[0],
                                           logo_img.size[1] - is_vegan_img.size[1]),
                            is_vegan_img)
+
+        if is_year_img:
+            is_year_width, is_year_height = is_year_img.size
+            is_year_img = is_year_img.resize((int(is_year_width * DEFAULT_WIDTH / (is_year_height * TAG_SMALL_SIZE_MULTIPLIER)),
+                                              int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
+            logo_img.paste(is_year_img, (0, logo_img.size[1] - is_year_img.size[1]), is_year_img)
 
         # append the logo to the list of restaurants
         restaurants.append(logo_img)
