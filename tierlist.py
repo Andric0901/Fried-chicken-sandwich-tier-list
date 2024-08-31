@@ -115,7 +115,7 @@ def make_tier_restaurants(tier):
             is_year_width, is_year_height = is_year_img.size
             is_year_img = is_year_img.resize((int(is_year_width * DEFAULT_WIDTH / (is_year_height * TAG_SMALL_SIZE_MULTIPLIER)),
                                               int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
-            logo_img.paste(is_year_img, (0, logo_img.size[1] - is_year_img.size[1]), is_year_img)
+            logo_img.paste(is_year_img, (0, 0), is_year_img)
 
         # append the logo to the list of restaurants
         restaurants.append(logo_img)
