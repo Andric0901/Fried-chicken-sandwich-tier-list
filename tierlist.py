@@ -1,7 +1,7 @@
 """A Python file with Tierlist configurations."""
 
 from PIL import Image, ImageDraw, ImageFont
-from helper import TIER_DICT, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE_NAME
+from helper import TIER_DICT, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE_NAME, TIERLIST_IMAGE_NAME_WITH_YEAR_TAG
 
 DEFAULT_WIDTH = 200
 DEFAULT_GAP = 20
@@ -167,3 +167,5 @@ if __name__ == "__main__":
     print("Number of logos per row: {}".format(NUM_LOGOS_PER_ROW))
     tierlist = make_tierlist()
     tierlist.save(TIERLIST_IMAGE_NAME)
+    tierlist_with_year_tag = make_tierlist(with_year_tag=True)
+    tierlist_with_year_tag.save(TIERLIST_IMAGE_NAME_WITH_YEAR_TAG)
