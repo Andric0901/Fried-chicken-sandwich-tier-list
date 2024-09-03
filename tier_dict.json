@@ -342,6 +342,13 @@
             "description": "Interesting take on pretzel bun, not crispy enough though",
             "year": 2023
         },
+        "Boston Pizza": {
+            "path_to_logo_image": "logos/Boston Pizza.jpg",
+            "price": "4",
+            "address": "250 Front St W Unit 1c201",
+            "description": "An average fried chicken sandwich from Boston",
+            "year": 2024
+        },
         "Cafe Landwer": {
             "path_to_logo_image": "logos/Cafe Landwer.jpg",
             "price": "4",
