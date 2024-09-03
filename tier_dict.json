@@ -87,6 +87,13 @@
             "description": "How to travel to Taiwan without going to Taiwan",
             "year": 2023
         },
+        "Rosie's Burger": {
+            "path_to_logo_image": "logos/Rosie's Burger.jpg",
+            "price": "1",
+            "address": "573 Queen St W",
+            "description": "Rosie makes a great fried chicken sandwich (not a burger)",
+            "year": 2024
+        },
         "Harry's Charbroiled": {
             "path_to_logo_image": "logos/Harry's Charbroiled.jpg",
             "price": "1",
