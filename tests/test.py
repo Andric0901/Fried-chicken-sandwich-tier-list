@@ -20,5 +20,15 @@ class TestLogosRatio(unittest.TestCase):
                 print(width, height, logo_dir)
 
 
+class TestLogosExtension(unittest.TestCase):
+    def test_logo_extension_equals_jpg(self):
+        list_of_logo_names = os.listdir(LOGOS_PATH)
+        for name in list_of_logo_names:
+            try:
+                assert name.endswith(".jpg")
+            except AssertionError:
+                print(name)
+
+
 if __name__ == '__main__':
     unittest.main()
