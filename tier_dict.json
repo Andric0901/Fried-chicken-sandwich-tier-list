@@ -415,6 +415,13 @@
             "description": "We're doomed! He's gonna get us!",
             "year": 2023
         },
+        "B Boyz": {
+            "path_to_logo_image": "logos/B Boyz.jpg",
+            "price": "1",
+            "address": "45 Carlton St",
+            "description": "I hoped B Boyz would be at least in B tier",
+            "year": 2024
+        },
         "The Fancy Induced Burger": {
             "path_to_logo_image": "logos/The Fancy Induced Burger.jpg",
             "price": "1",
