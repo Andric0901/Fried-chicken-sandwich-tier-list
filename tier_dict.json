@@ -7,6 +7,13 @@
             "description": "A huge achievement in the fried chicken world",
             "year": 2024
         },
+        "Zesty Burgers": {
+            "path_to_logo_image": "logos/Zesty Burgers.jpg",
+            "price": "1",
+            "address": "1051 Bloor St W",
+            "description": "Very Zesty indeed",
+            "year": 2024
+        },
         "Soy Boys": {
             "path_to_logo_image": "logos/Soy Boys.jpg",
             "price": "1",
