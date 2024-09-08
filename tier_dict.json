@@ -554,6 +554,13 @@
             "address": "563 Bloor St W",
             "description": "Loud music? Probably perfect for insomniacs",
             "year": 2024
+        },
+        "Banknote Bar": {
+            "path_to_logo_image": "logos/Banknote Bar.jpg",
+            "price": "4",
+            "address": "474 Adelaide St E",
+            "description": "Perfect for bankers, not for me",
+            "year": 2024
         }
     },
     "D": {
