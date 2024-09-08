@@ -64,6 +64,13 @@
             "description": "Stands up to their own name, the G.O.A.T",
             "year": 2023
         },
+        "Cluck Clucks": {
+            "path_to_logo_image": "logos/Cluck Clucks.jpg",
+            "price": "3",
+            "address": "222 The Esplanade",
+            "description": "They made the *cough cough* joke but 100 times better",
+            "year": 2024
+        },
         "Union Chicken": {
             "path_to_logo_image": "logos/Union Chicken.jpg",
             "price": "4",
