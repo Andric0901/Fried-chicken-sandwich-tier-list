@@ -9,7 +9,7 @@ A small project to rank ALL the fried chicken sandwich restaurants in GTA (Great
 ![Tier List](https://github.com/Andric0901/Fried-chicken-sandwich-tier-list/blob/main/tierlist.png?raw=true)
 
 # Alternative Tier Lists
-- Click [here](https://github.com/Andric0901/Fried-chicken-sandwich-tier-list/blob/main/tierlist_with_year_first_visited_tag.png?raw=true) to view the version of the tierlist with year tags of first visit (as part of keeping the metadata).
+- Click [here](https://github.com/Andric0901/Fried-chicken-sandwich-tier-list/blob/main/tierlist_with_year_first_visited_tag.png?raw=true) to view the version of the tier list with year tags of first visit (as part of keeping the metadata).
 - Click [here](https://github.com/Andric0901/Fried-chicken-sandwich-tier-list/blob/main/tierlist_with_year_tag.png?raw=true) to view the version of the tier list with year tags when the ranks have been (re)evaluated.
 
 # How to run
