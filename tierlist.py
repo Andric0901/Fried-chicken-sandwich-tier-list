@@ -86,12 +86,11 @@ def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_vis
     restaurants = []
     for restaurant_name in TIER_DICT[tier]:
         restaurant_info = TIER_DICT[tier][restaurant_name]
-        # TODO: Make the is_year_first_visited variable required
         restaurant_logo, price, is_vegan, is_year, is_year_first_visited = (restaurant_info["path_to_logo_image"],
                                                      restaurant_info["price"],
                                                      restaurant_info.get("vegan", False),
                                                      restaurant_info["year"],
-                                                     restaurant_info.get("year_first_visited", -1))
+                                                     restaurant_info["year_first_visited"])
         # get the image of the restaurant
         logo_img, price_img, is_vegan_img, is_year_img, is_year_first_visited_img = (Image.open(restaurant_logo),
                                                           Image.open("assets/{}.png".format(price)),
