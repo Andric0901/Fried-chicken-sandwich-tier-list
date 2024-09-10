@@ -182,5 +182,5 @@ if __name__ == "__main__":
     tierlist.save(TIERLIST_IMAGE_NAME)
     tierlist_with_year_tag = make_tierlist(with_year_tag=True)
     tierlist_with_year_tag.save(TIERLIST_IMAGE_NAME_WITH_YEAR_TAG)
-    # tierlist_with_year_first_visited_tag = make_tierlist(with_year_first_visited_tag=True)
-    # tierlist_with_year_first_visited_tag.save(TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG)
+    tierlist_with_year_first_visited_tag = make_tierlist(with_year_first_visited_tag=True)
+    tierlist_with_year_first_visited_tag.save(TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG)
