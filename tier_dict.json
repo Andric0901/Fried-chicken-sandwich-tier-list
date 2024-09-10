@@ -401,6 +401,13 @@
             "description": "More like Chicks-Fill-C",
             "year": 2023
         },
+        "MightyBird": {
+            "path_to_logo_image": "logos/MightyBird.jpg",
+            "price": "1",
+            "address": "65 Front St W Unit 441",
+            "description": "Not so Mighty sandwich",
+            "year": 2024
+        },
         "Harvey's": {
             "path_to_logo_image": "logos/Harvey's.jpg",
             "price": "1",
