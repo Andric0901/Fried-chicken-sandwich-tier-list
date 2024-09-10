@@ -71,6 +71,7 @@ RESTAURANT_TIERS = [tier for tier in TIER_DICT for _ in TIER_DICT[tier]]
 MANUAL_EMBED_RESTAURANTS = ["Bubba's Crispy Fried Chicken", "Foodie"]
 TIERLIST_IMAGE_NAME = 'tierlist.png'
 TIERLIST_IMAGE_NAME_WITH_YEAR_TAG = 'tierlist_with_year_tag.png'
+TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG = 'tierlist_with_year_first_visited_tag.png'
 TIMEZONE = pytz.timezone('America/Toronto')
 TIERS = ['S', 'A', 'B', 'C', 'D', 'E', 'F']
 

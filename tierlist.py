@@ -1,7 +1,7 @@
 """A Python file with Tierlist configurations."""
 
 from PIL import Image, ImageDraw, ImageFont
-from helper import TIER_DICT, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE_NAME, TIERLIST_IMAGE_NAME_WITH_YEAR_TAG
+from helper import TIER_DICT, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE_NAME, TIERLIST_IMAGE_NAME_WITH_YEAR_TAG, TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG
 
 DEFAULT_WIDTH = 200
 DEFAULT_GAP = 20
@@ -81,21 +81,25 @@ def make_tier_background(tier):
 
 def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_visited_tag: bool = False):
     """Make a tier image"""
+    # TODO: some variables here do not need to be resized every iteration, pull out as constants
     tier_img = make_tier_background(tier)
     restaurants = []
     for restaurant_name in TIER_DICT[tier]:
         restaurant_info = TIER_DICT[tier][restaurant_name]
-        # TODO
-        restaurant_logo, price, is_vegan, is_year = (restaurant_info["path_to_logo_image"],
+        # TODO: Make the is_year_first_visited variable required
+        restaurant_logo, price, is_vegan, is_year, is_year_first_visited = (restaurant_info["path_to_logo_image"],
                                                      restaurant_info["price"],
                                                      restaurant_info.get("vegan", False),
-                                                     restaurant_info["year"])
+                                                     restaurant_info["year"],
+                                                     restaurant_info.get("year_first_visited", -1))
         # get the image of the restaurant
-        logo_img, price_img, is_vegan_img, is_year_img = (Image.open(restaurant_logo),
+        logo_img, price_img, is_vegan_img, is_year_img, is_year_first_visited_img = (Image.open(restaurant_logo),
                                                           Image.open("assets/{}.png".format(price)),
                                                           Image.open("assets/Vegan.png") if is_vegan else None,
                                                           Image.open("assets/{}.png".format(
-                                                              is_year)) if is_year != -1 and with_year_tag else None)
+                                                              is_year)) if is_year != -1 and with_year_tag else None,
+                                                          Image.open("assets/{}.png".format(
+                                                              is_year_first_visited)) if is_year_first_visited != -1 and with_year_first_visited_tag else None)
         # get the width and height of the restaurant's logo
         width, height = logo_img.size
         price_width, price_height = price_img.size
@@ -122,6 +126,11 @@ def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_vis
             is_year_img = is_year_img.resize((int(is_year_width * DEFAULT_WIDTH / (is_year_height * TAG_SMALL_SIZE_MULTIPLIER)),
                                               int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
             logo_img.paste(is_year_img, (0, 0), is_year_img)
+        elif is_year_first_visited_img:
+            is_year_width, is_year_height = is_year_first_visited_img.size
+            is_year_first_visited_img = is_year_first_visited_img.resize((int(is_year_width * DEFAULT_WIDTH / (is_year_height * TAG_SMALL_SIZE_MULTIPLIER)),
+                                              int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
+            logo_img.paste(is_year_first_visited_img, (0, 0), is_year_first_visited_img)
 
         # append the logo to the list of restaurants
         restaurants.append(logo_img)
@@ -173,3 +182,5 @@ if __name__ == "__main__":
     tierlist.save(TIERLIST_IMAGE_NAME)
     tierlist_with_year_tag = make_tierlist(with_year_tag=True)
     tierlist_with_year_tag.save(TIERLIST_IMAGE_NAME_WITH_YEAR_TAG)
+    # tierlist_with_year_first_visited_tag = make_tierlist(with_year_first_visited_tag=True)
+    # tierlist_with_year_first_visited_tag.save(TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG)
