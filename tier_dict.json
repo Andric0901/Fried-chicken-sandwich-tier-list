@@ -254,6 +254,14 @@
             "year_first_visited": 2024,
             "vegan": true
         },
+        "Honeymoon Dessert": {
+            "path_to_logo_image": "logos/Honeymoon Dessert.jpg",
+            "price": "1",
+            "address": "460 Spadina Ave",
+            "description": "Not a honeymoon but a dessert",
+            "year": 2024,
+            "year_first_visited": 2024
+        },
         "The Arbor Room": {
             "path_to_logo_image": "logos/The Arbor Room.jpg",
             "price": "1",
