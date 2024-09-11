@@ -1,7 +1,7 @@
 """A Python file with Tierlist configurations."""
 
 from PIL import Image, ImageDraw, ImageFont
-from helper import TIER_DICT, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE_NAME, TIERLIST_IMAGE_NAME_WITH_YEAR_TAG
+from helper import TIER_DICT, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE_NAME, TIERLIST_IMAGE_NAME_WITH_YEAR_TAG, TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG
 
 DEFAULT_WIDTH = 200
 DEFAULT_GAP = 20
@@ -79,22 +79,26 @@ def make_tier_background(tier):
     return img
 
 
-def make_tier_restaurants(tier, with_year_tag: bool = False):
+def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_visited_tag: bool = False):
     """Make a tier image"""
+    # TODO: some variables here do not need to be resized every iteration, pull out as constants
     tier_img = make_tier_background(tier)
     restaurants = []
     for restaurant_name in TIER_DICT[tier]:
         restaurant_info = TIER_DICT[tier][restaurant_name]
-        restaurant_logo, price, is_vegan, is_year = (restaurant_info["path_to_logo_image"],
+        restaurant_logo, price, is_vegan, is_year, is_year_first_visited = (restaurant_info["path_to_logo_image"],
                                                      restaurant_info["price"],
                                                      restaurant_info.get("vegan", False),
-                                                     restaurant_info["year"])
+                                                     restaurant_info["year"],
+                                                     restaurant_info["year_first_visited"])
         # get the image of the restaurant
-        logo_img, price_img, is_vegan_img, is_year_img = (Image.open(restaurant_logo),
+        logo_img, price_img, is_vegan_img, is_year_img, is_year_first_visited_img = (Image.open(restaurant_logo),
                                                           Image.open("assets/{}.png".format(price)),
                                                           Image.open("assets/Vegan.png") if is_vegan else None,
                                                           Image.open("assets/{}.png".format(
-                                                              is_year)) if is_year != -1 and with_year_tag else None)
+                                                              is_year)) if is_year != -1 and with_year_tag else None,
+                                                          Image.open("assets/{}.png".format(
+                                                              is_year_first_visited)) if is_year_first_visited != -1 and with_year_first_visited_tag else None)
         # get the width and height of the restaurant's logo
         width, height = logo_img.size
         price_width, price_height = price_img.size
@@ -105,8 +109,8 @@ def make_tier_restaurants(tier, with_year_tag: bool = False):
         logo_img.paste(price_img, (logo_img.size[0] - price_img.size[0], 0), price_img)
         if is_vegan_img:
             is_vegan_width, is_vegan_height = is_vegan_img.size
-            if with_year_tag:
-                # If year tag is present, make the vegan tag smaller
+            if with_year_tag or with_year_first_visited_tag:
+                # If either year tag is present, make the vegan tag smaller
                 is_vegan_img = is_vegan_img.resize((int(is_vegan_width * DEFAULT_WIDTH / (is_vegan_height * TAG_SMALL_SIZE_MULTIPLIER)),
                                                     int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
             else:
@@ -121,6 +125,11 @@ def make_tier_restaurants(tier, with_year_tag: bool = False):
             is_year_img = is_year_img.resize((int(is_year_width * DEFAULT_WIDTH / (is_year_height * TAG_SMALL_SIZE_MULTIPLIER)),
                                               int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
             logo_img.paste(is_year_img, (0, 0), is_year_img)
+        elif is_year_first_visited_img:
+            is_year_width, is_year_height = is_year_first_visited_img.size
+            is_year_first_visited_img = is_year_first_visited_img.resize((int(is_year_width * DEFAULT_WIDTH / (is_year_height * TAG_SMALL_SIZE_MULTIPLIER)),
+                                              int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
+            logo_img.paste(is_year_first_visited_img, (0, 0), is_year_first_visited_img)
 
         # append the logo to the list of restaurants
         restaurants.append(logo_img)
@@ -136,10 +145,10 @@ def make_tier_restaurants(tier, with_year_tag: bool = False):
     return tier_img
 
 
-def make_one_complete_tier(tier, with_year_tag: bool = False):
+def make_one_complete_tier(tier, with_year_tag: bool = False, with_year_first_visited_tag: bool = False):
     """Make a tier image"""
     tier_indicator = make_tier_indicator(tier)
-    tier_restaurants = make_tier_restaurants(tier, with_year_tag=with_year_tag)
+    tier_restaurants = make_tier_restaurants(tier, with_year_tag=with_year_tag, with_year_first_visited_tag=with_year_first_visited_tag)
     tier_img = Image.new('RGB', (tier_indicator.size[0] + tier_restaurants.size[0] + DEFAULT_GAP,
                                  DEFAULT_WIDTH * TIER_NUM_ROWS[tier] +
                                  GAPS_BETWEEN_RESTAURANTS * (TIER_NUM_ROWS[tier] - 1)), (0, 0, 0))
@@ -148,8 +157,11 @@ def make_one_complete_tier(tier, with_year_tag: bool = False):
     return tier_img
 
 
-def make_tierlist(with_year_tag: bool = False):
+def make_tierlist(with_year_tag: bool = False, with_year_first_visited_tag: bool = False):
     """Make a tierlist image, with margins equal to DEFAULT_GAP"""
+    if with_year_tag and with_year_first_visited_tag:
+        # This function should not be called with both booleans set to True
+        raise ValueError('make_tierlist should not be called with both year tag booleans set to True')
     sum_of_num_rows = sum(TIER_NUM_ROWS.values())
     image_width, image_height = DEFAULT_WIDTH + BACKGROUND_WIDTH + 3 * DEFAULT_GAP, \
                                 sum_of_num_rows * DEFAULT_WIDTH + 8 * DEFAULT_GAP + \
@@ -157,7 +169,7 @@ def make_tierlist(with_year_tag: bool = False):
     tierlist = Image.new('RGB', (image_width, image_height), (0, 0, 0))
     y_offset = DEFAULT_GAP
     for tier in TIER_DICT:
-        tier_img = make_one_complete_tier(tier, with_year_tag=with_year_tag)
+        tier_img = make_one_complete_tier(tier, with_year_tag=with_year_tag, with_year_first_visited_tag=with_year_first_visited_tag)
         tierlist.paste(tier_img, (DEFAULT_GAP, y_offset))
         y_offset += tier_img.size[1] + DEFAULT_GAP
     return tierlist
@@ -169,3 +181,5 @@ if __name__ == "__main__":
     tierlist.save(TIERLIST_IMAGE_NAME)
     tierlist_with_year_tag = make_tierlist(with_year_tag=True)
     tierlist_with_year_tag.save(TIERLIST_IMAGE_NAME_WITH_YEAR_TAG)
+    tierlist_with_year_first_visited_tag = make_tierlist(with_year_first_visited_tag=True)
+    tierlist_with_year_first_visited_tag.save(TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG)
