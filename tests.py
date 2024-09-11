@@ -10,13 +10,14 @@ $ export PYTHONPATH="${PYTHONPATH}:/root/path"
 
 """
 
-import unittest
-import os
 import json
-from PIL import Image
-from tierlist import make_tierlist
-from helper import RESTAURANT_NAMES
+import os
+import unittest
 
+from PIL import Image
+
+from helper import RESTAURANT_NAMES
+from tierlist import make_tierlist
 
 LOGOS_PATH = "logos"
 
