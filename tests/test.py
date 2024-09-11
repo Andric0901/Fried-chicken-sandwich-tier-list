@@ -64,10 +64,9 @@ class TestTierDictJson(unittest.TestCase):
 
     def test_tier_dict_json_has_unique_names(self):
         try:
-            for t in self.tiers:
-                # Set removes duplicate elements if there exists one
-                restaurant_names_set = set(self.restaurant_names)
-                assert len(self.restaurant_names) == len(restaurant_names_set)
+            # Set removes duplicate elements if there exists one
+            restaurant_names_set = set(self.restaurant_names)
+            assert len(self.restaurant_names) == len(restaurant_names_set)
         except AssertionError:
             print(self.restaurant_names, restaurant_names_set)
             print(len(self.restaurant_names), len(restaurant_names_set))
