@@ -95,10 +95,8 @@ class TestTierDictJson(unittest.TestCase):
             print(self.d[t][name]["year"])
             self.fail()
 
-
     def tearDown(self):
         self.f.close()
-
 
 
 if __name__ == '__main__':
