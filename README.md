@@ -16,8 +16,9 @@ A small project to rank ALL the fried chicken sandwich restaurants in GTA (Great
 If you want to play with this tierlist code (requires Python 3.12.3)...
 
  1. Clone this repository.
- 2. Install all dependencies in `requirements.txt`.
- 3. Run tierlist.py.
+ 2. Run `make` command
+ 3. Install all dependencies in `requirements.txt`.
+ 4. Run tierlist.py.
 
 # Discord Bot
 Click on [this link](https://discord.com/api/oauth2/authorize?client_id=1077364191494668420&permissions=8&scope=bot) to invite the bot to your server.
