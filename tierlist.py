@@ -93,11 +93,11 @@ def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_vis
                                                      restaurant_info["year_first_visited"])
         # get the image of the restaurant
         logo_img, price_img, is_vegan_img, is_year_img, is_year_first_visited_img = (Image.open(restaurant_logo),
-                                                          Image.open("assets/{}.png".format(price)),
-                                                          Image.open("assets/Vegan.png") if is_vegan else None,
-                                                          Image.open("assets/{}.png".format(
+                                                          Image.open("assets/png/{}.png".format(price)),
+                                                          Image.open("assets/png/Vegan.png") if is_vegan else None,
+                                                          Image.open("assets/png/{}.png".format(
                                                               is_year)) if is_year != -1 and with_year_tag else None,
-                                                          Image.open("assets/{}.png".format(
+                                                          Image.open("assets/png/{}.png".format(
                                                               is_year_first_visited)) if is_year_first_visited != -1 and with_year_first_visited_tag else None)
         # get the width and height of the restaurant's logo
         width, height = logo_img.size
