@@ -13,6 +13,7 @@ $ export PYTHONPATH="${PYTHONPATH}:/root/path"
 import json
 import os
 import unittest
+import time
 
 from PIL import Image
 
@@ -23,12 +24,36 @@ LOGOS_PATH = "logos"
 
 
 class TestMakeTierList(unittest.TestCase):
+    def test_make_tierlist_performance(self):
+        cutoff = 3
+        start = time.time()
+        make_tierlist()
+        end = time.time()
+        if end - start > cutoff:
+            self.fail(f"Failed the performance test with cutoff {cutoff} seconds")
+
     def test_make_tierlist_raises_exception(self):
         try:
             make_tierlist(with_year_tag=True, with_year_first_visited_tag=True)
             self.fail("The function make_tierlist with both boolean set to True should raise ValueError")
         except ValueError:
             pass
+
+    def test_make_tierlist_consistency(self):
+        try:
+            # All invocations of make_tierlist with same (unchanged) tier_dict.json file should
+            # create exactly same Image objects
+            t1, t2 = make_tierlist(), make_tierlist()
+            assert t1 == t2
+            # TODO: uncomment after optimizing make_tierlist
+            # t1, t2 = make_tierlist(with_year_tag=True), make_tierlist(with_year_tag=True)
+            # assert t1 == t2
+            # t1, t2 = make_tierlist(with_year_first_visited_tag=True), make_tierlist(with_year_first_visited_tag=True)
+            # assert t1 == t2
+        except AssertionError:
+            print(t1)
+            print(t2)
+            self.fail('All invocations of make_tierlist with unchanged tier_dict.json should not change resulting tier list')
 
 
 class TestLogos(unittest.TestCase):
