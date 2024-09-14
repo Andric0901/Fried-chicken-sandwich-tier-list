@@ -30,6 +30,7 @@ class TestMakeTierList(unittest.TestCase):
         make_tierlist()
         end = time.time()
         if end - start > cutoff:
+            print(end - start)
             self.fail(f"Failed the performance test with cutoff {cutoff} seconds")
 
     def test_make_tierlist_raises_exception(self):
@@ -39,17 +40,30 @@ class TestMakeTierList(unittest.TestCase):
         except ValueError:
             pass
 
-    def test_make_tierlist_consistency(self):
+    def test_make_tierlist_consistency_1(self):
         try:
             # All invocations of make_tierlist with same (unchanged) tier_dict.json file should
             # create exactly same Image objects
             t1, t2 = make_tierlist(), make_tierlist()
             assert t1 == t2
-            # TODO: uncomment after optimizing make_tierlist
-            # t1, t2 = make_tierlist(with_year_tag=True), make_tierlist(with_year_tag=True)
-            # assert t1 == t2
-            # t1, t2 = make_tierlist(with_year_first_visited_tag=True), make_tierlist(with_year_first_visited_tag=True)
-            # assert t1 == t2
+        except AssertionError:
+            print(t1)
+            print(t2)
+            self.fail('All invocations of make_tierlist with unchanged tier_dict.json should not change resulting tier list')
+
+    def test_make_tierlist_consistency_2(self):
+        try:
+            t1, t2 = make_tierlist(with_year_tag=True), make_tierlist(with_year_tag=True)
+            assert t1 == t2
+        except AssertionError:
+            print(t1)
+            print(t2)
+            self.fail('All invocations of make_tierlist with unchanged tier_dict.json should not change resulting tier list')
+
+    def test_make_tierlist_consistency_3(self):
+        try:
+            t1, t2 = make_tierlist(with_year_first_visited_tag=True), make_tierlist(with_year_first_visited_tag=True)
+            assert t1 == t2
         except AssertionError:
             print(t1)
             print(t2)
