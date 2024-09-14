@@ -1,4 +1,5 @@
 """A Python file with Tierlist configurations."""
+import os
 
 from PIL import Image, ImageDraw, ImageFont
 from helper import TIER_DICT, TIER_COLOUR_HEX_DICT, TIERLIST_IMAGE_NAME, TIERLIST_IMAGE_NAME_WITH_YEAR_TAG, TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG
@@ -79,6 +80,44 @@ def make_tier_background(tier):
     return img
 
 
+def _resize_tag_image(filepath: str, small: bool = False):
+    """Given the file path, opens the tag image and resizes accordingly for better usability.
+    
+    By default, it will resize it to a larger sized tag, unless specified by the `small` parameter.
+    """
+    img = Image.open(filepath)
+    width, height = img.size
+    size_multiplier = TAG_LARGE_SIZE_MULTIPLIER
+    if small:
+        size_multiplier = TAG_SMALL_SIZE_MULTIPLIER
+    return img.resize((int(width * DEFAULT_WIDTH / (height * size_multiplier)), int(DEFAULT_WIDTH / size_multiplier)))
+
+TAGS_BASE_PATH = "assets/png/"
+def _make_tags_image_dict():
+    """Creates a tags image dictionary with the following attributes:
+    
+        - Price tags denoted by 1-4.png (never resized)
+        - Year tags denoted by 2022-...png (small size by default for alternative tierlist image)
+        - Vegan tag denoted by Vegan.png ("vegan_small" if year tags present, "vegan_large" otherwise)
+    """
+    tags_image_dict = {}
+    png_names = os.listdir(TAGS_BASE_PATH)
+    for name in png_names:
+        if name.endswith(".png"):
+            filepath, head = TAGS_BASE_PATH + name, name[:-4]
+            if head == "Vegan":
+                tags_image_dict["vegan_large"] = _resize_tag_image(filepath)
+                tags_image_dict["vegan_small"] = _resize_tag_image(filepath, small=True)
+            elif int(head) in (1, 2, 3, 4):
+                # Price tag
+                tags_image_dict[int(head)] = _resize_tag_image(filepath)
+            else:
+                # Year tag
+                tags_image_dict[int(head)] = _resize_tag_image(filepath, small=True)
+    return tags_image_dict
+TAGS_IMAGE_DICT = _make_tags_image_dict()
+
+
 def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_visited_tag: bool = False):
     """Make a tier image"""
     # TODO: some variables here do not need to be resized every iteration, pull out as constants
@@ -92,43 +131,28 @@ def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_vis
                                                      restaurant_info["year"],
                                                      restaurant_info["year_first_visited"])
         # get the image of the restaurant
-        logo_img, price_img, is_vegan_img, is_year_img, is_year_first_visited_img = (Image.open(restaurant_logo),
-                                                          Image.open("assets/{}.png".format(price)),
-                                                          Image.open("assets/Vegan.png") if is_vegan else None,
-                                                          Image.open("assets/{}.png".format(
-                                                              is_year)) if is_year != -1 and with_year_tag else None,
-                                                          Image.open("assets/{}.png".format(
-                                                              is_year_first_visited)) if is_year_first_visited != -1 and with_year_first_visited_tag else None)
+        logo_img, price_img, is_year_img, is_year_first_visited_img = (Image.open(restaurant_logo),
+                                                                                     TAGS_IMAGE_DICT[price],
+                                                                                     TAGS_IMAGE_DICT[is_year],
+                                                                                     TAGS_IMAGE_DICT[is_year_first_visited])
         # get the width and height of the restaurant's logo
         width, height = logo_img.size
-        price_width, price_height = price_img.size
         # resize the logo, preserving the aspect ratio, so that the height is 100 pixels
+        # TODO: store the resized logo image in a db
         logo_img = logo_img.resize((int(width * DEFAULT_WIDTH / height), DEFAULT_WIDTH))
-        price_img = price_img.resize((int(price_width * DEFAULT_WIDTH / (price_height * TAG_LARGE_SIZE_MULTIPLIER)),
-                                      int(DEFAULT_WIDTH / TAG_LARGE_SIZE_MULTIPLIER)))
         logo_img.paste(price_img, (logo_img.size[0] - price_img.size[0], 0), price_img)
-        if is_vegan_img:
-            is_vegan_width, is_vegan_height = is_vegan_img.size
+        if is_vegan:
+            is_vegan_img = TAGS_IMAGE_DICT["vegan_large"]
             if with_year_tag or with_year_first_visited_tag:
                 # If either year tag is present, make the vegan tag smaller
-                is_vegan_img = is_vegan_img.resize((int(is_vegan_width * DEFAULT_WIDTH / (is_vegan_height * TAG_SMALL_SIZE_MULTIPLIER)),
-                                                    int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
-            else:
-                is_vegan_img = is_vegan_img.resize((int(is_vegan_width * DEFAULT_WIDTH / (is_vegan_height * TAG_LARGE_SIZE_MULTIPLIER)),
-                                                    int(DEFAULT_WIDTH / TAG_LARGE_SIZE_MULTIPLIER)))
+                is_vegan_img = TAGS_IMAGE_DICT["vegan_small"]
             logo_img.paste(is_vegan_img, (logo_img.size[0] - is_vegan_img.size[0],
                                           logo_img.size[1] - is_vegan_img.size[1]),
                            is_vegan_img)
 
-        if is_year_img:
-            is_year_width, is_year_height = is_year_img.size
-            is_year_img = is_year_img.resize((int(is_year_width * DEFAULT_WIDTH / (is_year_height * TAG_SMALL_SIZE_MULTIPLIER)),
-                                              int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
+        if with_year_tag:
             logo_img.paste(is_year_img, (0, 0), is_year_img)
-        elif is_year_first_visited_img:
-            is_year_width, is_year_height = is_year_first_visited_img.size
-            is_year_first_visited_img = is_year_first_visited_img.resize((int(is_year_width * DEFAULT_WIDTH / (is_year_height * TAG_SMALL_SIZE_MULTIPLIER)),
-                                              int(DEFAULT_WIDTH / TAG_SMALL_SIZE_MULTIPLIER)))
+        elif with_year_first_visited_tag:
             logo_img.paste(is_year_first_visited_img, (0, 0), is_year_first_visited_img)
 
         # append the logo to the list of restaurants

@@ -2,7 +2,7 @@
     "S": {
         "Birdies Fried Chicken": {
             "path_to_logo_image": "logos/Birdies Fried Chicken.jpg",
-            "price": "1",
+            "price": 1,
             "address": "263 Coxwell Ave",
             "description": "A huge achievement in the fried chicken world",
             "year": 2024,
@@ -10,7 +10,7 @@
         },
         "Zesty Burgers": {
             "path_to_logo_image": "logos/Zesty Burgers.jpg",
-            "price": "1",
+            "price": 1,
             "address": "1051 Bloor St W",
             "description": "Very Zesty indeed",
             "year": 2024,
@@ -18,7 +18,7 @@
         },
         "Soy Boys": {
             "path_to_logo_image": "logos/Soy Boys.jpg",
-            "price": "1",
+            "price": 1,
             "address": "471 Church St",
             "description": "Never doubt in the power of Soy Boys",
             "year": 2024,
@@ -27,7 +27,7 @@
         },
         "Bubba's Crispy Fried Chicken": {
             "path_to_logo_image": "logos/Bubba's Crispy Fried Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "521 Bloor St W",
             "description": "Bubba's (and everyone's) past favorite",
             "year": 2022,
@@ -35,7 +35,7 @@
         },
         "The Burger Bros": {
             "path_to_logo_image": "logos/The Burger Bros.jpg",
-            "price": "2",
+            "price": 2,
             "address": "1316 Bloor St W",
             "description": "The kind of burgers Mario Bros would love",
             "year": 2023,
@@ -43,7 +43,7 @@
         },
         "Chen Chen's Nashville Hot Chicken": {
             "path_to_logo_image": "logos/Chen Chen's Nashville Hot Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "1184 Queen St W",
             "description": "The best Nashville Hot Chicken in Toronto",
             "year": 2024,
@@ -51,7 +51,7 @@
         },
         "Daddy's Chicken": {
             "path_to_logo_image": "logos/Daddy's Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "1276 Queen St E",
             "description": "Who's Your Daddy?",
             "year": 2024,
@@ -59,7 +59,7 @@
         },
         "Porchetta & Co": {
             "path_to_logo_image": "logos/Porchetta & Co.jpg",
-            "price": "2",
+            "price": 2,
             "address": "545 King St W",
             "description": "Plentiful & Crispy",
             "year": 2022,
@@ -67,7 +67,7 @@
         },
         "Juicy Birds": {
             "path_to_logo_image": "logos/Juicy Birds.jpg",
-            "price": "2",
+            "price": 2,
             "address": "721 Pape Ave",
             "description": "Stands up to their own name, the G.O.A.T",
             "year": 2023,
@@ -75,7 +75,7 @@
         },
         "Cluck Clucks": {
             "path_to_logo_image": "logos/Cluck Clucks.jpg",
-            "price": "3",
+            "price": 3,
             "address": "222 The Esplanade",
             "description": "They made the *cough cough* joke but 100 times better",
             "year": 2024,
@@ -83,15 +83,15 @@
         },
         "Union Chicken": {
             "path_to_logo_image": "logos/Union Chicken.jpg",
-            "price": "4",
+            "price": 4,
             "address": "65 Front St W",
             "description": "The biggest comeback in history, better than the Raptors",
             "year": 2023,
             "year_first_visited": 2022
         },
-        "The Wren":  {
+        "The Wren": {
             "path_to_logo_image": "logos/The Wren.jpg",
-            "price": "4",
+            "price": 4,
             "address": "1382 Danforth Ave",
             "description": "Perfect combo of Italian and Japanese",
             "year": 2024,
@@ -101,7 +101,7 @@
     "A": {
         "El Furniture Warehouse": {
             "path_to_logo_image": "logos/El Furniture Warehouse.jpg",
-            "price": "1",
+            "price": 1,
             "address": "410 Bloor St W",
             "description": "The most unique burger I've tried",
             "year": 2023,
@@ -109,7 +109,7 @@
         },
         "Sunny Taiwanese Breakfast": {
             "path_to_logo_image": "logos/Sunny Taiwanese Breakfast.jpg",
-            "price": "1",
+            "price": 1,
             "address": "915 Bay St",
             "description": "How to travel to Taiwan without going to Taiwan",
             "year": 2023,
@@ -117,7 +117,7 @@
         },
         "Rosie's Burger": {
             "path_to_logo_image": "logos/Rosie's Burger.jpg",
-            "price": "1",
+            "price": 1,
             "address": "573 Queen St W",
             "description": "Rosie makes a great fried chicken sandwich (not a burger)",
             "year": 2024,
@@ -125,7 +125,7 @@
         },
         "Harry's Charbroiled": {
             "path_to_logo_image": "logos/Harry's Charbroiled.jpg",
-            "price": "1",
+            "price": 1,
             "address": "255 Coxwell Ave",
             "description": "Yer a wizard Harry... with a good burger",
             "year": 2024,
@@ -133,7 +133,7 @@
         },
         "The Burger's Priest": {
             "path_to_logo_image": "logos/The Burger's Priest.jpg",
-            "price": "1",
+            "price": 1,
             "address": "406 Bloor St W",
             "description": "Even The Pope would love it",
             "year": 2023,
@@ -141,7 +141,7 @@
         },
         "Cabano's Cheeseburgers": {
             "path_to_logo_image": "logos/Cabano's Cheeseburgers.jpg",
-            "price": "2",
+            "price": 2,
             "address": "75 St Nicholas St #104",
             "description": "Comforting just like home",
             "year": 2023,
@@ -149,7 +149,7 @@
         },
         "Tokyo Hot Fried Chicken": {
             "path_to_logo_image": "logos/Tokyo Hot Fried Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "656 College St",
             "description": "Try the taste of Tokyo and wasabi mayo",
             "year": 2023,
@@ -157,7 +157,7 @@
         },
         "The Heartbreak Chef": {
             "path_to_logo_image": "logos/The Heartbreak Chef.jpg",
-            "price": "2",
+            "price": 2,
             "address": "170 Baldwin St",
             "description": "Broke up with your GF? Have HBC",
             "year": 2024,
@@ -165,7 +165,7 @@
         },
         "Beauty's Fried Chicken": {
             "path_to_logo_image": "logos/Beauty's Fried Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "220 Yonge St",
             "description": "Such a beauty",
             "year": 2024,
@@ -173,7 +173,7 @@
         },
         "Flock Rotisserie + Greens": {
             "path_to_logo_image": "logos/Flock Rotisserie + Greens.jpg",
-            "price": "2",
+            "price": 2,
             "address": "379 Harbord St",
             "description": "A way to not flock your health",
             "year": 2023,
@@ -181,7 +181,7 @@
         },
         "PG Clucks": {
             "path_to_logo_image": "logos/PG Clucks.jpg",
-            "price": "2",
+            "price": 2,
             "address": "610 College St",
             "description": "Not a PG-13 taste",
             "year": 2023,
@@ -189,7 +189,7 @@
         },
         "Burgers n' Fries Forever": {
             "path_to_logo_image": "logos/Burgers n' Fries Forever.jpg",
-            "price": "3",
+            "price": 3,
             "address": "106 John St Unit 2",
             "description": "Nothing lasts forever other than this burger",
             "year": 2023,
@@ -197,7 +197,7 @@
         },
         "JABS (Just Another Burger Spot)": {
             "path_to_logo_image": "logos/JABS (Just Another Burger Spot).jpg",
-            "price": "3",
+            "price": 3,
             "address": "630 St Clair Ave W",
             "description": "Not Just Another Burger Spot, It's a Knockout after many JABS",
             "year": 2023,
@@ -205,7 +205,7 @@
         },
         "Duke of York": {
             "path_to_logo_image": "logos/Duke of York.jpg",
-            "price": "4",
+            "price": 4,
             "address": "39 Prince Arthur Ave",
             "description": "Tastes like British (not derogatory, rather celebratory)",
             "year": 2023,
@@ -213,7 +213,7 @@
         },
         "CRAFT Beer Market": {
             "path_to_logo_image": "logos/CRAFT Beer Market.jpg",
-            "price": "4",
+            "price": 4,
             "address": "1 Adelaide St E",
             "description": "Drunk? Be crafty with the sandwich",
             "year": 2023,
@@ -223,7 +223,7 @@
     "B": {
         "Fried Chicken Master": {
             "path_to_logo_image": "logos/Fried Chicken Master.jpg",
-            "price": "1",
+            "price": 1,
             "address": "628 Yonge St",
             "description": "Chinese fusion burger with gloves",
             "year": 2023,
@@ -231,7 +231,7 @@
         },
         "Old.K": {
             "path_to_logo_image": "logos/Old.K.jpg",
-            "price": "1",
+            "price": 1,
             "address": "310 College St",
             "description": "Old but Powerful Krunch",
             "year": 2024,
@@ -239,7 +239,7 @@
         },
         "Jollibee": {
             "path_to_logo_image": "logos/Jollibee.jpg",
-            "price": "1",
+            "price": 1,
             "address": "334 Yonge St",
             "description": "Philippine fast food classics",
             "year": 2023,
@@ -247,7 +247,7 @@
         },
         "Vegholic": {
             "path_to_logo_image": "logos/Vegholic.jpg",
-            "price": "1",
+            "price": 1,
             "address": "372 Yonge St",
             "description": "Not so much of a holic but still good",
             "year": 2024,
@@ -256,7 +256,7 @@
         },
         "Honeymoon Dessert": {
             "path_to_logo_image": "logos/Honeymoon Dessert.jpg",
-            "price": "1",
+            "price": 1,
             "address": "460 Spadina Ave",
             "description": "Not a honeymoon but a dessert",
             "year": 2024,
@@ -264,7 +264,7 @@
         },
         "The Arbor Room": {
             "path_to_logo_image": "logos/The Arbor Room.jpg",
-            "price": "1",
+            "price": 1,
             "address": "7 Hart House Cir",
             "description": "A mid chicken burger in the heart of UofT",
             "year": 2024,
@@ -272,7 +272,7 @@
         },
         "ChickQueen": {
             "path_to_logo_image": "logos/ChickQueen.jpg",
-            "price": "1",
+            "price": 1,
             "address": "247 Queen St",
             "description": "Where's her King cuz she is delicious",
             "year": 2023,
@@ -280,7 +280,7 @@
         },
         "Tut's Egyptian Street Food": {
             "path_to_logo_image": "logos/Tut's Egyptian Street Food.jpg",
-            "price": "1",
+            "price": 1,
             "address": "567 King St W",
             "description": "Tutankha-yum",
             "year": 2023,
@@ -288,7 +288,7 @@
         },
         "Dave's Hot Chicken": {
             "path_to_logo_image": "logos/Dave's Hot Chicken.jpg",
-            "price": "1",
+            "price": 1,
             "address": "328 Yonge St",
             "description": "Dave's not here, but his chicken is",
             "year": 2024,
@@ -296,7 +296,7 @@
         },
         "Fancy Franks": {
             "path_to_logo_image": "logos/Fancy Franks.jpg",
-            "price": "1",
+            "price": 1,
             "address": "326 College St",
             "description": "Here's how you make your Fancy fried chicken sandwich, Frank style",
             "year": 2023,
@@ -304,7 +304,7 @@
         },
         "Shamrock Burgers": {
             "path_to_logo_image": "logos/Shamrock Burgers.jpg",
-            "price": "2",
+            "price": 2,
             "address": "6109 Kingston Rd",
             "description": "Brings you much luck",
             "year": 2022,
@@ -312,7 +312,7 @@
         },
         "South St. Burger": {
             "path_to_logo_image": "logos/South St. Burger.jpg",
-            "price": "2",
+            "price": 2,
             "address": "55 Avenue Rd",
             "description": "Didn't taste much like a Southern burger but more like a Savoury burger",
             "year": 2023,
@@ -320,7 +320,7 @@
         },
         "Knockout Chicken": {
             "path_to_logo_image": "logos/Knockout Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "207 Augusta Ave",
             "description": "Try not to get knocked out",
             "year": 2022,
@@ -328,7 +328,7 @@
         },
         "Ding-a-Wing": {
             "path_to_logo_image": "logos/Ding-a-Wing.jpg",
-            "price": "2",
+            "price": 2,
             "address": "397 Roncesvalles Ave",
             "description": "It really dinged my taste buds",
             "year": 2024,
@@ -336,7 +336,7 @@
         },
         "Penny's Hot Chicken": {
             "path_to_logo_image": "logos/Penny's Hot Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "372 Yonge St",
             "description": "Hotter than Hooters",
             "year": 2023,
@@ -344,7 +344,7 @@
         },
         "CampusOne": {
             "path_to_logo_image": "logos/CampusOne.jpg",
-            "price": "2",
+            "price": 2,
             "address": "253 College St",
             "description": "Way better than I expected, not the NumberOne burger though",
             "year": 2023,
@@ -352,7 +352,7 @@
         },
         "Happy Burger": {
             "path_to_logo_image": "logos/Happy Burger.jpg",
-            "price": "2",
+            "price": 2,
             "address": "76 Lippincott St",
             "description": "Best place to make you happy",
             "year": 2023,
@@ -360,7 +360,7 @@
         },
         "Chica's Chicken": {
             "path_to_logo_image": "logos/Chica's Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "495 Bloor St W",
             "description": "Hot nashville taste from Texas",
             "year": 2023,
@@ -368,7 +368,7 @@
         },
         "The Gourmet Burger House": {
             "path_to_logo_image": "logos/The Gourmet Burger House.jpg",
-            "price": "2",
+            "price": 2,
             "address": "100 St George St",
             "description": "Gourmet? More like Gour-not... T'was okay though",
             "year": 2023,
@@ -376,7 +376,7 @@
         },
         "Lazy Daisy's Cafe": {
             "path_to_logo_image": "logos/Lazy Daisy's Cafe.jpg",
-            "price": "3",
+            "price": 3,
             "address": "1515 Gerrard St E",
             "description": "Not so lazy, but rather Daisy",
             "year": 2024,
@@ -384,7 +384,7 @@
         },
         "T.O.'s Kathi Roll Eatery": {
             "path_to_logo_image": "logos/T.O.'s Kathi Roll Eatery.jpg",
-            "price": "3",
+            "price": 3,
             "address": "465 Queen St W",
             "description": "A dangerously spicy indian and mexican fusion",
             "year": 2023,
@@ -392,7 +392,7 @@
         },
         "Moxies": {
             "path_to_logo_image": "logos/Moxies.jpg",
-            "price": "4",
+            "price": 4,
             "address": "70 University Ave",
             "description": "As if Nashville was in South Korea",
             "year": 2023,
@@ -400,7 +400,7 @@
         },
         "Ohiru Cafe": {
             "path_to_logo_image": "logos/Ohiru Cafe.jpg",
-            "price": "4",
+            "price": 4,
             "address": "370 College St",
             "description": "Good for brunch, not for every day",
             "year": 2023,
@@ -408,7 +408,7 @@
         },
         "WVRST": {
             "path_to_logo_image": "logos/WVRST.jpg",
-            "price": "4",
+            "price": 4,
             "address": "65 Front St W",
             "description": "Not the worst burger, unique curry sauce",
             "year": 2023,
@@ -416,7 +416,7 @@
         },
         "Prenup Pub": {
             "path_to_logo_image": "logos/Prenup Pub.jpg",
-            "price": "4",
+            "price": 4,
             "address": "191 College St",
             "description": "Interesting take on pretzel bun, not crispy enough though",
             "year": 2023,
@@ -424,7 +424,7 @@
         },
         "Boston Pizza": {
             "path_to_logo_image": "logos/Boston Pizza.jpg",
-            "price": "4",
+            "price": 4,
             "address": "250 Front St W Unit 1c201",
             "description": "An average fried chicken sandwich from Boston",
             "year": 2024,
@@ -432,7 +432,7 @@
         },
         "Cafe Landwer": {
             "path_to_logo_image": "logos/Cafe Landwer.jpg",
-            "price": "4",
+            "price": 4,
             "address": "33 Bloor St E",
             "description": "Crispy schnitzel but rather dry",
             "year": 2023,
@@ -442,7 +442,7 @@
     "C": {
         "Saigon Lotus": {
             "path_to_logo_image": "logos/Saigon Lotus.jpg",
-            "price": "1",
+            "price": 1,
             "address": "6 St Andrew St",
             "description": "A good bahn mi but an unfortunate loss for vegan chicken",
             "year": 2024,
@@ -451,7 +451,7 @@
         },
         "Mary Brown's": {
             "path_to_logo_image": "logos/Mary Brown's.jpg",
-            "price": "1",
+            "price": 1,
             "address": "636 Bloor St W",
             "description": "Mary Brown's? More like Dry and Frowned",
             "year": 2023,
@@ -459,7 +459,7 @@
         },
         "Chick-Fil-A": {
             "path_to_logo_image": "logos/Chick-Fil-A.jpg",
-            "price": "1",
+            "price": 1,
             "address": "709 Yonge St",
             "description": "More like Chicks-Fill-C",
             "year": 2023,
@@ -467,7 +467,7 @@
         },
         "MightyBird": {
             "path_to_logo_image": "logos/MightyBird.jpg",
-            "price": "1",
+            "price": 1,
             "address": "65 Front St W Unit 441",
             "description": "Not so Mighty sandwich",
             "year": 2024,
@@ -475,7 +475,7 @@
         },
         "Harvey's": {
             "path_to_logo_image": "logos/Harvey's.jpg",
-            "price": "1",
+            "price": 1,
             "address": "278 Jarvis St",
             "description": "Harvey's? More like Harv-eh",
             "year": 2024,
@@ -483,7 +483,7 @@
         },
         "Foodie": {
             "path_to_logo_image": "logos/Foodie.jpg",
-            "price": "1",
+            "price": 1,
             "address": "255 Huron St",
             "description": "UofT's only pink truck",
             "year": 2023,
@@ -491,7 +491,7 @@
         },
         "Super Chicken": {
             "path_to_logo_image": "logos/Super Chicken.jpg",
-            "price": "1",
+            "price": 1,
             "address": "628 Yonge St",
             "description": "Not so super...",
             "year": 2023,
@@ -499,7 +499,7 @@
         },
         "The Burgernator": {
             "path_to_logo_image": "logos/The Burgernator.jpg",
-            "price": "1",
+            "price": 1,
             "address": "269 Augusta Ave",
             "description": "We're doomed! He's gonna get us!",
             "year": 2023,
@@ -507,7 +507,7 @@
         },
         "B Boyz": {
             "path_to_logo_image": "logos/B Boyz.jpg",
-            "price": "1",
+            "price": 1,
             "address": "45 Carlton St",
             "description": "I hoped B Boyz would be at least in B tier",
             "year": 2024,
@@ -515,7 +515,7 @@
         },
         "The Fancy Induced Burger": {
             "path_to_logo_image": "logos/The Fancy Induced Burger.jpg",
-            "price": "1",
+            "price": 1,
             "address": "565 Bloor St W",
             "description": "Too induced and became greasy",
             "year": 2024,
@@ -523,7 +523,7 @@
         },
         "KFC": {
             "path_to_logo_image": "logos/KFC.jpg",
-            "price": "1",
+            "price": 1,
             "address": "900 Dufferin St",
             "description": "Kentucky would not be proud",
             "year": 2024,
@@ -531,7 +531,7 @@
         },
         "Shake Shack": {
             "path_to_logo_image": "logos/Shake Shack.jpg",
-            "price": "1",
+            "price": 1,
             "address": "10 Dundas St E",
             "description": "Shake Shack has shaken me too much with their mediocre burger",
             "year": 2024,
@@ -539,7 +539,7 @@
         },
         "Bodega Burgers": {
             "path_to_logo_image": "logos/Bodega Burgers.jpg",
-            "price": "1",
+            "price": 1,
             "address": "335 Yonge St",
             "description": "Bodega? More like Bored-ega",
             "year": 2024,
@@ -547,7 +547,7 @@
         },
         "Wing Machine": {
             "path_to_logo_image": "logos/Wing Machine.jpg",
-            "price": "1",
+            "price": 1,
             "address": "1661 Eglinton Ave",
             "description": "The Wing Machine dried out the Wings (and the bread)",
             "year": 2023,
@@ -555,7 +555,7 @@
         },
         "Ozzy's Burgers": {
             "path_to_logo_image": "logos/Ozzy's Burgers.jpg",
-            "price": "2",
+            "price": 2,
             "address": "66 Nassau St Unit 1/2",
             "description": "A dizzy Ozzy burgazzy",
             "year": 2023,
@@ -563,7 +563,7 @@
         },
         "RUDY": {
             "path_to_logo_image": "logos/RUDY.jpg",
-            "price": "2",
+            "price": 2,
             "address": "69 Duncan St",
             "description": "It was RUDY to my stomach",
             "year": 2023,
@@ -571,7 +571,7 @@
         },
         "The Dirty Bird Chicken + Waffles": {
             "path_to_logo_image": "logos/The Dirty Bird Chicken + Waffles.jpg",
-            "price": "2",
+            "price": 2,
             "address": "79 Kensington Ave",
             "description": "No birds were harmed in naming this restaurant",
             "year": 2022,
@@ -579,7 +579,7 @@
         },
         "Chicken N' Dough": {
             "path_to_logo_image": "logos/Chicken N' Dough.jpg",
-            "price": "2",
+            "price": 2,
             "address": "410 Bathurst Street",
             "description": "More like Chicken N' Doughnut but the chicken is silent",
             "year": 2023,
@@ -587,7 +587,7 @@
         },
         "Mayday Burger": {
             "path_to_logo_image": "logos/Mayday Burger.jpg",
-            "price": "2",
+            "price": 2,
             "address": "66 Dundas St E",
             "description": "Mayday! Mayday! The burger is on fire! (literally)",
             "year": 2024,
@@ -595,7 +595,7 @@
         },
         "Dublin Calling": {
             "path_to_logo_image": "logos/Dublin Calling.jpg",
-            "price": "2",
+            "price": 2,
             "address": "250 Adelaide St W",
             "description": "Dublin does not call for Kraft Single",
             "year": 2023,
@@ -603,7 +603,7 @@
         },
         "The Bullger Burger & Steak": {
             "path_to_logo_image": "logos/The Bullger Burger & Steak.jpg",
-            "price": "2",
+            "price": 2,
             "address": "348 Queen Street East",
             "description": "I forgot how greasy a bull can get",
             "year": 2024,
@@ -611,7 +611,7 @@
         },
         "Matt's Burger Lab": {
             "path_to_logo_image": "logos/Matt's Burger Lab.jpg",
-            "price": "2",
+            "price": 2,
             "address": "1205 Queen St W",
             "description": "Rather failed burger experiments",
             "year": 2023,
@@ -619,7 +619,7 @@
         },
         "Banh Haus": {
             "path_to_logo_image": "logos/Banh Haus.jpg",
-            "price": "2",
+            "price": 2,
             "address": "Lwr Lvl, 81 Huron St",
             "description": "Banh Haus? More like Banh How",
             "year": 2023,
@@ -627,7 +627,7 @@
         },
         "Hero Certified Burgers": {
             "path_to_logo_image": "logos/Hero Certified Burgers.jpg",
-            "price": "2",
+            "price": 2,
             "address": "100 Queen St W",
             "description": "A self-proclaimed Hero",
             "year": 2023,
@@ -635,7 +635,7 @@
         },
         "Monga Fried Chicken": {
             "path_to_logo_image": "logos/Monga Fried Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "692 Yonge St",
             "description": "Monga would not be so proud",
             "year": 2023,
@@ -643,7 +643,7 @@
         },
         "Light Cafe": {
             "path_to_logo_image": "logos/Light Cafe.jpg",
-            "price": "2",
+            "price": 2,
             "address": "23 Baldwin Street",
             "description": "They could not enlighten me with their sandwich",
             "year": 2023,
@@ -651,7 +651,7 @@
         },
         "Hooters": {
             "path_to_logo_image": "logos/Hooters.jpg",
-            "price": "3",
+            "price": 3,
             "address": "280 Adelaide St W",
             "description": "Why is there an owl in the logo?",
             "year": 2023,
@@ -659,7 +659,7 @@
         },
         "Insomnia Restaurant and Lounge": {
             "path_to_logo_image": "logos/Insomnia Restaurant and Lounge.jpg",
-            "price": "4",
+            "price": 4,
             "address": "563 Bloor St W",
             "description": "Loud music? Probably perfect for insomniacs",
             "year": 2024,
@@ -667,7 +667,7 @@
         },
         "Banknote Bar": {
             "path_to_logo_image": "logos/Banknote Bar.jpg",
-            "price": "4",
+            "price": 4,
             "address": "474 Adelaide St E",
             "description": "Perfect for bankers, not for me",
             "year": 2024,
@@ -677,7 +677,7 @@
     "D": {
         "Tim Hortons": {
             "path_to_logo_image": "logos/Tim Hortons.jpg",
-            "price": "1",
+            "price": 1,
             "address": "334 Bloor St W",
             "description": "Maybe focus on making better coffee instead...",
             "year": 2023,
@@ -685,7 +685,7 @@
         },
         "Top Gun Burger": {
             "path_to_logo_image": "logos/Top Gun Burger.jpg",
-            "price": "1",
+            "price": 1,
             "address": "490 Bloor St W",
             "description": "The chickens were threatened with a gun",
             "year": 2023,
@@ -693,7 +693,7 @@
         },
         "Burger Factory": {
             "path_to_logo_image": "logos/Burger Factory.jpg",
-            "price": "1",
+            "price": 1,
             "address": "437 Yonge St",
             "description": "Build your own burger!",
             "year": 2024,
@@ -701,7 +701,7 @@
         },
         "A&W": {
             "path_to_logo_image": "logos/A&W.jpg",
-            "price": "1",
+            "price": 1,
             "address": "500 Bloor St W",
             "description": "A 24-hr generic burger chain",
             "year": 2024,
@@ -709,7 +709,7 @@
         },
         "Burger King": {
             "path_to_logo_image": "logos/Burger King.jpg",
-            "price": "1",
+            "price": 1,
             "address": "267 College St",
             "description": "Not the best King of burgers I have tried",
             "year": 2024,
@@ -717,7 +717,7 @@
         },
         "Fatburger": {
             "path_to_logo_image": "logos/Fatburger.jpg",
-            "price": "1",
+            "price": 1,
             "address": "565 Bloor St W",
             "description": "FATburger? What a shame, the burger's not fat",
             "year": 2024,
@@ -725,7 +725,7 @@
         },
         "Banquet Burger": {
             "path_to_logo_image": "logos/Banquet Burger.jpg",
-            "price": "1",
+            "price": 1,
             "address": "940 Bloor St W",
             "description": "NSFB (Not Safe For Banquet)",
             "year": 2024,
@@ -733,7 +733,7 @@
         },
         "Popeyes Louisiana Kitchen": {
             "path_to_logo_image": "logos/Popeyes Louisiana Kitchen.jpg",
-            "price": "1",
+            "price": 1,
             "address": "553 Bloor St W",
             "description": "Makes your eyes pop? idk",
             "year": 2023,
@@ -741,7 +741,7 @@
         },
         "Slab Burgers": {
             "path_to_logo_image": "logos/Slab Burgers.jpg",
-            "price": "1",
+            "price": 1,
             "address": "47 Charles St W",
             "description": "They should be slapped instead",
             "year": 2023,
@@ -749,7 +749,7 @@
         },
         "Simple Burger": {
             "path_to_logo_image": "logos/Simple Burger.jpg",
-            "price": "2",
+            "price": 2,
             "address": "735 Bloor St W",
             "description": "Too simple that it lost its originality",
             "year": 2023,
@@ -757,7 +757,7 @@
         },
         "Philthy Philly's": {
             "path_to_logo_image": "logos/Philthy Philly's.jpg",
-            "price": "2",
+            "price": 2,
             "address": "624 Queen St W",
             "description": "Too philthy for Philly",
             "year": 2024,
@@ -765,7 +765,7 @@
         },
         "W Burger Bar": {
             "path_to_logo_image": "logos/W Burger Bar.jpg",
-            "price": "2",
+            "price": 2,
             "address": "10 College St",
             "description": "More like L burger bar",
             "year": 2023,
@@ -775,7 +775,7 @@
     "E": {
         "McDonald's": {
             "path_to_logo_image": "logos/McDonald's.jpg",
-            "price": "1",
+            "price": 1,
             "address": "196 Bloor St W",
             "description": "Ew",
             "year": 2023,
@@ -783,7 +783,7 @@
         },
         "Holy Chuck": {
             "path_to_logo_image": "logos/Holy Chuck.jpg",
-            "price": "2",
+            "price": 2,
             "address": "1450 Yonge St",
             "description": "Holy CLUCK this is bad",
             "year": 2023,
@@ -791,7 +791,7 @@
         },
         "Fran's Restaurant and Bar": {
             "path_to_logo_image": "logos/Fran's Restaurant and Bar.jpg",
-            "price": "3",
+            "price": 3,
             "address": "20 College St",
             "description": "A miserable fried chicken legacy for Fran",
             "year": 2023,
@@ -801,7 +801,7 @@
     "F": {
         "Subway": {
             "path_to_logo_image": "logos/Subway.jpg",
-            "price": "1",
+            "price": 1,
             "address": "1102 Bay St",
             "description": "It's soggy, maybe they didn't squeeze it after the underwater subway trip",
             "year": 2023,
@@ -809,7 +809,7 @@
         },
         "7-Eleven": {
             "path_to_logo_image": "logos/7-Eleven.jpg",
-            "price": "1",
+            "price": 1,
             "address": "260 College St",
             "description": "It'll kill you on the way to Heaven Eleven",
             "year": 2023,
@@ -817,7 +817,7 @@
         },
         "Church's Texas Chicken": {
             "path_to_logo_image": "logos/Church's Texas Chicken.jpg",
-            "price": "2",
+            "price": 2,
             "address": "531 Yonge St",
             "description": "It's not a church, it's a chicken sandwich.",
             "year": 2023,
