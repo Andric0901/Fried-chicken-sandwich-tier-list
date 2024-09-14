@@ -131,13 +131,6 @@ def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_vis
                                                      restaurant_info["year"],
                                                      restaurant_info["year_first_visited"])
         # get the image of the restaurant
-        # logo_img, price_img, is_vegan_img, is_year_img, is_year_first_visited_img = (Image.open(restaurant_logo),
-        #                                                   Image.open("assets/png/{}.png".format(price)),
-        #                                                   Image.open("assets/png/Vegan.png") if is_vegan else None,
-        #                                                   Image.open("assets/png/{}.png".format(
-        #                                                       is_year)) if is_year != -1 and with_year_tag else None,
-        #                                                   Image.open("assets/png/{}.png".format(
-        #                                                       is_year_first_visited)) if is_year_first_visited != -1 and with_year_first_visited_tag else None)
         logo_img, price_img, is_year_img, is_year_first_visited_img = (Image.open(restaurant_logo),
                                                                                      TAGS_IMAGE_DICT[price],
                                                                                      TAGS_IMAGE_DICT[is_year],
@@ -149,11 +142,10 @@ def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_vis
         logo_img = logo_img.resize((int(width * DEFAULT_WIDTH / height), DEFAULT_WIDTH))
         logo_img.paste(price_img, (logo_img.size[0] - price_img.size[0], 0), price_img)
         if is_vegan:
+            is_vegan_img = TAGS_IMAGE_DICT["vegan_large"]
             if with_year_tag or with_year_first_visited_tag:
                 # If either year tag is present, make the vegan tag smaller
                 is_vegan_img = TAGS_IMAGE_DICT["vegan_small"]
-            else:
-                is_vegan_img = TAGS_IMAGE_DICT["vegan_large"]
             logo_img.paste(is_vegan_img, (logo_img.size[0] - is_vegan_img.size[0],
                                           logo_img.size[1] - is_vegan_img.size[1]),
                            is_vegan_img)
