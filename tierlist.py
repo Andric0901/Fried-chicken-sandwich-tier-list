@@ -137,8 +137,8 @@ def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_vis
                                                                                      TAGS_IMAGE_DICT[is_year_first_visited])
         # get the width and height of the restaurant's logo
         width, height = logo_img.size
-        price_width, price_height = price_img.size
         # resize the logo, preserving the aspect ratio, so that the height is 100 pixels
+        # TODO: store the resized logo image in a db
         logo_img = logo_img.resize((int(width * DEFAULT_WIDTH / height), DEFAULT_WIDTH))
         logo_img.paste(price_img, (logo_img.size[0] - price_img.size[0], 0), price_img)
         if is_vegan:
