@@ -99,14 +99,6 @@
         }
     },
     "A": {
-        "El Furniture Warehouse": {
-            "path_to_logo_image": "logos/El Furniture Warehouse.jpg",
-            "price": 1,
-            "address": "410 Bloor St W",
-            "description": "The most unique burger I've tried",
-            "year": 2023,
-            "year_first_visited": 2023
-        },
         "Sunny Taiwanese Breakfast": {
             "path_to_logo_image": "logos/Sunny Taiwanese Breakfast.jpg",
             "price": 1,
@@ -448,6 +440,14 @@
         }
     },
     "C": {
+        "El Furniture Warehouse": {
+            "path_to_logo_image": "logos/El Furniture Warehouse.jpg",
+            "price": 1,
+            "address": "410 Bloor St W",
+            "description": "Why... just why..",
+            "year": 2024,
+            "year_first_visited": 2023
+        },
         "Saigon Lotus": {
             "path_to_logo_image": "logos/Saigon Lotus.jpg",
             "price": 1,
