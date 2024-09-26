@@ -163,6 +163,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "Furusato": {
+            "path_to_logo_image": "logos/Furusato.jpg",
+            "price": 2,
+            "address": "Unknown",
+            "description": "A truly Japanese katsu sando experience",
+            "year": 2024,
+            "year_first_visited": 2024
+        },
         "Flock Rotisserie + Greens": {
             "path_to_logo_image": "logos/Flock Rotisserie + Greens.jpg",
             "price": 2,
