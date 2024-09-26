@@ -704,6 +704,14 @@
             "description": "Perfect for bankers, not for me",
             "year": 2024,
             "year_first_visited": 2024
+        },
+        "Madison Avenue Pub": {
+            "path_to_logo_image": "logos/Madison Avenue Pub.jpg",
+            "price": 4,
+            "address": "14 Madison Ave",
+            "description": "Bouncer? I barely know her",
+            "year": 2024,
+            "year_first_visited": 2024
         }
     },
     "D": {
