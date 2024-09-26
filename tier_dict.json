@@ -262,6 +262,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "Gushi Japanese Street Food": {
+            "path_to_logo_image": "logos/Gushi Japanese Street Food.jpg",
+            "price": 1,
+            "address": "296 Gerrard St E",
+            "description": "Interesting karaage sando",
+            "year": 2024,
+            "year_first_visited": 2024
+        },
         "The Arbor Room": {
             "path_to_logo_image": "logos/The Arbor Room.jpg",
             "price": 1,
