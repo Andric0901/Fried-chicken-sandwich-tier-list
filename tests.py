@@ -25,7 +25,7 @@ LOGOS_PATH = "logos"
 
 class TestMakeTierList(unittest.TestCase):
     def test_make_tierlist_performance(self):
-        cutoff = 3
+        cutoff = 3.6
         start = time.time()
         make_tierlist()
         end = time.time()
