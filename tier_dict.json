@@ -845,6 +845,14 @@
             "year": 2023,
             "year_first_visited": 2022
         },
+        "Rock Pot": {
+            "path_to_logo_image": "logos/Rock Pot.jpg",
+            "price": 1,
+            "address": "372 Yonge St",
+            "description": "Insanely salty, did they make the sandwich with rocks??",
+            "year": 2024,
+            "year_first_visited": 2024
+        },
         "Holy Chuck": {
             "path_to_logo_image": "logos/Holy Chuck.jpg",
             "price": 2,
