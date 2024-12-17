@@ -446,6 +446,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "Hair Of The Dog Neighbourhood Pub & Restaurant": {
+            "path_to_logo_image": "logos/Hair Of The Dog Neighbourhood Pub & Restaurant.jpg",
+            "price": 4,
+            "address": "425 Church St",
+            "description": "The Dog here eats well",
+            "year": 2024,
+            "year_first_visited": 2024
+        },
         "WVRST": {
             "path_to_logo_image": "logos/WVRST.jpg",
             "price": 4,
