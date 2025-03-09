@@ -390,6 +390,14 @@
             "year": 2025,
             "year_first_visited": 2025
         },
+        "Roywoods": {
+            "path_to_logo_image": "logos/Roywoods.jpg",
+            "price": 2,
+            "address": "65 Front St W",
+            "description": "Nice fusion of Jamaican and American",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Happy Burger": {
             "path_to_logo_image": "logos/Happy Burger.jpg",
             "price": 2,
