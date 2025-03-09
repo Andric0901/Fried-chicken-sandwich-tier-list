@@ -382,6 +382,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "Red Cranberries Restaurant": {
+            "path_to_logo_image": "logos/Red Cranberries Restaurant.jpg",
+            "price": 2,
+            "address": "601 Parliament St",
+            "description": "Really good flavour overall, great aioli",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Happy Burger": {
             "path_to_logo_image": "logos/Happy Burger.jpg",
             "price": 2,
