@@ -326,6 +326,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "The Original Hot Chicken": {
+            "path_to_logo_image": "logos/The Original Hot Chicken.jpg",
+            "price": 1,
+            "address": "20 Carlton St",
+            "description": "Very saucey, down to basics but uninteresting",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Shamrock Burgers": {
             "path_to_logo_image": "logos/Shamrock Burgers.jpg",
             "price": 2,
@@ -381,6 +389,22 @@
             "description": "Way better than I expected, not the NumberOne burger though",
             "year": 2023,
             "year_first_visited": 2023
+        },
+        "Red Cranberries Restaurant": {
+            "path_to_logo_image": "logos/Red Cranberries Restaurant.jpg",
+            "price": 2,
+            "address": "601 Parliament St",
+            "description": "Really good flavour overall, great aioli",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
+        "Roywoods": {
+            "path_to_logo_image": "logos/Roywoods.jpg",
+            "price": 2,
+            "address": "65 Front St W",
+            "description": "Nice fusion of Jamaican and American",
+            "year": 2025,
+            "year_first_visited": 2025
         },
         "Happy Burger": {
             "path_to_logo_image": "logos/Happy Burger.jpg",
@@ -752,6 +776,14 @@
             "description": "Bouncer? I barely know her",
             "year": 2024,
             "year_first_visited": 2024
+        },
+        "Smith Social House": {
+            "path_to_logo_image": "logos/Smith Social House.jpg",
+            "price": 4,
+            "address": "171 College St",
+            "description": "A failed attempt at Ding-a-wing sandwich",
+            "year": 2025,
+            "year_first_visited": 2025
         }
     },
     "D": {
@@ -786,6 +818,14 @@
             "description": "A 24-hr generic burger chain",
             "year": 2024,
             "year_first_visited": 2022
+        },
+        "Loblaws": {
+            "path_to_logo_image": "logos/Loblaws.jpg",
+            "price": 1,
+            "address": "60 Carlton St",
+            "description": "Dry, uninteresting grocery store sandwich",
+            "year": 2025,
+            "year_first_visited": 2025
         },
         "Burger King": {
             "path_to_logo_image": "logos/Burger King.jpg",
@@ -850,6 +890,14 @@
             "description": "More like L burger bar",
             "year": 2023,
             "year_first_visited": 2023
+        },
+        "bb.q Chicken": {
+            "path_to_logo_image": "logos/bb.q Chicken.jpg",
+            "price": 3,
+            "address": "689 Yonge St",
+            "description": "GREASY and does not follow the korean expectations",
+            "year": 2025,
+            "year_first_visited": 2025
         },
         "House on Parliament": {
             "path_to_logo_image": "logos/House on Parliament.jpg",
