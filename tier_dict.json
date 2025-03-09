@@ -883,6 +883,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "bb.q Chicken": {
+            "path_to_logo_image": "logos/bb.q Chicken.jpg",
+            "price": 3,
+            "address": "689 Yonge St",
+            "description": "GREASY and does not follow the korean expectations",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "House on Parliament": {
             "path_to_logo_image": "logos/House on Parliament.jpg",
             "price": 4,
