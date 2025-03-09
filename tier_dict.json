@@ -326,6 +326,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "The Original Hot Chicken": {
+            "path_to_logo_image": "logos/The Original Hot Chicken.jpg",
+            "price": 1,
+            "address": "20 Carlton St",
+            "description": "Very saucey, down to basics but uninteresting",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Shamrock Burgers": {
             "path_to_logo_image": "logos/Shamrock Burgers.jpg",
             "price": 2,
