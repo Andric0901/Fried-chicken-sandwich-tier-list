@@ -721,6 +721,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "Pig Out BBQ": {
+            "path_to_logo_image": "logos/Pig Out BBQ.jpg",
+            "price": 2,
+            "address": "650 Spadina Ave",
+            "description": "Pig's Out, Chicken's In",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Future Bistro": {
             "path_to_logo_image": "logos/Future Bistro.jpg",
             "price": 2,
