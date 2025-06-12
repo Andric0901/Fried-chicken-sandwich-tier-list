@@ -219,6 +219,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "Cactus Club Cafe": {
+            "path_to_logo_image": "logos/Cactus Club Cafe.jpg",
+            "price": 4,
+            "address": "77 Adelaide St W",
+            "description": "Cactus would love it",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "The Fortunate Fox": {
             "path_to_logo_image": "logos/The Fortunate Fox.jpg",
             "price": 4,
