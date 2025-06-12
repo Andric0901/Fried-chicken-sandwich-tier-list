@@ -1,8 +1,6 @@
 """A helper file containing functions used by tierlist.py and main.py"""
 
 import discord
-import googlemaps
-from googlemaps import places
 import requests
 from pathlib import Path
 from datetime import datetime
@@ -23,11 +21,11 @@ token = os.getenv("token")
 test_token = os.getenv("test_token")
 key = os.getenv("key")
 author_id = os.getenv("author_id")
-try:
-    gmaps = googlemaps.Client(key=key)
-except ValueError:
-    # Likely tierlist.py has been called without defined key in the env file
-    pass
+# try:
+#     gmaps = googlemaps.Client(key=key)
+# except ValueError:
+#     # Likely tierlist.py has been called without defined key in the env file
+#     pass
 client = pymongo.MongoClient(connection_string, tlsCAFile=certifi.where())
 db = client["fried-chicken-sandwich-bot"]
 collection = db["gmaps_infos"]
