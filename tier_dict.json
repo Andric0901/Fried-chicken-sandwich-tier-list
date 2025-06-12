@@ -366,6 +366,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "Bahn Mi Boys": {
+            "path_to_logo_image": "logos/Bahn Mi Boys.jpg",
+            "price": 2,
+            "address": "329 Yonge St",
+            "description": "An OK bahn mi for the boys",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Knockout Chicken": {
             "path_to_logo_image": "logos/Knockout Chicken.jpg",
             "price": 2,
