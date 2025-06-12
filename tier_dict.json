@@ -454,6 +454,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "The Broadview Diner": {
+            "path_to_logo_image": "logos/The Broadview Diner.jpg",
+            "price": 3,
+            "address": "757 Broadview Ave",
+            "description": "Mid chicken sandwich",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "T.O.'s Kathi Roll Eatery": {
             "path_to_logo_image": "logos/T.O.'s Kathi Roll Eatery.jpg",
             "price": 3,
