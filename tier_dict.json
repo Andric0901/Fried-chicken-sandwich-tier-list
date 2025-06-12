@@ -219,6 +219,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "Cactus Club Cafe": {
+            "path_to_logo_image": "logos/Cactus Club Cafe.jpg",
+            "price": 4,
+            "address": "77 Adelaide St W",
+            "description": "Cactus would love it",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "The Fortunate Fox": {
             "path_to_logo_image": "logos/The Fortunate Fox.jpg",
             "price": 4,
@@ -358,6 +366,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "Bahn Mi Boys": {
+            "path_to_logo_image": "logos/Bahn Mi Boys.jpg",
+            "price": 2,
+            "address": "329 Yonge St",
+            "description": "An OK bahn mi for the boys",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Knockout Chicken": {
             "path_to_logo_image": "logos/Knockout Chicken.jpg",
             "price": 2,
@@ -445,6 +461,14 @@
             "description": "Fallen to the damn landlords with decent sandwiches, o7",
             "year": 2024,
             "year_first_visited": 2024
+        },
+        "The Broadview Diner": {
+            "path_to_logo_image": "logos/The Broadview Diner.jpg",
+            "price": 3,
+            "address": "757 Broadview Ave",
+            "description": "Mid chicken sandwich",
+            "year": 2025,
+            "year_first_visited": 2025
         },
         "T.O.'s Kathi Roll Eatery": {
             "path_to_logo_image": "logos/T.O.'s Kathi Roll Eatery.jpg",
@@ -712,6 +736,14 @@
             "description": "Banh Haus? More like Banh How",
             "year": 2023,
             "year_first_visited": 2023
+        },
+        "Pig Out BBQ": {
+            "path_to_logo_image": "logos/Pig Out BBQ.jpg",
+            "price": 2,
+            "address": "650 Spadina Ave",
+            "description": "Pig's Out, Chicken's In",
+            "year": 2025,
+            "year_first_visited": 2025
         },
         "Future Bistro": {
             "path_to_logo_image": "logos/Future Bistro.jpg",
