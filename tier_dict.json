@@ -721,6 +721,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "Church's Texas Chicken": {
+            "path_to_logo_image": "logos/Church's Texas Chicken.jpg",
+            "price": 2,
+            "address": "3003 Danforth Ave",
+            "description": "It's not a church, it's a chicken sandwich.",
+            "year": 2025,
+            "year_first_visited": 2023
+        },
         "Matt's Burger Lab": {
             "path_to_logo_image": "logos/Matt's Burger Lab.jpg",
             "price": 2,
@@ -996,14 +1004,6 @@
             "price": 1,
             "address": "260 College St",
             "description": "It'll kill you on the way to Heaven Eleven",
-            "year": 2023,
-            "year_first_visited": 2023
-        },
-        "Church's Texas Chicken": {
-            "path_to_logo_image": "logos/Church's Texas Chicken.jpg",
-            "price": 2,
-            "address": "531 Yonge St",
-            "description": "It's not a church, it's a chicken sandwich.",
             "year": 2023,
             "year_first_visited": 2023
         }
