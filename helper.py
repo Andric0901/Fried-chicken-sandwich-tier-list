@@ -1,7 +1,6 @@
 """A helper file containing functions used by tierlist.py and main.py"""
 
 import discord
-import requests
 from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
@@ -91,29 +90,6 @@ TIER_COLOUR_HEX_DICT = {
     'E': "#7f7fff",
     'F': "#ff7fff"
 }
-
-
-##############################################
-# Set up the database
-##############################################
-def setup_db(force: bool = False) -> None:
-    """Updates the database with the latest information from Google Maps API."""
-    if collection.count_documents({}) == len(RESTAURANT_NAMES) and not force:
-        return
-    for i in range(len(RESTAURANT_NAMES)):
-        restaurant = RESTAURANT_NAMES[i]
-        if restaurant in MANUAL_EMBED_RESTAURANTS:
-            collection.update_one({"index": i}, {"$set": {"json": None}}, upsert=True)
-        else:
-            # restaurant_name, restaurant_address = RESTAURANTS[i][0][6:-4], RESTAURANTS[i][2]
-            restaurant_name, restaurant_address = RESTAURANT_NAMES[i], RESTAURANT_ADDRESSES[i]
-            place_id = \
-                places.find_place(gmaps, restaurant_name + ' ' + restaurant_address, 'textquery')['candidates'][0][
-                    'place_id']
-            url = "https://maps.googleapis.com/maps/api/place/details/json?placeid={}&key={}".format(place_id, key)
-            response = requests.get(url)
-            data = response.json()
-            collection.update_one({"index": i}, {"$set": {"json": data}}, upsert=True)
 
 
 ##############################################
@@ -524,16 +500,8 @@ def verify_restaurant_names() -> None:
             f.write("\n")
 
 
-def destroy_db(force: bool = False) -> None:
-    """Destroy the database and reset it with the latest information from Google Maps API."""
-    if force:
-        collection.delete_many({})
-        setup_db(force=True)
-
-
 if __name__ == "__main__":
     # Check that .env file exists
     if not os.path.exists('.env'):
         raise FileNotFoundError('.env file not found')
-    # setup_db()
     # verify_restaurant_names()
