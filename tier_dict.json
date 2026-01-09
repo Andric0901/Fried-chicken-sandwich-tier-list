@@ -398,6 +398,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "Burger Hill": {
+            "path_to_logo_image": "logos/Burger Hill.jpg",
+            "price": 2,
+            "address": "2326 Danforth Ave",
+            "description": "Still climbing the highest hill for a better sandwich",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Penny's Hot Chicken": {
             "path_to_logo_image": "logos/Penny's Hot Chicken.jpg",
             "price": 2,
