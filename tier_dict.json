@@ -398,6 +398,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "Joey Turks Island Grill": {
+            "path_to_logo_image": "logos/Joey Turks Island Grill.jpg",
+            "price": 2,
+            "address": "1900 Eglinton Ave E Unit #E4",
+            "description": "Down to classics",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "CampusOne": {
             "path_to_logo_image": "logos/CampusOne.jpg",
             "price": 2,
