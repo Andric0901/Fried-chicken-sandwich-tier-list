@@ -104,6 +104,8 @@ def generate_year_image(year: int, output_dir: str = "assets/png"):
 
 def create_missing_year_images():
     for year in RESTAURANT_YEARS:
+        if os.path.exists(f"assets/png/{year}.png"):
+            continue
         generate_year_image(year)
 
 
@@ -566,6 +568,3 @@ if __name__ == "__main__":
     if not os.path.exists('.env'):
         raise FileNotFoundError('.env file not found')
     # verify_restaurant_names()
-    
-    # Generate a sample year image for 2026
-    print(RESTAURANT_YEARS)
