@@ -10,6 +10,7 @@ import certifi
 import pytz
 import json
 from typing import Optional
+from PIL import Image, ImageDraw, ImageFont
 
 ##############################################
 # Set up environment variables
@@ -52,6 +53,62 @@ def get_first_tier_indexes() -> dict:
     return first_tier_indexes
 
 
+def generate_year_image(year: int, output_dir: str = "assets/png"):
+    """Generate a year tag image by overlaying text on a background image.
+    
+    Args:
+        year: The year to display as text
+        output_dir: Directory to save the output image (default: 'assets/png')
+    
+    Returns:
+        The path to the generated image file
+    """
+    background_path = "assets/png/year_background.png"
+    font_path = "assets/bahnschrift.ttf"
+    
+    # Open the background image
+    img = Image.open(background_path)
+    draw = ImageDraw.Draw(img)
+    
+    # Load the font
+    font = ImageFont.truetype(
+        font_path,
+        size=430,
+    )
+    
+    # Set the font to Bold variation
+    font.set_variation_by_name("Bold")
+    
+    # Get the text to display
+    year_text = str(year)
+    
+    # Get the bounding box of the text
+    left, top, right, bottom = draw.textbbox((0, 0), year_text, font=font)
+    text_width = right - left
+    text_height = bottom - top
+    
+    # Calculate centered position
+    img_width, img_height = img.size
+    x = (img_width - text_width) / 2 - left
+    y = (img_height - text_height) / 2 - top
+    
+    # Draw the text on the image (white text)
+    draw.text((x, y), year_text, font=font, fill=(255, 255, 255))
+    
+    # Save the image
+    output_path = os.path.join(output_dir, f"{year}.png")
+    img.save(output_path)
+    
+    return output_path
+
+
+def create_missing_year_images():
+    for year in RESTAURANT_YEARS:
+        if os.path.exists(f"assets/png/{year}.png"):
+            continue
+        generate_year_image(year)
+
+
 ##############################################
 # Set up constants
 ##############################################
@@ -65,6 +122,10 @@ RESTAURANT_ADDRESSES = [TIER_DICT[tier][restaurant_name]["address"]
 RESTAURANT_DESCRIPTIONS = [TIER_DICT[tier][restaurant_name]["description"]
                            for tier in TIER_DICT for restaurant_name in TIER_DICT[tier]]
 RESTAURANT_TIERS = [tier for tier in TIER_DICT for _ in TIER_DICT[tier]]
+RESTAURANT_YEARS = sorted(list(set([TIER_DICT[tier][restaurant_name]["year"]
+                        for tier in TIER_DICT for restaurant_name in TIER_DICT[tier]])))
+create_missing_year_images()
+
 MANUAL_EMBED_RESTAURANTS = ["Bubba's Crispy Fried Chicken", "Foodie"]
 TIERLIST_IMAGE_NAME = 'tierlist.png'
 TIERLIST_IMAGE_NAME_WITH_YEAR_TAG = 'tierlist_with_year_tag.png'
