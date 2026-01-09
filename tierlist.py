@@ -132,7 +132,9 @@ def _make_tags_image_dict():
     for name in png_names:
         if name.endswith(".png"):
             filepath, head = TAGS_BASE_PATH + name, name[:-4]
-            if head == "Vegan":
+            if head == "year_background":
+                pass
+            elif head == "Vegan":
                 tags_image_dict["vegan_large"] = _resize_tag_image(filepath)
                 tags_image_dict["vegan_small"] = _resize_tag_image(filepath, small=True)
             elif int(head) in (1, 2, 3, 4):
