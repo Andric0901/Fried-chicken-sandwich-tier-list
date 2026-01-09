@@ -131,6 +131,14 @@
             "year": 2023,
             "year_first_visited": 2022
         },
+        "Friday Burger Company": {
+            "path_to_logo_image": "logos/Friday Burger Company.jpg",
+            "price": 2,
+            "address": "2162 Danforth Ave",
+            "description": "A good company to have for your mental health",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Tokyo Hot Fried Chicken": {
             "path_to_logo_image": "logos/Tokyo Hot Fried Chicken.jpg",
             "price": 2,
