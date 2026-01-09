@@ -187,6 +187,14 @@
             "year": 2023,
             "year_first_visited": 2022
         },
+        "Grateful Chicken": {
+            "path_to_logo_image": "logos/Grateful Chicken.jpg",
+            "price": 3,
+            "address": "111 Richmond St W",
+            "description": "We should be grateful for this sandwich",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Burgers n' Fries Forever": {
             "path_to_logo_image": "logos/Burgers n' Fries Forever.jpg",
             "price": 3,
