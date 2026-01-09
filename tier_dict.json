@@ -294,6 +294,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "Soup Nutsy": {
+            "path_to_logo_image": "logos/Soup Nutsy.jpg",
+            "price": 1,
+            "address": "Richmond-Adelaide Centre, 120 Adelaide St W R31",
+            "description": "A well made sandwich from a well-known soup place",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "The Arbor Room": {
             "path_to_logo_image": "logos/The Arbor Room.jpg",
             "price": 1,
