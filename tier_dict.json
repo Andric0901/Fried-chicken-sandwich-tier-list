@@ -601,6 +601,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "City Fried Chicken": {
+            "path_to_logo_image": "logos/City Fried Chicken.jpg",
+            "price": 1,
+            "address": "990 Danforth Ave",
+            "description": "Our city doesn't really like it",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "MightyBird": {
             "path_to_logo_image": "logos/MightyBird.jpg",
             "price": 1,
