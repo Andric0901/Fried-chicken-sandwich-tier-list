@@ -131,6 +131,14 @@
             "year": 2023,
             "year_first_visited": 2022
         },
+        "Friday Burger Company": {
+            "path_to_logo_image": "logos/Friday Burger Company.jpg",
+            "price": 2,
+            "address": "2162 Danforth Ave",
+            "description": "A good company to have for your mental health",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Tokyo Hot Fried Chicken": {
             "path_to_logo_image": "logos/Tokyo Hot Fried Chicken.jpg",
             "price": 2,
@@ -178,6 +186,14 @@
             "description": "Not a PG-13 taste",
             "year": 2023,
             "year_first_visited": 2022
+        },
+        "Grateful Chicken": {
+            "path_to_logo_image": "logos/Grateful Chicken.jpg",
+            "price": 3,
+            "address": "111 Richmond St W",
+            "description": "We should be grateful for this sandwich",
+            "year": 2025,
+            "year_first_visited": 2025
         },
         "Burgers n' Fries Forever": {
             "path_to_logo_image": "logos/Burgers n' Fries Forever.jpg",
@@ -234,6 +250,14 @@
             "description": "The Fox is indeed Fortunate",
             "year": 2024,
             "year_first_visited": 2024
+        },
+        "Fox on John": {
+            "path_to_logo_image": "logos/Fox on John.jpg",
+            "price": 4,
+            "address": "106 John St #3",
+            "description": "John loved the fox who made good sandwiches",
+            "year": 2025,
+            "year_first_visited": 2025
         }
     },
     "B": {
@@ -285,6 +309,14 @@
             "description": "Interesting karaage sando",
             "year": 2024,
             "year_first_visited": 2024
+        },
+        "Soup Nutsy": {
+            "path_to_logo_image": "logos/Soup Nutsy.jpg",
+            "price": 1,
+            "address": "Richmond-Adelaide Centre, 120 Adelaide St W R31",
+            "description": "A well made sandwich from a well-known soup place",
+            "year": 2025,
+            "year_first_visited": 2025
         },
         "The Arbor Room": {
             "path_to_logo_image": "logos/The Arbor Room.jpg",
@@ -390,6 +422,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "Burger Hill": {
+            "path_to_logo_image": "logos/Burger Hill.jpg",
+            "price": 2,
+            "address": "2326 Danforth Ave",
+            "description": "Still climbing the highest hill for a better sandwich",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "Penny's Hot Chicken": {
             "path_to_logo_image": "logos/Penny's Hot Chicken.jpg",
             "price": 2,
@@ -397,6 +437,14 @@
             "description": "Hotter than Hooters",
             "year": 2023,
             "year_first_visited": 2023
+        },
+        "Joey Turks Island Grill": {
+            "path_to_logo_image": "logos/Joey Turks Island Grill.jpg",
+            "price": 2,
+            "address": "1900 Eglinton Ave E Unit #E4",
+            "description": "Down to classics",
+            "year": 2025,
+            "year_first_visited": 2025
         },
         "CampusOne": {
             "path_to_logo_image": "logos/CampusOne.jpg",
@@ -577,6 +625,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "City Fried Chicken": {
+            "path_to_logo_image": "logos/City Fried Chicken.jpg",
+            "price": 1,
+            "address": "990 Danforth Ave",
+            "description": "Our city doesn't really like it",
+            "year": 2025,
+            "year_first_visited": 2025
+        },
         "MightyBird": {
             "path_to_logo_image": "logos/MightyBird.jpg",
             "price": 1,
@@ -720,6 +776,14 @@
             "description": "I forgot how greasy a bull can get",
             "year": 2024,
             "year_first_visited": 2024
+        },
+        "Church's Texas Chicken": {
+            "path_to_logo_image": "logos/Church's Texas Chicken.jpg",
+            "price": 2,
+            "address": "3003 Danforth Ave",
+            "description": "It's not a church, it's a chicken sandwich.",
+            "year": 2025,
+            "year_first_visited": 2023
         },
         "Matt's Burger Lab": {
             "path_to_logo_image": "logos/Matt's Burger Lab.jpg",
@@ -996,14 +1060,6 @@
             "price": 1,
             "address": "260 College St",
             "description": "It'll kill you on the way to Heaven Eleven",
-            "year": 2023,
-            "year_first_visited": 2023
-        },
-        "Church's Texas Chicken": {
-            "path_to_logo_image": "logos/Church's Texas Chicken.jpg",
-            "price": 2,
-            "address": "531 Yonge St",
-            "description": "It's not a church, it's a chicken sandwich.",
             "year": 2023,
             "year_first_visited": 2023
         }
