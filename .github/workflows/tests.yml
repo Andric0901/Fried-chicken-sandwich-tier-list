@@ -39,5 +39,4 @@ jobs:
         name: test-results
         path: |
           *.log
-          mismatches.txt
         if-no-files-found: ignore
