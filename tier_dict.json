@@ -258,6 +258,14 @@
             "description": "John loved the fox who made good sandwiches",
             "year": 2025,
             "year_first_visited": 2025
+        },
+        "Flipper's": {
+            "path_to_logo_image": "logos/Flipper's.jpg",
+            "price": 4,
+            "address": "31 Elm St",
+            "description": "Flippin' good sandwich, balanced, breakfast style with avocado",
+            "year": 2026,
+            "year_first_visited": 2026
         }
     },
     "B": {
