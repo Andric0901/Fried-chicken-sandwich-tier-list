@@ -17,7 +17,7 @@ TAG_SMALL_SIZE_MULTIPLIER = 7  # Tag's height will be 1/7 of the logo's height
 DEBUG = False
 
 
-def evaluate_num_logos_per_row(min_val: int = 10, threshold: int = 10) -> int:
+def evaluate_num_logos_per_row(min_val: int = 17, threshold: int = 10) -> int:
     """Evaluate the ideal number of logos per row, such that
     the ratio between the width and height is closest to the golden ratio."""
     if DEBUG:
