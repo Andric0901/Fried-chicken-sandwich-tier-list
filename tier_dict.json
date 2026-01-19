@@ -195,6 +195,14 @@
             "year": 2025,
             "year_first_visited": 2025
         },
+        "Crafty Coyote": {
+            "path_to_logo_image": "logos/Crafty Coyote.jpg",
+            "price": 3,
+            "address": "511 Bloor St W",
+            "description": "Coyote's favorite for a classic",
+            "year": 2026,
+            "year_first_visited": 2026
+        },
         "Burgers n' Fries Forever": {
             "path_to_logo_image": "logos/Burgers n' Fries Forever.jpg",
             "price": 3,
