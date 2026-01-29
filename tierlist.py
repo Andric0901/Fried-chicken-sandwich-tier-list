@@ -132,19 +132,17 @@ def _make_tags_image_dict():
     for name in png_names:
         if name.endswith(".png"):
             filepath, head = TAGS_BASE_PATH + name, name[:-4]
-            if head == "year_background" \
-                or head == "year_background_highlighted" \
-                or head.endswith("_highlighted"):
+            if head == "year_background" or head == "year_background_highlighted":
                 pass
             elif head == "Vegan":
                 tags_image_dict["vegan_large"] = _resize_tag_image(filepath)
                 tags_image_dict["vegan_small"] = _resize_tag_image(filepath, small=True)
-            elif int(head) in (1, 2, 3, 4):
+            elif head in ("1", "2", "3", "4"):
                 # Price tag
-                tags_image_dict[int(head)] = _resize_tag_image(filepath)
+                tags_image_dict[head] = _resize_tag_image(filepath)
             else:
-                # Year tag
-                tags_image_dict[int(head)] = _resize_tag_image(filepath, small=True)
+                # Year tag (normal and highlighted)
+                tags_image_dict[head] = _resize_tag_image(filepath, small=True)
     if DEBUG:
         end = time.time()
         print(f"Time taken for _make_tags_image_dict(): {end - start} seconds")
@@ -165,11 +163,16 @@ def make_tier_restaurants(tier, with_year_tag: bool = False, with_year_first_vis
                                                      restaurant_info.get("vegan", False),
                                                      restaurant_info["year"],
                                                      restaurant_info["year_first_visited"])
+        highlighted = restaurant_info.get("highlighted", False)
         # get the image of the restaurant
         logo_img, price_img, is_year_img, is_year_first_visited_img = (Image.open(restaurant_logo),
-                                                                                     TAGS_IMAGE_DICT[price],
-                                                                                     TAGS_IMAGE_DICT[is_year],
-                                                                                     TAGS_IMAGE_DICT[is_year_first_visited])
+                                                                                     TAGS_IMAGE_DICT[str(price)],
+                                                                                     TAGS_IMAGE_DICT[str(is_year)],
+                                                                                     TAGS_IMAGE_DICT[str(is_year_first_visited)])
+        # If the year is different from the year first visited, the place has been revisited
+        # Highlight the year tag only when with_year_tag is True
+        if (highlighted or is_year != is_year_first_visited) and with_year_tag:
+            is_year_img = TAGS_IMAGE_DICT[str(is_year) + "_highlighted"]
         # get the width and height of the restaurant's logo
         width, height = logo_img.size
         # resize the logo, preserving the aspect ratio, so that the height is 100 pixels
@@ -249,6 +252,13 @@ def make_tierlist(with_year_tag: bool = False, with_year_first_visited_tag: bool
 
 if __name__ == "__main__":
     print("Number of logos per row: {}".format(NUM_LOGOS_PER_ROW))
+    print("""
+    Did you recently change the rank of a restaurant? Make sure to update the "year" tag
+    and specify "highlighted" option if re-ranked twice in the same year.
+    Example:
+        "year": 2025,
+        "highlighted": true
+    """)
     tierlist = make_tierlist()
     tierlist.save(TIERLIST_IMAGE_NAME)
     tierlist_with_year_tag = make_tierlist(with_year_tag=True)
