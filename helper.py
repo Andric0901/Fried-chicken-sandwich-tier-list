@@ -9,6 +9,7 @@ import pymongo
 import certifi
 import pytz
 import json
+import re
 from typing import Optional
 from PIL import Image, ImageDraw, ImageFont
 
@@ -53,17 +54,112 @@ def get_first_tier_indexes() -> dict:
     return first_tier_indexes
 
 
-def generate_year_image(year: int, output_dir: str = "assets/png"):
+def change_image_color(input_path: str, output_path: str, new_color: str | tuple,
+                       old_color: str | tuple = None, tolerance: int = 0):
+    """Change a specific color in an image to a new color.
+    
+    This function can replace a specific color in an image with a new color.
+    If old_color is not specified, it will automatically detect and replace
+    the most common non-transparent color in the image.
+    
+    Args:
+        input_path: Path to the input image
+        output_path: Path to save the modified image
+        new_color: New color as hex string (e.g., '#720000') or RGB tuple (e.g., (114, 0, 0))
+        old_color: Optional. Color to replace as hex string or RGB tuple.
+                   If None, replaces the most common non-transparent color.
+        tolerance: Optional. Color matching tolerance (0-255) for anti-aliasing.
+                   Default is 0 (exact match only).
+    
+    Returns:
+        str: Path to the output image
+    
+    Example:
+        # Replace a specific color
+        change_image_color('input.png', 'output.png', '#720000', '#1a1a1a')
+        
+        # Replace the most common color
+        change_image_color('input.png', 'output.png', (114, 0, 0))
+    """
+    # Helper function to convert hex to RGB
+    def hex_to_rgb(hex_color: str) -> tuple:
+        hex_color = hex_color.lstrip('#')
+        return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    
+    # Convert colors to RGB tuples if they're hex strings
+    if isinstance(new_color, str):
+        new_color = hex_to_rgb(new_color)
+    if isinstance(old_color, str):
+        old_color = hex_to_rgb(old_color)
+    
+    # Open the image
+    img = Image.open(input_path)
+    img = img.convert('RGBA')
+    
+    # Get pixel data
+    pixels = img.load()
+    width, height = img.size
+    
+    # If old_color is not specified, find the most common non-transparent color
+    if old_color is None:
+        color_counts = {}
+        for y in range(height):
+            for x in range(width):
+                r, g, b, a = pixels[x, y]
+                # Skip transparent pixels
+                if a < 128:
+                    continue
+                color = (r, g, b)
+                color_counts[color] = color_counts.get(color, 0) + 1
+        
+        if color_counts:
+            old_color = max(color_counts, key=color_counts.get)
+        else:
+            raise ValueError("No non-transparent pixels found in image")
+    
+    # Helper function to check if colors match within tolerance
+    def colors_match(c1: tuple, c2: tuple, tol: int) -> bool:
+        return all(abs(c1[i] - c2[i]) <= tol for i in range(3))
+    
+    # Iterate through all pixels and replace the old color with the new color
+    for y in range(height):
+        for x in range(width):
+            r, g, b, a = pixels[x, y]
+            
+            # If this pixel matches the old color (within tolerance), replace it
+            if colors_match((r, g, b), old_color, tolerance):
+                pixels[x, y] = (new_color[0], new_color[1], new_color[2], a)
+    
+    # Save the modified image
+    img.save(output_path)
+    
+    return output_path
+
+
+def change_year_background_highlighted_color(new_color: tuple | str):
+    """Change the background color of the highlighted year image."""
+    change_image_color(
+        "assets/png/year_background_highlighted.png", 
+        "assets/png/year_background_highlighted.png", 
+        new_color
+    )
+    # Delete <year>_highlighted.png files, filter with regex
+    for file in os.listdir("assets/png"):
+        if re.match(r"\d+_(highlighted).png", file):
+            os.remove(os.path.join("assets/png", file))
+
+
+def generate_year_image(year: int, background_path: str, output_dir: str = "assets/png"):
     """Generate a year tag image by overlaying text on a background image.
     
     Args:
         year: The year to display as text
+        background_path: Path to the background image to use
         output_dir: Directory to save the output image (default: 'assets/png')
     
     Returns:
         The path to the generated image file
     """
-    background_path = "assets/png/year_background.png"
     font_path = "assets/bahnschrift.ttf"
     
     # Open the background image
@@ -96,17 +192,31 @@ def generate_year_image(year: int, output_dir: str = "assets/png"):
     draw.text((x, y), year_text, font=font, fill=(255, 255, 255))
     
     # Save the image
-    output_path = os.path.join(output_dir, f"{year}.png")
+    # Determine suffix based on background path
+    if "highlighted" in background_path:
+        output_path = os.path.join(output_dir, f"{year}_highlighted.png")
+    else:
+        output_path = os.path.join(output_dir, f"{year}.png")
     img.save(output_path)
     
     return output_path
 
 
 def create_missing_year_images():
+    """Generate missing year images for both regular and highlighted backgrounds."""
+    # Uncomment and change color below for new highlighted year background color
+    # change_year_background_highlighted_color("#cc6633")
+    background_regular = "assets/png/year_background.png"
+    background_highlighted = "assets/png/year_background_highlighted.png"
+    
     for year in RESTAURANT_YEARS:
-        if os.path.exists(f"assets/png/{year}.png"):
-            continue
-        generate_year_image(year)
+        # Generate regular year image if it doesn't exist
+        if not os.path.exists(f"assets/png/{year}.png"):
+            generate_year_image(year, background_regular)
+        
+        # Generate highlighted year image if it doesn't exist
+        if not os.path.exists(f"assets/png/{year}_highlighted.png"):
+            generate_year_image(year, background_highlighted)
 
 
 ##############################################
@@ -566,3 +676,5 @@ if __name__ == "__main__":
     if not os.path.exists('.env'):
         raise FileNotFoundError('.env file not found')
     # verify_restaurant_names()
+    # To change the highlighted year background color, go to create_missing_year_images()
+    # and uncomment the change_year_background_highlighted_color() line
