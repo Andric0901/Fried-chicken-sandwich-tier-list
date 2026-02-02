@@ -41,6 +41,28 @@ async def tierlist_command(interaction: discord.Interaction) -> None:
     await interaction.response.send_message(embed=embed, file=discord.File(image, TIERLIST_IMAGE_NAME))
 
 
+@tree.command(name='alt1', description='Tier List with year tags of first visit')
+async def alt1_tierlist_command(interaction: discord.Interaction) -> None:
+    """Shows the tierlist image with year of first visit tags in an embed."""
+    title = "Tier List (First Visit)"
+    description = "Tier List with year tags of first visit"
+    embed = discord.Embed(title=title, description=description, color=0x00ff00)
+    image = open(TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG, 'rb')
+    embed.set_image(url='attachment://{}'.format(TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG))
+    await interaction.response.send_message(embed=embed, file=discord.File(image, TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG))
+
+
+@tree.command(name='alt2', description='Tier List with year tags when the ranks have been (re)evaluated')
+async def alt2_tierlist_command(interaction: discord.Interaction) -> None:
+    """Shows the tierlist image with year of evaluation tags in an embed."""
+    title = "Tier List (Evaluation)"
+    description = "Tier List with year tags when the ranks have been (re)evaluated"
+    embed = discord.Embed(title=title, description=description, color=0x00ff00)
+    image = open(TIERLIST_IMAGE_NAME_WITH_YEAR_TAG, 'rb')
+    embed.set_image(url='attachment://{}'.format(TIERLIST_IMAGE_NAME_WITH_YEAR_TAG))
+    await interaction.response.send_message(embed=embed, file=discord.File(image, TIERLIST_IMAGE_NAME_WITH_YEAR_TAG))
+
+
 if __name__ == '__main__':
     # Check that .env file exists
     if not os.path.exists('.env'):
