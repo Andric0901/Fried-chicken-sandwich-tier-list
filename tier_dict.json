@@ -123,6 +123,14 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "Nicki J's Hot Chicken": {
+            "path_to_logo_image": "logos/Nicki J's Hot Chicken.jpg",
+            "price": 1,
+            "address": "358 Marlee Ave",
+            "description": "Nicki Jam approved",
+            "year": 2026,
+            "year_first_visited": 2026
+        },
         "Cabano's Cheeseburgers": {
             "path_to_logo_image": "logos/Cabano's Cheeseburgers.jpg",
             "price": 2,
@@ -1018,6 +1026,15 @@
             "description": "GREASY and does not follow the korean expectations",
             "year": 2025,
             "year_first_visited": 2025
+        },
+        "Guerrilla Burger": {
+            "path_to_logo_image": "logos/Guerrilla Burger.jpg",
+            "price": 3,
+            "vegan": true,
+            "address": "454 Bloor St W",
+            "description": "Guerrilla wouldn't like this",
+            "year": 2026,
+            "year_first_visited": 2026
         },
         "House on Parliament": {
             "path_to_logo_image": "logos/House on Parliament.jpg",
