@@ -96,6 +96,14 @@
             "description": "Perfect combo of Italian and Japanese",
             "year": 2024,
             "year_first_visited": 2024
+        },
+        "Gully": {
+            "path_to_logo_image": "logos/Gully.jpg",
+            "price": 4,
+            "address": "521 Bloor St W",
+            "description": "A great descent from Bubba's chicken",
+            "year": 2026,
+            "year_first_visited": 2026
         }
     },
     "A": {
