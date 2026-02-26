@@ -621,6 +621,14 @@
             "description": "Crispy schnitzel but rather dry",
             "year": 2023,
             "year_first_visited": 2023
+        },
+        "Birroteca by Indie Alehouse": {
+            "path_to_logo_image": "logos/Birroteca by Indie Alehouse.jpg",
+            "price": 4,
+            "address": "55 Bloor St W Concourse Level",
+            "description": "well well well, what do we have here? crispy chicken sandwich where bread is crispier?",
+            "year": 2026,
+            "year_first_visited": 2026
         }
     },
     "C": {
