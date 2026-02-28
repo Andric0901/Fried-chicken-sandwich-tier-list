@@ -34,7 +34,7 @@ Tips for using the editor UI:
  1. The editor UI automatically saves any changes to the local `tier_dict.json` file.
  1. Drag and drop any restaurant in the tierlist to move restaurants between tiers or reorder within a tier.
  1. Double click on any restaurant in the tierlist to open the metadata editor.
- 1. Clicking the "Export Imgs" button on the top right corner will run `tierlist.py` file to generate the tierlist images as shown above. You can find the generated images at the root directory of this repository, if modified at all.
+ 1. Clicking the "Export Imgs" button on the top right corner will run `tierlist.py` file to generate the tierlist images as shown above. You can find the newly generated images at the root directory of this repository, if modified at all.
 
 # Discord Bot
 Click on [this link](https://discord.com/api/oauth2/authorize?client_id=1077364191494668420&permissions=8&scope=bot) to invite the bot to your server.
