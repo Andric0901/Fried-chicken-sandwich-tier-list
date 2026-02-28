@@ -92,12 +92,25 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
                 old_path = data.get('old_path')
                 new_path = data.get('new_path')
                 
-                if old_path and new_path and os.path.exists(old_path):
-                    os.rename(old_path, new_path)
-                    self.send_response(200)
-                    self.send_header('Content-type', 'application/json')
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"status": "success"}).encode())
+                # Security Check: Prevent directory traversal
+                if old_path and new_path:
+                    # Resolve to absolute paths relative to current directory
+                    base_dir = os.path.abspath('logos')
+                    abs_old = os.path.abspath(old_path)
+                    abs_new = os.path.abspath(new_path)
+                    
+                    # Ensure both paths strictly reside within the specific 'logos' directory boundary
+                    if abs_old.startswith(base_dir) and abs_new.startswith(base_dir) and os.path.exists(abs_old):
+                        os.rename(abs_old, abs_new)
+                        self.send_response(200)
+                        self.send_header('Content-type', 'application/json')
+                        self.end_headers()
+                        self.wfile.write(json.dumps({"status": "success"}).encode())
+                    else:
+                        self.send_response(400)
+                        self.send_header('Content-type', 'application/json')
+                        self.end_headers()
+                        self.wfile.write(json.dumps({"error": "Security check failed: Invalid path or file does not exist. Path must remain inside logos directory."}).encode())
                 else:
                     self.send_response(400)
                     self.send_header('Content-type', 'application/json')
