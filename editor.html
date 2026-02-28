@@ -755,6 +755,13 @@
             setTimeout(() => { editModal.style.display = 'none'; }, 300);
         });
 
+        // Close modal on Esc key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && editModal.style.display !== 'none') {
+                btnCancel.click();
+            }
+        });
+
         async function init() {
             try {
                 // Fetch logos and dict in parallel
@@ -1067,8 +1074,35 @@
                 editName.setCustomValidity("");
             }
 
+            // Year validation
+            const yearVal = parseInt(editYear.value);
+            const yearFirstVal = parseInt(editYearFirst.value);
+            const isYearInvalid = isNaN(yearVal) || !Number.isInteger(Number(editYear.value));
+            const isYearFirstInvalid = isNaN(yearFirstVal) || !Number.isInteger(Number(editYearFirst.value));
+            const isYearOrderInvalid = yearFirstVal > yearVal;
+
+            if (isYearInvalid) {
+                editYear.classList.add('invalid-input');
+                editYear.setCustomValidity("Must be a valid integer year");
+            } else {
+                editYear.classList.remove('invalid-input');
+                editYear.setCustomValidity("");
+            }
+
+            if (isYearFirstInvalid || isYearOrderInvalid) {
+                editYearFirst.classList.add('invalid-input');
+                if (isYearFirstInvalid) {
+                    editYearFirst.setCustomValidity("Must be a valid integer year");
+                } else {
+                    editYearFirst.setCustomValidity("First visit cannot be after re-ranked year");
+                }
+            } else {
+                editYearFirst.classList.remove('invalid-input');
+                editYearFirst.setCustomValidity("");
+            }
+
             const isValid = editForm.checkValidity();
-            btnSave.disabled = !hasChanged || !isValid || isNameInvalid;
+            btnSave.disabled = !hasChanged || !isValid || isNameInvalid || isYearInvalid || isYearFirstInvalid || isYearOrderInvalid;
         }
 
         function getFormState() {
