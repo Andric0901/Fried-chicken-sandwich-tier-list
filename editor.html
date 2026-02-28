@@ -111,8 +111,10 @@
             font-size: 14px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(255, 127, 127, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
             text-transform: uppercase;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .run-tierlist-btn:hover {
@@ -562,6 +564,13 @@
 
     <div class="controls">
         <div class="zoom-controls">
+            <button id="zoom-default" title="Default Zoom">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                    <path d="M3 3v5h5"></path>
+                </svg>
+            </button>
             <button id="zoom-out" title="Zoom Out">-</button>
             <span id="zoom-value">35%</span>
             <button id="zoom-in" title="Zoom In">+</button>
@@ -664,8 +673,10 @@
         const container = document.getElementById('tierlist-container');
         const saveIndicator = document.getElementById('save-indicator');
         const tooltip = document.getElementById('tooltip');
+        const zoomDefaultBtn = document.getElementById('zoom-default');
 
         let currentZoom = 35;
+        let defaultZoom = 35;
         const zoomValue = document.getElementById('zoom-value');
         const zoomOutBtn = document.getElementById('zoom-out');
         const zoomInBtn = document.getElementById('zoom-in');
@@ -675,16 +686,23 @@
             container.style.zoom = currentZoom / 100;
         }
 
+        zoomDefaultBtn.addEventListener('click', () => {
+            currentZoom = defaultZoom;
+            applyZoom();
+        });
+
         zoomOutBtn.addEventListener('click', () => {
             if (currentZoom > 5) {
-                currentZoom -= 5;
+                currentZoom = Math.ceil(currentZoom / 5) * 5 - 5;
+                if (currentZoom < 5) currentZoom = 5;
                 applyZoom();
             }
         });
 
         zoomInBtn.addEventListener('click', () => {
             if (currentZoom < 200) {
-                currentZoom += 5;
+                currentZoom = Math.floor(currentZoom / 5) * 5 + 5;
+                if (currentZoom > 200) currentZoom = 200;
                 applyZoom();
             }
         });
@@ -789,6 +807,14 @@
                 unassignedLogos = logosData.logos.filter(l => !allExtractedLogos.has(`logos/${l}`.toLowerCase()));
                 updateUnassignedDropdown();
 
+                // Dynamic Zoom Calculation
+                const tierRowWidth = 200 + 40 + (columns * 210); // label + gaps + content
+                const availableWidth = window.innerWidth - 40; // some margin
+                currentZoom = Math.min(100, Math.floor((availableWidth / tierRowWidth) * 100) - 1);
+                if (currentZoom < 10) currentZoom = 10;
+                defaultZoom = currentZoom;
+                applyZoom();
+
                 render(columns);
             } catch (err) {
                 container.innerHTML = `<div class="error"><h2>Error!</h2><p>${err.message}</p><p>Make sure editor_server.py is running on port 8000.</p></div>`;
@@ -880,7 +906,16 @@
                         });
 
                         wrapper.addEventListener('mousemove', e => {
-                            tooltip.style.left = (e.pageX + 15) + 'px';
+                            const tooltipWidth = tooltip.offsetWidth;
+                            const pageWidth = window.innerWidth;
+                            let xPos = e.pageX + 15;
+
+                            // If tooltip would go off-screen to the right, flip it to the left of the cursor
+                            if (xPos + tooltipWidth > pageWidth - 15) {
+                                xPos = e.pageX - tooltipWidth - 15;
+                            }
+
+                            tooltip.style.left = xPos + 'px';
                             tooltip.style.top = (e.pageY + 15) + 'px';
                         });
 
