@@ -112,10 +112,11 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
 
         if self.path == '/api/run_tierlist':
             import subprocess
+            import sys
             try:
                 # Run the tierlist.py file synchronously
                 result = subprocess.run(
-                    ['python', 'tierlist.py'],
+                    [sys.executable, 'tierlist.py'],
                     capture_output=True,
                     text=True,
                     check=True
