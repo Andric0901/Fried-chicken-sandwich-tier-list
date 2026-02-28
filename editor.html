@@ -789,6 +789,13 @@
                 unassignedLogos = logosData.logos.filter(l => !allExtractedLogos.has(`logos/${l}`.toLowerCase()));
                 updateUnassignedDropdown();
 
+                // Dynamic Zoom Calculation
+                const tierRowWidth = 200 + 40 + (columns * 210); // label + gaps + content
+                const availableWidth = window.innerWidth - 40; // some margin
+                currentZoom = Math.min(100, Math.floor((availableWidth / tierRowWidth) * 100) - 1);
+                if (currentZoom < 10) currentZoom = 10;
+                applyZoom();
+
                 render(columns);
             } catch (err) {
                 container.innerHTML = `<div class="error"><h2>Error!</h2><p>${err.message}</p><p>Make sure editor_server.py is running on port 8000.</p></div>`;
@@ -880,7 +887,16 @@
                         });
 
                         wrapper.addEventListener('mousemove', e => {
-                            tooltip.style.left = (e.pageX + 15) + 'px';
+                            const tooltipWidth = tooltip.offsetWidth;
+                            const pageWidth = window.innerWidth;
+                            let xPos = e.pageX + 15;
+
+                            // If tooltip would go off-screen to the right, flip it to the left of the cursor
+                            if (xPos + tooltipWidth > pageWidth - 15) {
+                                xPos = e.pageX - tooltipWidth - 15;
+                            }
+
+                            tooltip.style.left = xPos + 'px';
                             tooltip.style.top = (e.pageY + 15) + 'px';
                         });
 
