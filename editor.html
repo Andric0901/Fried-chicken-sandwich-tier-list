@@ -915,6 +915,20 @@
             container.style.zoom = currentZoom / 100;
         }
 
+        function updateTooltipPosition(e) {
+            const tooltipWidth = tooltip.offsetWidth;
+            const pageWidth = window.innerWidth;
+            let xPos = e.pageX + 15;
+
+            // If tooltip would go off-screen to the right, flip it to the left of the cursor
+            if (xPos + tooltipWidth > pageWidth - 15) {
+                xPos = e.pageX - tooltipWidth - 15;
+            }
+
+            tooltip.style.left = xPos + 'px';
+            tooltip.style.top = (e.pageY + 15) + 'px';
+        }
+
         zoomDefaultBtn.addEventListener('click', () => {
             currentZoom = defaultZoom;
             applyZoom();
@@ -970,8 +984,7 @@
                 tooltip.style.opacity = '1';
             });
             item.el.addEventListener('mousemove', e => {
-                tooltip.style.left = (e.pageX + 15) + 'px';
-                tooltip.style.top = (e.pageY + 15) + 'px';
+                updateTooltipPosition(e);
             });
             item.el.addEventListener('mouseleave', () => {
                 tooltip.style.opacity = '0';
@@ -1314,17 +1327,7 @@
                         });
 
                         wrapper.addEventListener('mousemove', e => {
-                            const tooltipWidth = tooltip.offsetWidth;
-                            const pageWidth = window.innerWidth;
-                            let xPos = e.pageX + 15;
-
-                            // If tooltip would go off-screen to the right, flip it to the left of the cursor
-                            if (xPos + tooltipWidth > pageWidth - 15) {
-                                xPos = e.pageX - tooltipWidth - 15;
-                            }
-
-                            tooltip.style.left = xPos + 'px';
-                            tooltip.style.top = (e.pageY + 15) + 'px';
+                            updateTooltipPosition(e);
                         });
 
                         wrapper.addEventListener('mouseleave', e => {
@@ -1880,8 +1883,7 @@
                     tooltip.style.opacity = '1';
                 });
                 wrapper.addEventListener('mousemove', e => {
-                    tooltip.style.left = (e.pageX + 15) + 'px';
-                    tooltip.style.top = (e.pageY + 15) + 'px';
+                    updateTooltipPosition(e);
                 });
                 wrapper.addEventListener('mouseleave', e => {
                     tooltip.style.opacity = '0';
