@@ -30,7 +30,8 @@ jobs:
         
     - name: Run tests
       run: |
-        python tests.py
+        python -m pytest tests.py
+        python -m pytest editor_tests.py
         
     - name: Upload test results
       if: always()
