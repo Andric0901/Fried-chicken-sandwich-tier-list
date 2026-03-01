@@ -691,7 +691,9 @@ class TestEditorHtmlStructure(unittest.TestCase):
     def test_no_inline_script_block(self):
         # Should not contain a <script> tag with actual code
         # (a bare <script src=...> tag is fine)
-        inline_script = re.search(r"<script(?![^>]*\bsrc\b)[^>]*>[^<]+", self.html)
+        inline_script = re.search(
+            r"<script(?![^>]*\bsrc\b)[^>]*>[^<]+", self.html, flags=re.IGNORECASE
+        )
         self.assertIsNone(inline_script, "Found inline <script> block in editor.html")
 
     # ---- all 7 tier options present in the select ----
