@@ -378,13 +378,21 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
+            /* Slightly darker to compensate for loss of blur */
             z-index: 10000;
-            backdrop-filter: blur(10px);
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease-in-out;
+            will-change: opacity;
+            pointer-events: none;
+            backface-visibility: hidden;
+        }
+
+        #edit-modal.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .modal-content {
@@ -395,8 +403,17 @@
             width: 80vw;
             max-width: 1000px;
             height: clamp(550px, 75vh, 800px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
             border: 1px solid #333;
+            transform: scale(0.98) translateZ(0);
+            /* Subtle scale and GPU force */
+            transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        #edit-modal.active .modal-content {
+            transform: scale(1) translateZ(0);
         }
 
         .modal-left {
@@ -826,8 +843,12 @@
         });
 
         btnCancel.addEventListener('click', () => {
-            editModal.style.opacity = '0';
-            setTimeout(() => { editModal.style.display = 'none'; }, 300);
+            editModal.classList.remove('active');
+            setTimeout(() => {
+                if (!editModal.classList.contains('active')) {
+                    editModal.style.display = 'none';
+                }
+            }, 300);
         });
 
         // Close modal on Esc key
@@ -1357,7 +1378,9 @@
 
         function showModal() {
             editModal.style.display = 'flex';
-            setTimeout(() => { editModal.style.opacity = '1'; }, 10);
+            // Force reflow
+            editModal.offsetHeight;
+            editModal.classList.add('active');
         }
 
         editForm.addEventListener('submit', async (e) => {
@@ -1497,8 +1520,12 @@
                 globalTierDict[tier] = newTierItems;
             }
 
-            editModal.style.opacity = '0';
-            setTimeout(() => { editModal.style.display = 'none'; }, 300);
+            editModal.classList.remove('active');
+            setTimeout(() => {
+                if (!editModal.classList.contains('active')) {
+                    editModal.style.display = 'none';
+                }
+            }, 300);
 
             // Rebuild or update DOM directly
             let wrapper = null;
