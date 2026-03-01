@@ -987,24 +987,37 @@
 
             try {
                 const res = await fetch('/api/run_tierlist', { method: 'POST' });
+                const data = await res.json().catch(() => ({ error: "Failed to parse server response" }));
+
                 if (res.ok) {
-                    saveIndicator.textContent = 'Successfully generated tierlist.png!';
+                    saveIndicator.textContent = 'Successfully generated images!';
                     saveIndicator.className = 'save-indicator saved';
+                    setTimeout(() => {
+                        saveIndicator.style.display = "";
+                        saveIndicator.className = "save-indicator";
+                    }, 3000);
                 } else {
-                    throw new Error('Script failed');
+                    const details = data.details ? `: ${data.details}` : (data.error ? `: ${data.error}` : '');
+                    saveIndicator.textContent = 'Error' + details;
+                    saveIndicator.className = 'save-indicator error';
                 }
             } catch (err) {
-                saveIndicator.textContent = 'Error running script!';
+                saveIndicator.textContent = 'Error running script: ' + err.message;
                 saveIndicator.className = 'save-indicator error';
             } finally {
                 runTierlistBtn.textContent = 'Export imgs';
                 runTierlistBtn.disabled = false;
                 runTierlistBtn.style.opacity = '1';
 
-                setTimeout(() => {
-                    saveIndicator.style.display = "";
-                    saveIndicator.className = "save-indicator";
-                }, 3000);
+                // Ensure indicator fades out even on error after a bit longer
+                if (saveIndicator.classList.contains('error')) {
+                    setTimeout(() => {
+                        if (saveIndicator.classList.contains('error')) {
+                            saveIndicator.style.display = "";
+                            saveIndicator.className = "save-indicator";
+                        }
+                    }, 5000);
+                }
             }
         });
 
@@ -1523,6 +1536,25 @@
             });
         }
 
+        async function ensureImageInCache(path) {
+            if (imageCache.has(path)) return imageCache.get(path);
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    imageCache.set(path, img);
+                    resolve(img);
+                };
+                img.onerror = () => {
+                    console.warn("Failed to catch-load image:", path);
+                    // Return a dummy small transparent pixel or similar to avoid crash
+                    const dummy = new Image();
+                    imageCache.set(path, dummy);
+                    resolve(dummy);
+                };
+                img.src = path;
+            });
+        }
+
         // Modal Logic
         const editName = document.getElementById('edit-name');
         const editTier = document.getElementById('edit-tier');
@@ -1647,6 +1679,7 @@
             const path = 'logos/' + logoFilename;
             modalImg.src = path;
             editLogoPath.value = path;
+            ensureImageInCache(path); // Ensure it's in cache for saving later
 
             const guessedName = logoFilename.replace(/\.[^/.]+$/, "");
             editOriginalName.value = '';
@@ -1734,42 +1767,45 @@
                 delete newInfo.highlighted;
             }
 
-            // Handle potential file rename if name changed and in edit mode
-            if (mode === 'edit' && name !== origName) {
+            if (mode === 'edit') {
                 const oldPath = editLogoPath.value;
                 const ext = oldPath.split('.').pop();
                 const newPath = `logos/${name}.${ext}`;
-                newInfo.path_to_logo_image = newPath;
-
-                try {
-                    await fetch('/api/rename_logo', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ old_path: oldPath, new_path: newPath })
-                    });
-                } catch (e) {
-                    console.error("Failed to rename logo file", e);
-                }
-            } else if (mode === 'create') {
-                unassignedLogos = unassignedLogos.filter(l => `logos/${l}` !== editLogoPath.value);
-                updateUnassignedDropdown();
-
-                // For new files, rename immediately if name string doesn't match original logo
-                if (name !== origName) {
-                    const oldPath = editLogoPath.value;
-                    const ext = oldPath.split('.').pop();
-                    const newPath = `logos/${name}.${ext}`;
+                if (oldPath !== newPath) {
                     newInfo.path_to_logo_image = newPath;
-
                     try {
                         await fetch('/api/rename_logo', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ old_path: oldPath, new_path: newPath })
                         });
+                        await ensureImageInCache(newPath);
                     } catch (e) {
                         console.error("Failed to rename logo file", e);
                     }
+                }
+            } else if (mode === 'create') {
+                unassignedLogos = unassignedLogos.filter(l => `logos/${l}` !== editLogoPath.value);
+                updateUnassignedDropdown();
+
+                const oldPath = editLogoPath.value;
+                const ext = oldPath.split('.').pop();
+                const newPath = `logos/${name}.${ext}`;
+
+                if (oldPath !== newPath) {
+                    newInfo.path_to_logo_image = newPath;
+                    try {
+                        await fetch('/api/rename_logo', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ old_path: oldPath, new_path: newPath })
+                        });
+                        await ensureImageInCache(newPath);
+                    } catch (e) {
+                        console.error("Failed to rename logo file", e);
+                    }
+                } else {
+                    await ensureImageInCache(oldPath);
                 }
             }
 
@@ -1864,7 +1900,7 @@
             wrapper.dataset.tier = tier;
             wrapper.innerHTML = '';
 
-            const img = imageCache.get(newInfo.path_to_logo_image);
+            const img = await ensureImageInCache(newInfo.path_to_logo_image);
             img.className = 'logo-item';
             img.alt = name;
             wrapper.appendChild(img);
