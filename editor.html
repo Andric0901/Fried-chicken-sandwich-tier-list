@@ -271,6 +271,11 @@
             color: #7fff7f;
         }
 
+        .save-indicator.error {
+            display: block;
+            color: #ff7f7f;
+        }
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -333,6 +338,53 @@
             font-weight: 900;
         }
 
+        .year-toggle-container {
+            position: fixed;
+            top: 20px;
+            left: 200px;
+            /* Offset from unassigned btn */
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .year-toggle-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        .year-toggle-btn:hover {
+            background: rgba(50, 50, 50, 0.8);
+            border-color: #666;
+        }
+
+        .year-toggle-btn.active {
+            background: #ff7f7f;
+            border-color: #ffbf7f;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 127, 127, 0.4);
+        }
+
+        .year-tag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 30px;
+            /* Reduced from 40px */
+            width: auto;
+            pointer-events: none;
+        }
+
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -378,13 +430,21 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
+            /* Slightly darker to compensate for loss of blur */
             z-index: 10000;
-            backdrop-filter: blur(10px);
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease-in-out;
+            will-change: opacity;
+            pointer-events: none;
+            backface-visibility: hidden;
+        }
+
+        #edit-modal.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .modal-content {
@@ -395,8 +455,79 @@
             width: 80vw;
             max-width: 1000px;
             height: clamp(550px, 75vh, 800px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
             border: 1px solid #333;
+            transform: scale(0.98) translateZ(0);
+            /* Subtle scale and GPU force */
+            transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        #edit-modal.active .modal-content {
+            transform: scale(1) translateZ(0);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10001;
+            backdrop-filter: blur(5px);
+            opacity: 0.8;
+            padding: 0;
+            line-height: normal;
+        }
+
+        .modal-nav::after {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-top: 3px solid white;
+            border-right: 3px solid white;
+            display: inline-block;
+        }
+
+        .btn-nav-left {
+            left: 40px;
+        }
+
+        .btn-nav-right {
+            right: 40px;
+        }
+
+        .btn-nav-left::after {
+            transform: rotate(-135deg);
+            margin-right: -4px;
+            /* Counter-balance the rotation for visual centering */
+        }
+
+        .btn-nav-right::after {
+            transform: rotate(45deg);
+            margin-left: -4px;
+            /* Counter-balance the rotation for visual centering */
+        }
+
+        .modal-nav:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-50%) scale(1.1);
+            opacity: 1;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .modal-nav:active {
+            transform: translateY(-50%) scale(0.95);
         }
 
         .modal-left {
@@ -548,10 +679,64 @@
         .btn-save:hover {
             background: #6fdf6f;
         }
+
+        /* Loading Overlay */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+            flex-direction: column;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #loading-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 400px;
+            height: 10px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(255, 127, 127, 0.3);
+        }
+
+        #progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff7f7f, #ffbf7f);
+            transition: width 0.2s ease;
+        }
+
+        #progress-text {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #ccc;
+        }
     </style>
 </head>
 
 <body>
+    <div id="loading-overlay">
+        <div class="loading-content">
+            <h2>Loading Tier List...</h2>
+            <div class="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+            <div id="progress-text">0%</div>
+        </div>
+    </div>
 
     <div class="unassigned-btn-container">
         <button id="unassigned-btn" class="unassigned-btn">
@@ -560,6 +745,35 @@
         <div id="unassigned-dropdown" class="dropdown-menu">
             <!-- Populated via JS -->
         </div>
+    </div>
+
+    <div class="year-toggle-container">
+        <button id="toggle-year-first" class="year-toggle-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <path d="M8 14h.01"></path>
+                <path d="M12 14h.01"></path>
+                <path d="M16 14h.01"></path>
+                <path d="M8 18h.01"></path>
+                <path d="M12 18h.01"></path>
+                <path d="M16 18h.01"></path>
+            </svg>
+        </button>
+        <button id="toggle-year-rerank" class="year-toggle-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <path d="M12 14v4"></path>
+                <path d="M10 16h4"></path>
+            </svg>
+        </button>
     </div>
 
     <div class="controls">
@@ -594,6 +808,7 @@
 
     <!-- Edit Modal -->
     <div id="edit-modal">
+        <button id="nav-prev" class="modal-nav btn-nav-left" title="Previous Restaurant"></button>
         <div class="modal-content">
             <div class="modal-left">
                 <img id="modal-img" src="" alt="Logo Preview">
@@ -602,6 +817,8 @@
                 <h2 id="modal-title">Edit Metadata</h2>
                 <form id="edit-form">
                     <input type="hidden" id="edit-original-name">
+                    <input type="hidden" id="edit-original-tier">
+                    <input type="hidden" id="edit-original-price">
                     <input type="hidden" id="edit-mode"> <!-- 'edit' or 'create' -->
                     <input type="hidden" id="edit-logo-path">
 
@@ -656,8 +873,14 @@
                     </div>
 
                     <div class="checkbox-group">
-                        <input type="checkbox" id="edit-vegan">
-                        <label for="edit-vegan">Vegan</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="edit-vegan">
+                            <label for="edit-vegan">Vegan</label>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="edit-highlighted">
+                            <label for="edit-highlighted">Force Highlight (Re-ranked)</label>
+                        </div>
                     </div>
 
                     <div class="modal-actions">
@@ -667,6 +890,7 @@
                 </form>
             </div>
         </div>
+        <button id="nav-next" class="modal-nav btn-nav-right" title="Next Restaurant"></button>
     </div>
 
     <script>
@@ -677,13 +901,32 @@
 
         let currentZoom = 35;
         let defaultZoom = 35;
+        let activeYearMode = null; // 'first' or 'rerank'
+        let currentColumns = 17;
+
         const zoomValue = document.getElementById('zoom-value');
         const zoomOutBtn = document.getElementById('zoom-out');
         const zoomInBtn = document.getElementById('zoom-in');
+        const toggleYearFirstBtn = document.getElementById('toggle-year-first');
+        const toggleYearRerankBtn = document.getElementById('toggle-year-rerank');
 
         function applyZoom() {
             zoomValue.textContent = currentZoom + '%';
             container.style.zoom = currentZoom / 100;
+        }
+
+        function updateTooltipPosition(e) {
+            const tooltipWidth = tooltip.offsetWidth;
+            const pageWidth = window.innerWidth;
+            let xPos = e.pageX + 15;
+
+            // If tooltip would go off-screen to the right, flip it to the left of the cursor
+            if (xPos + tooltipWidth > pageWidth - 15) {
+                xPos = e.pageX - tooltipWidth - 15;
+            }
+
+            tooltip.style.left = xPos + 'px';
+            tooltip.style.top = (e.pageY + 15) + 'px';
         }
 
         zoomDefaultBtn.addEventListener('click', () => {
@@ -707,6 +950,47 @@
             }
         });
 
+        toggleYearFirstBtn.addEventListener('click', () => {
+            if (activeYearMode === 'first') {
+                activeYearMode = null;
+                toggleYearFirstBtn.classList.remove('active');
+            } else {
+                activeYearMode = 'first';
+                toggleYearFirstBtn.classList.add('active');
+                toggleYearRerankBtn.classList.remove('active');
+            }
+            render(currentColumns);
+        });
+
+        toggleYearRerankBtn.addEventListener('click', () => {
+            if (activeYearMode === 'rerank') {
+                activeYearMode = null;
+                toggleYearRerankBtn.classList.remove('active');
+            } else {
+                activeYearMode = 'rerank';
+                toggleYearRerankBtn.classList.add('active');
+                toggleYearFirstBtn.classList.remove('active');
+            }
+            render(currentColumns);
+        });
+
+        // Toggle Hover Global Tooltip
+        [
+            { el: toggleYearFirstBtn, text: "Year First Visited" },
+            { el: toggleYearRerankBtn, text: "Year Re-ranked" }
+        ].forEach(item => {
+            item.el.addEventListener('mouseenter', () => {
+                tooltip.textContent = item.text;
+                tooltip.style.opacity = '1';
+            });
+            item.el.addEventListener('mousemove', e => {
+                updateTooltipPosition(e);
+            });
+            item.el.addEventListener('mouseleave', () => {
+                tooltip.style.opacity = '0';
+            });
+        });
+
         // Run Tierlist Button Logic
         const runTierlistBtn = document.getElementById('run-tierlist-btn');
         runTierlistBtn.addEventListener('click', async () => {
@@ -716,29 +1000,43 @@
 
             try {
                 const res = await fetch('/api/run_tierlist', { method: 'POST' });
+                const data = await res.json().catch(() => ({ error: "Failed to parse server response" }));
+
                 if (res.ok) {
-                    saveIndicator.textContent = 'Successfully generated tierlist.png!';
+                    saveIndicator.textContent = 'Successfully generated images!';
                     saveIndicator.className = 'save-indicator saved';
+                    setTimeout(() => {
+                        saveIndicator.style.display = "";
+                        saveIndicator.className = "save-indicator";
+                    }, 3000);
                 } else {
-                    throw new Error('Script failed');
+                    const details = data.details ? `: ${data.details}` : (data.error ? `: ${data.error}` : '');
+                    saveIndicator.textContent = 'Error' + details;
+                    saveIndicator.className = 'save-indicator error';
                 }
             } catch (err) {
-                saveIndicator.textContent = 'Error running script!';
+                saveIndicator.textContent = 'Error running script: ' + err.message;
                 saveIndicator.className = 'save-indicator error';
             } finally {
                 runTierlistBtn.textContent = 'Export imgs';
                 runTierlistBtn.disabled = false;
                 runTierlistBtn.style.opacity = '1';
 
-                setTimeout(() => {
-                    saveIndicator.style.display = "";
-                    saveIndicator.className = "save-indicator";
-                }, 3000);
+                // Ensure indicator fades out even on error after a bit longer
+                if (saveIndicator.classList.contains('error')) {
+                    setTimeout(() => {
+                        if (saveIndicator.classList.contains('error')) {
+                            saveIndicator.style.display = "";
+                            saveIndicator.className = "save-indicator";
+                        }
+                    }, 5000);
+                }
             }
         });
 
         let globalTierDict = {};
         let unassignedLogos = []; // list of logo paths
+        const imageCache = new Map();
 
         // DOM elements for Modal and Dropdown
         const unassignedBtn = document.getElementById('unassigned-btn');
@@ -769,14 +1067,82 @@
         });
 
         btnCancel.addEventListener('click', () => {
-            editModal.style.opacity = '0';
-            setTimeout(() => { editModal.style.display = 'none'; }, 300);
+            editModal.classList.remove('active');
+            setTimeout(() => {
+                if (!editModal.classList.contains('active')) {
+                    editModal.style.display = 'none';
+                }
+            }, 300);
         });
 
-        // Close modal on Esc key
+        const navPrevBtn = document.getElementById('nav-prev');
+        const navNextBtn = document.getElementById('nav-next');
+        let _allOrdered = [];
+        let _currentIndex = -1;
+
+        function getOrderedRestaurants() {
+            const list = [];
+            ['S', 'A', 'B', 'C', 'D', 'E', 'F'].forEach(tier => {
+                const tierItems = globalTierDict[tier];
+                if (tierItems) {
+                    Object.entries(tierItems).forEach(([name, info]) => {
+                        list.push({ name, tier, info });
+                    });
+                }
+            });
+            return list;
+        }
+
+        function updateNavButtons(currentName) {
+            _allOrdered = getOrderedRestaurants();
+            _currentIndex = _allOrdered.findIndex(r => r.name === currentName);
+
+            if (_currentIndex > 0) {
+                navPrevBtn.style.display = 'flex';
+            } else {
+                navPrevBtn.style.display = 'none';
+            }
+
+            if (_currentIndex >= 0 && _currentIndex < _allOrdered.length - 1) {
+                navNextBtn.style.display = 'flex';
+            } else {
+                navNextBtn.style.display = 'none';
+            }
+        }
+
+        async function navigateModal(direction) {
+            const nextIdx = _currentIndex + direction;
+            if (nextIdx >= 0 && nextIdx < _allOrdered.length) {
+                const nextItem = _allOrdered[nextIdx];
+                openEditModal(nextItem.name, nextItem.tier, nextItem.info);
+            }
+        }
+
+        navPrevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateModal(-1);
+        });
+
+        navNextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateModal(1);
+        });
+
+        // Close modal on Esc key and navigate with Arrows
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && editModal.style.display !== 'none') {
-                btnCancel.click();
+            if (editModal.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    btnCancel.click();
+                } else if (['ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                    // Don't navigate if typing in input/textarea
+                    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+                    if (e.key === 'ArrowLeft' && _currentIndex > 0) {
+                        navigateModal(-1);
+                    } else if (e.key === 'ArrowRight' && _currentIndex < _allOrdered.length - 1) {
+                        navigateModal(1);
+                    }
+                }
             }
         });
 
@@ -790,8 +1156,10 @@
 
                 if (!dataRes.ok || !logosRes.ok) throw new Error('Failed to fetch from server');
 
-                const data = await dataRes.json();
-                const logosData = await logosRes.json();
+                const [data, logosData] = await Promise.all([
+                    dataRes.json(),
+                    logosRes.json()
+                ]);
 
                 globalTierDict = data.tier_dict;
                 const columns = data.num_logos_per_row || 17;
@@ -807,6 +1175,29 @@
                 unassignedLogos = logosData.logos.filter(l => !allExtractedLogos.has(`logos/${l}`.toLowerCase()));
                 updateUnassignedDropdown();
 
+                // Collect ALL image paths
+                const imagePaths = [];
+
+                Object.values(globalTierDict).forEach(tierObj => {
+                    Object.values(tierObj).forEach(info => {
+                        imagePaths.push(info.path_to_logo_image);
+                        if (info.price) imagePaths.push(`assets/png/${info.price}.png`);
+                        if (info.vegan) imagePaths.push(`assets/png/Vegan.png`);
+                        if (info.year) {
+                            imagePaths.push(`assets/png/${info.year}.png`);
+                            imagePaths.push(`assets/png/${info.year}_highlighted.png`);
+                        }
+                        if (info.year_first_visited) imagePaths.push(`assets/png/${info.year_first_visited}.png`);
+                    });
+                });
+
+                // Preload everything before render
+                await loadImagesWithProgress(imagePaths);
+
+                // Fade out loading overlay
+                const overlay = document.getElementById('loading-overlay');
+                overlay.classList.add('fade-out');
+
                 // Dynamic Zoom Calculation
                 const tierRowWidth = 200 + 40 + (columns * 210); // label + gaps + content
                 const availableWidth = window.innerWidth - 40; // some margin
@@ -815,9 +1206,15 @@
                 defaultZoom = currentZoom;
                 applyZoom();
 
+                currentColumns = columns;
                 render(columns);
             } catch (err) {
-                container.innerHTML = `<div class="error"><h2>Error!</h2><p>${err.message}</p><p>Make sure editor_server.py is running on port 8000.</p></div>`;
+                container.innerHTML = `
+            <div class="error">
+                <h2>Error!</h2>
+                <p>${err.message}</p>
+                <p>Make sure editor_server.py is running on port 8000.</p>
+            </div>`;
             }
         }
 
@@ -876,27 +1273,51 @@
                         wrapper.dataset.tier = tier;
                         wrapper.draggable = true;
 
-                        const img = document.createElement('img');
-                        img.src = info.path_to_logo_image;
-                        img.className = 'logo-item';
+                        const img = imageCache.get(info.path_to_logo_image);
+
+                        img.classList.add('logo-item');
                         img.alt = name;
-                        img.loading = "lazy";
-                        img.decoding = "async";
 
                         wrapper.appendChild(img);
 
                         if (info.price) {
-                            const priceImg = document.createElement('img');
-                            priceImg.src = `assets/png/${info.price}.png`;
-                            priceImg.className = 'price-tag';
-                            wrapper.appendChild(priceImg);
+                            const pricePath = `assets/png/${info.price}.png`;
+                            const basePriceImg = imageCache.get(pricePath);
+
+                            if (basePriceImg) {
+                                const priceImg = basePriceImg.cloneNode();
+                                priceImg.className = 'price-tag';
+                                wrapper.appendChild(priceImg);
+                            }
                         }
 
                         if (info.vegan) {
-                            const veganImg = document.createElement('img');
-                            veganImg.src = `assets/png/Vegan.png`;
-                            veganImg.className = 'vegan-tag';
-                            wrapper.appendChild(veganImg);
+                            const veganPath = `assets/png/Vegan.png`;
+                            const baseVeganImg = imageCache.get(veganPath);
+
+                            if (baseVeganImg) {
+                                const veganImg = baseVeganImg.cloneNode();
+                                veganImg.className = 'vegan-tag';
+                                wrapper.appendChild(veganImg);
+                            }
+                        }
+
+                        if (activeYearMode) {
+                            let yearToDisplay = activeYearMode === 'first' ? info.year_first_visited : info.year;
+                            if (yearToDisplay) {
+                                let suffix = "";
+                                const isForced = info.highlighted === "true" || info.highlighted === true;
+                                if (activeYearMode === 'rerank' && (info.year !== info.year_first_visited || isForced)) {
+                                    suffix = "_highlighted";
+                                }
+                                const yearPath = `assets/png/${yearToDisplay}${suffix}.png`;
+                                const baseYearImg = imageCache.get(yearPath);
+                                if (baseYearImg) {
+                                    const yearImg = baseYearImg.cloneNode();
+                                    yearImg.className = 'year-tag';
+                                    wrapper.appendChild(yearImg);
+                                }
+                            }
                         }
 
                         // Tooltip
@@ -906,17 +1327,7 @@
                         });
 
                         wrapper.addEventListener('mousemove', e => {
-                            const tooltipWidth = tooltip.offsetWidth;
-                            const pageWidth = window.innerWidth;
-                            let xPos = e.pageX + 15;
-
-                            // If tooltip would go off-screen to the right, flip it to the left of the cursor
-                            if (xPos + tooltipWidth > pageWidth - 15) {
-                                xPos = e.pageX - tooltipWidth - 15;
-                            }
-
-                            tooltip.style.left = xPos + 'px';
-                            tooltip.style.top = (e.pageY + 15) + 'px';
+                            updateTooltipPosition(e);
                         });
 
                         wrapper.addEventListener('mouseleave', e => {
@@ -1075,6 +1486,78 @@
             }
         }
 
+        // Progress bar
+        function loadImagesWithProgress(paths) {
+            return new Promise(resolve => {
+                const progressFill = document.getElementById('progress-fill');
+                const progressText = document.getElementById('progress-text');
+
+                const unique = [...new Set(paths)];
+                let loaded = 0;
+                const total = unique.length;
+
+                if (total === 0) {
+                    resolve();
+                    return;
+                }
+
+                unique.forEach(path => {
+                    const img = new Image();
+
+                    img.onload = async () => {
+                        try {
+                            if (img.decode) await img.decode();
+                        } catch (e) {
+                            console.warn("Decoding failed for", path, e);
+                        }
+                        imageCache.set(path, img);
+
+                        loaded++;
+                        const percent = Math.round((loaded / total) * 100);
+                        if (progressFill) progressFill.style.width = percent + '%';
+                        if (progressText) progressText.textContent = percent + '%';
+
+                        if (loaded === total) {
+                            resolve();
+                        }
+                    };
+
+                    img.onerror = () => {
+                        console.error("Failed to load image:", path);
+                        loaded++;
+                        const percent = Math.round((loaded / total) * 100);
+                        if (progressFill) progressFill.style.width = percent + '%';
+                        if (progressText) progressText.textContent = percent + '%';
+
+                        if (loaded === total) {
+                            resolve();
+                        }
+                    };
+
+                    img.src = path;
+                });
+            });
+        }
+
+        async function ensureImageInCache(path) {
+            if (imageCache.has(path)) return imageCache.get(path);
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    imageCache.set(path, img);
+                    resolve(img);
+                };
+                img.onerror = () => {
+                    console.warn("Failed to catch-load image:", path);
+                    // Return a dummy small transparent pixel or similar to avoid crash
+                    const dummy = new Image();
+                    imageCache.set(path, dummy);
+                    resolve(dummy);
+                };
+                img.src = path;
+            });
+        }
+
         // Modal Logic
         const editName = document.getElementById('edit-name');
         const editTier = document.getElementById('edit-tier');
@@ -1084,6 +1567,7 @@
         const editAddress = document.getElementById('edit-address');
         const editDescription = document.getElementById('edit-description');
         const editVegan = document.getElementById('edit-vegan');
+        const editHighlighted = document.getElementById('edit-highlighted');
 
         const editOriginalName = document.getElementById('edit-original-name');
         const editMode = document.getElementById('edit-mode');
@@ -1149,12 +1633,13 @@
                 yearFirst: editYearFirst.value,
                 address: editAddress.value.trim(),
                 description: editDescription.value.trim(),
-                vegan: editVegan.checked
+                vegan: editVegan.checked,
+                highlighted: editHighlighted.checked
             });
         }
 
         // Attach change listeners to all form inputs
-        [editName, editTier, editPrice, editYear, editYearFirst, editAddress, editDescription, editVegan].forEach(el => {
+        [editName, editTier, editPrice, editYear, editYearFirst, editAddress, editDescription, editVegan, editHighlighted].forEach(el => {
             el.addEventListener('input', checkFormChanged);
             el.addEventListener('change', checkFormChanged);
         });
@@ -1168,6 +1653,8 @@
             modalImg.src = info.path_to_logo_image;
             editLogoPath.value = info.path_to_logo_image;
             editOriginalName.value = name;
+            document.getElementById('edit-original-tier').value = tier;
+            document.getElementById('edit-original-price').value = info.price || '1';
 
             editName.value = name;
             editTier.value = tier;
@@ -1177,10 +1664,12 @@
             editAddress.value = info.address || '';
             editDescription.value = info.description || '';
             editVegan.checked = !!info.vegan;
+            editHighlighted.checked = info.highlighted === "true" || info.highlighted === true;
 
             initialFormState = getFormState();
             btnSave.disabled = true;
 
+            updateNavButtons(name);
             showModal();
         }
 
@@ -1193,6 +1682,7 @@
             const path = 'logos/' + logoFilename;
             modalImg.src = path;
             editLogoPath.value = path;
+            ensureImageInCache(path); // Ensure it's in cache for saving later
 
             const guessedName = logoFilename.replace(/\.[^/.]+$/, "");
             editOriginalName.value = '';
@@ -1205,16 +1695,21 @@
             editAddress.value = '';
             editDescription.value = '';
             editVegan.checked = false;
+            editHighlighted.checked = false;
 
             initialFormState = getFormState();
             btnSave.disabled = true;
 
+            navPrevBtn.style.display = 'none';
+            navNextBtn.style.display = 'none';
             showModal();
         }
 
         function showModal() {
             editModal.style.display = 'flex';
-            setTimeout(() => { editModal.style.opacity = '1'; }, 10);
+            // Force reflow
+            editModal.offsetHeight;
+            editModal.classList.add('active');
         }
 
         editForm.addEventListener('submit', async (e) => {
@@ -1231,7 +1726,7 @@
                 for (let t of ['S', 'A', 'B', 'C', 'D', 'E', 'F']) {
                     if (globalTierDict[t] && globalTierDict[t][origName]) {
                         newInfo = { ...globalTierDict[t][origName] };
-                        delete globalTierDict[t][origName];
+                        // Delay deletion until we know if it's a move or in-place update
                         break;
                     }
                 }
@@ -1269,68 +1764,106 @@
                 delete newInfo.vegan;
             }
 
-            // Handle potential file rename if name changed and in edit mode
-            if (mode === 'edit' && name !== origName) {
+            if (editHighlighted.checked) {
+                newInfo.highlighted = "true";
+            } else {
+                delete newInfo.highlighted;
+            }
+
+            if (mode === 'edit') {
                 const oldPath = editLogoPath.value;
                 const ext = oldPath.split('.').pop();
                 const newPath = `logos/${name}.${ext}`;
-                newInfo.path_to_logo_image = newPath;
-
-                try {
-                    await fetch('/api/rename_logo', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ old_path: oldPath, new_path: newPath })
-                    });
-                } catch (e) {
-                    console.error("Failed to rename logo file", e);
-                }
-            } else if (mode === 'create') {
-                unassignedLogos = unassignedLogos.filter(l => `logos/${l}` !== editLogoPath.value);
-                updateUnassignedDropdown();
-
-                // For new files, rename immediately if name string doesn't match original logo
-                if (name !== origName) {
-                    const oldPath = editLogoPath.value;
-                    const ext = oldPath.split('.').pop();
-                    const newPath = `logos/${name}.${ext}`;
+                if (oldPath !== newPath) {
                     newInfo.path_to_logo_image = newPath;
-
                     try {
                         await fetch('/api/rename_logo', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ old_path: oldPath, new_path: newPath })
                         });
+                        await ensureImageInCache(newPath);
                     } catch (e) {
                         console.error("Failed to rename logo file", e);
                     }
                 }
+            } else if (mode === 'create') {
+                unassignedLogos = unassignedLogos.filter(l => `logos/${l}` !== editLogoPath.value);
+                updateUnassignedDropdown();
+
+                const oldPath = editLogoPath.value;
+                const ext = oldPath.split('.').pop();
+                const newPath = `logos/${name}.${ext}`;
+
+                if (oldPath !== newPath) {
+                    newInfo.path_to_logo_image = newPath;
+                    try {
+                        await fetch('/api/rename_logo', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ old_path: oldPath, new_path: newPath })
+                        });
+                        await ensureImageInCache(newPath);
+                    } catch (e) {
+                        console.error("Failed to rename logo file", e);
+                    }
+                } else {
+                    await ensureImageInCache(oldPath);
+                }
             }
 
-            // Insert into correct tier, sorted by price
+            // Insert into correct tier, keeping position if tier/price didn't change
             if (!globalTierDict[tier]) globalTierDict[tier] = {};
 
-            // Build new tier dict maintaining price sort (if new price > existing price)
-            const newTierItems = {};
-            let inserted = false;
-            const pVal = price || 0;
+            const origTier = document.getElementById('edit-original-tier').value;
+            const origPrice = document.getElementById('edit-original-price').value ? parseInt(document.getElementById('edit-original-price').value) : null;
 
-            for (const [k, v] of Object.entries(globalTierDict[tier])) {
-                const itemP = v.price || 0;
-                if (!inserted && itemP > pVal) {
-                    newTierItems[name] = newInfo;
-                    inserted = true;
+            const tierChanged = tier !== origTier;
+            const priceChanged = price !== origPrice;
+
+            if (mode === 'edit' && !tierChanged && !priceChanged) {
+                // REPLACE IN PLACE
+                const updatedTierItems = {};
+                for (const [k, v] of Object.entries(globalTierDict[tier])) {
+                    if (k === origName) {
+                        updatedTierItems[name] = newInfo;
+                    } else {
+                        updatedTierItems[k] = v;
+                    }
                 }
-                newTierItems[k] = v;
-            }
-            if (!inserted) {
-                newTierItems[name] = newInfo;
-            }
-            globalTierDict[tier] = newTierItems;
+                globalTierDict[tier] = updatedTierItems;
+            } else {
+                // MOVE/SORT (Price or Tier changed, or it's a new entry)
 
-            editModal.style.opacity = '0';
-            setTimeout(() => { editModal.style.display = 'none'; }, 300);
+                // If editing and moving, delete the old entry now
+                if (mode === 'edit') {
+                    delete globalTierDict[origTier][origName];
+                }
+
+                const newTierItems = {};
+                let inserted = false;
+                const pVal = price || 0;
+
+                for (const [k, v] of Object.entries(globalTierDict[tier])) {
+                    const itemP = v.price || 0;
+                    if (!inserted && itemP > pVal) {
+                        newTierItems[name] = newInfo;
+                        inserted = true;
+                    }
+                    newTierItems[k] = v;
+                }
+                if (!inserted) {
+                    newTierItems[name] = newInfo;
+                }
+                globalTierDict[tier] = newTierItems;
+            }
+
+            editModal.classList.remove('active');
+            setTimeout(() => {
+                if (!editModal.classList.contains('active')) {
+                    editModal.style.display = 'none';
+                }
+            }, 300);
 
             // Rebuild or update DOM directly
             let wrapper = null;
@@ -1350,8 +1883,7 @@
                     tooltip.style.opacity = '1';
                 });
                 wrapper.addEventListener('mousemove', e => {
-                    tooltip.style.left = (e.pageX + 15) + 'px';
-                    tooltip.style.top = (e.pageY + 15) + 'px';
+                    updateTooltipPosition(e);
                 });
                 wrapper.addEventListener('mouseleave', e => {
                     tooltip.style.opacity = '0';
@@ -1370,26 +1902,45 @@
             wrapper.dataset.tier = tier;
             wrapper.innerHTML = '';
 
-            const img = document.createElement('img');
-            img.src = newInfo.path_to_logo_image;
+            const img = await ensureImageInCache(newInfo.path_to_logo_image);
             img.className = 'logo-item';
             img.alt = name;
-            img.loading = "lazy";
-            img.decoding = "async";
             wrapper.appendChild(img);
 
             if (newInfo.price) {
-                const priceImg = document.createElement('img');
-                priceImg.src = `assets/png/${newInfo.price}.png`;
-                priceImg.className = 'price-tag';
-                wrapper.appendChild(priceImg);
+                const basePriceImg = imageCache.get(`assets/png/${newInfo.price}.png`);
+                if (basePriceImg) {
+                    const priceImg = basePriceImg.cloneNode();
+                    priceImg.className = 'price-tag';
+                    wrapper.appendChild(priceImg);
+                }
             }
 
             if (newInfo.vegan) {
-                const veganImg = document.createElement('img');
-                veganImg.src = `assets/png/Vegan.png`;
-                veganImg.className = 'vegan-tag';
-                wrapper.appendChild(veganImg);
+                const baseVeganImg = imageCache.get('assets/png/Vegan.png');
+                if (baseVeganImg) {
+                    const veganImg = baseVeganImg.cloneNode();
+                    veganImg.className = 'vegan-tag';
+                    wrapper.appendChild(veganImg);
+                }
+            }
+
+            if (activeYearMode) {
+                let yearToDisplay = activeYearMode === 'first' ? newInfo.year_first_visited : newInfo.year;
+                if (yearToDisplay) {
+                    let suffix = "";
+                    const isForced = newInfo.highlighted === "true" || newInfo.highlighted === true;
+                    if (activeYearMode === 'rerank' && (newInfo.year !== newInfo.year_first_visited || isForced)) {
+                        suffix = "_highlighted";
+                    }
+                    const yearPath = `assets/png/${yearToDisplay}${suffix}.png`;
+                    const baseYearImg = imageCache.get(yearPath);
+                    if (baseYearImg) {
+                        const yearImg = baseYearImg.cloneNode();
+                        yearImg.className = 'year-tag';
+                        wrapper.appendChild(yearImg);
+                    }
+                }
             }
 
             // Move wrapper to correct position in DOM based on globalTierDict

@@ -3,6 +3,8 @@ import socketserver
 import json
 import os
 import shutil
+import subprocess
+import sys
 
 PORT = 8000
 
@@ -34,11 +36,31 @@ def evaluate_num_logos_per_row(tier_dict: dict, min_val: int = 17, threshold: in
     return num_logos_per_row
 
 class EditorHandler(http.server.SimpleHTTPRequestHandler):
+    protocol_version = "HTTP/1.1"
+
+    def send_json_response(self, data, status=200):
+        try:
+            body = json.dumps(data).encode('utf-8')
+            self.send_response(status)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+        except Exception as e:
+            print(f"Error sending JSON response: {e}")
+
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
-        self.send_header('Pragma', 'no-cache')
-        self.send_header('Expires', '0')
+        
+        # Only disable cache for API and HTML to ensure data stays fresh
+        # Allow assets and logos to be cached by the browser
+        if self.path.startswith('/api/') or self.path.endswith('.html') or self.path == '/':
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
+        else:
+            self.send_header('Cache-Control', 'public, max-age=3600')
+            
         super().end_headers()
 
     def do_GET(self):
@@ -47,16 +69,9 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
                 logos = []
                 if os.path.exists('logos'):
                     logos = [f for f in os.listdir('logos') if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
-                
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"logos": logos}).encode())
+                self.send_json_response({"logos": logos})
             except Exception as e:
-                self.send_response(500)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": str(e)}).encode())
+                self.send_json_response({"error": str(e)}, 500)
             return
 
         if self.path == '/api/data':
@@ -65,20 +80,12 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
                     tier_dict = json.load(f)
                 
                 num_logos_per_row = evaluate_num_logos_per_row(tier_dict)
-                response = {
+                self.send_json_response({
                     "tier_dict": tier_dict,
                     "num_logos_per_row": num_logos_per_row
-                }
-                
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps(response).encode())
+                })
             except Exception as e:
-                self.send_response(500)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": str(e)}).encode())
+                self.send_json_response({"error": str(e)}, 500)
             return
             
         return super().do_GET()
@@ -102,52 +109,32 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
                     # Ensure both paths strictly reside within the specific 'logos' directory boundary
                     if abs_old.startswith(base_dir) and abs_new.startswith(base_dir) and os.path.exists(abs_old):
                         os.rename(abs_old, abs_new)
-                        self.send_response(200)
-                        self.send_header('Content-type', 'application/json')
-                        self.end_headers()
-                        self.wfile.write(json.dumps({"status": "success"}).encode())
+                        self.send_json_response({"status": "success"})
                     else:
-                        self.send_response(400)
-                        self.send_header('Content-type', 'application/json')
-                        self.end_headers()
-                        self.wfile.write(json.dumps({"error": "Security check failed: Invalid path or file does not exist. Path must remain inside logos directory."}).encode())
+                        self.send_json_response({"error": "Security check failed: Invalid path or file does not exist. Path must remain inside logos directory."}, 400)
                 else:
-                    self.send_response(400)
-                    self.send_header('Content-type', 'application/json')
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"error": "Invalid paths or file does not exist"}).encode())
+                    self.send_json_response({"error": "Invalid paths or file does not exist"}, 400)
             except Exception as e:
-                self.send_response(500)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": str(e)}).encode())
+                self.send_json_response({"error": str(e)}, 500)
             return
 
         if self.path == '/api/run_tierlist':
-            import subprocess
-            import sys
             try:
                 # Run the tierlist.py file synchronously
+                # Use current interpreter to ensure same environment
                 result = subprocess.run(
                     [sys.executable, 'tierlist.py'],
                     capture_output=True,
                     text=True,
-                    check=True
+                    check=False
                 )
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"status": "success", "output": result.stdout}).encode())
-            except subprocess.CalledProcessError as e:
-                self.send_response(500)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": "Script failed", "details": e.stderr}).encode())
+                
+                if result.returncode == 0:
+                    self.send_json_response({"status": "success", "output": result.stdout})
+                else:
+                    self.send_json_response({"error": "Script failed", "details": result.stderr}, 500)
             except Exception as e:
-                self.send_response(500)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": str(e)}).encode())
+                self.send_json_response({"error": str(e)}, 500)
             return
 
         if self.path == '/api/update':
@@ -160,23 +147,22 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
                     # dump with standard formatting to avoid big git diffs
                     json.dump(new_dict, f, indent=4)
                 
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"status": "success"}).encode())
+                self.send_json_response({"status": "success"})
             except Exception as e:
-                self.send_response(500)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": str(e)}).encode())
+                self.send_json_response({"error": str(e)}, 500)
             return
             
         self.send_response(404)
         self.end_headers()
 
+class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    pass
+
 if __name__ == '__main__':
     # Start server in same directory as tier_dict.json
-    with socketserver.TCPServer(("", PORT), EditorHandler) as httpd:
+    # Allow address reuse to prevent "Address already in use" errors during quick restarts
+    socketserver.TCPServer.allow_reuse_address = True
+    with ThreadedTCPServer(("", PORT), EditorHandler) as httpd:
         print(f"Server starting at http://localhost:{PORT}/editor.html")
         print("To stop, press Ctrl+C")
         httpd.serve_forever()
