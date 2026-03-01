@@ -3,6 +3,8 @@ import socketserver
 import json
 import os
 import shutil
+import subprocess
+import sys
 
 PORT = 8000
 
@@ -141,25 +143,26 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         if self.path == '/api/run_tierlist':
-            import subprocess
-            import sys
             try:
                 # Run the tierlist.py file synchronously
+                # Use current interpreter to ensure same environment
                 result = subprocess.run(
                     [sys.executable, 'tierlist.py'],
                     capture_output=True,
                     text=True,
-                    check=True
+                    check=False
                 )
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"status": "success", "output": result.stdout}).encode())
-            except subprocess.CalledProcessError as e:
-                self.send_response(500)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": "Script failed", "details": e.stderr}).encode())
+                
+                if result.returncode == 0:
+                    self.send_response(200)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"status": "success", "output": result.stdout}).encode())
+                else:
+                    self.send_response(500)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"error": "Script failed", "details": result.stderr}).encode())
             except Exception as e:
                 self.send_response(500)
                 self.send_header('Content-type', 'application/json')

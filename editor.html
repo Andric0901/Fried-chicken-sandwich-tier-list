@@ -271,6 +271,11 @@
             color: #7fff7f;
         }
 
+        .save-indicator.error {
+            display: block;
+            color: #ff7f7f;
+        }
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -331,6 +336,53 @@
             border-radius: 12px;
             font-size: 12px;
             font-weight: 900;
+        }
+
+        .year-toggle-container {
+            position: fixed;
+            top: 20px;
+            left: 200px;
+            /* Offset from unassigned btn */
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .year-toggle-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        .year-toggle-btn:hover {
+            background: rgba(50, 50, 50, 0.8);
+            border-color: #666;
+        }
+
+        .year-toggle-btn.active {
+            background: #ff7f7f;
+            border-color: #ffbf7f;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 127, 127, 0.4);
+        }
+
+        .year-tag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 30px;
+            /* Reduced from 40px */
+            width: auto;
+            pointer-events: none;
         }
 
         .dropdown-menu {
@@ -695,6 +747,35 @@
         </div>
     </div>
 
+    <div class="year-toggle-container">
+        <button id="toggle-year-first" class="year-toggle-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <path d="M8 14h.01"></path>
+                <path d="M12 14h.01"></path>
+                <path d="M16 14h.01"></path>
+                <path d="M8 18h.01"></path>
+                <path d="M12 18h.01"></path>
+                <path d="M16 18h.01"></path>
+            </svg>
+        </button>
+        <button id="toggle-year-rerank" class="year-toggle-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <path d="M12 14v4"></path>
+                <path d="M10 16h4"></path>
+            </svg>
+        </button>
+    </div>
+
     <div class="controls">
         <div class="zoom-controls">
             <button id="zoom-default" title="Default Zoom">
@@ -792,8 +873,14 @@
                     </div>
 
                     <div class="checkbox-group">
-                        <input type="checkbox" id="edit-vegan">
-                        <label for="edit-vegan">Vegan</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="edit-vegan">
+                            <label for="edit-vegan">Vegan</label>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="edit-highlighted">
+                            <label for="edit-highlighted">Force Highlight (Re-ranked)</label>
+                        </div>
                     </div>
 
                     <div class="modal-actions">
@@ -814,9 +901,14 @@
 
         let currentZoom = 35;
         let defaultZoom = 35;
+        let activeYearMode = null; // 'first' or 'rerank'
+        let currentColumns = 17;
+
         const zoomValue = document.getElementById('zoom-value');
         const zoomOutBtn = document.getElementById('zoom-out');
         const zoomInBtn = document.getElementById('zoom-in');
+        const toggleYearFirstBtn = document.getElementById('toggle-year-first');
+        const toggleYearRerankBtn = document.getElementById('toggle-year-rerank');
 
         function applyZoom() {
             zoomValue.textContent = currentZoom + '%';
@@ -842,6 +934,48 @@
                 if (currentZoom > 200) currentZoom = 200;
                 applyZoom();
             }
+        });
+
+        toggleYearFirstBtn.addEventListener('click', () => {
+            if (activeYearMode === 'first') {
+                activeYearMode = null;
+                toggleYearFirstBtn.classList.remove('active');
+            } else {
+                activeYearMode = 'first';
+                toggleYearFirstBtn.classList.add('active');
+                toggleYearRerankBtn.classList.remove('active');
+            }
+            render(currentColumns);
+        });
+
+        toggleYearRerankBtn.addEventListener('click', () => {
+            if (activeYearMode === 'rerank') {
+                activeYearMode = null;
+                toggleYearRerankBtn.classList.remove('active');
+            } else {
+                activeYearMode = 'rerank';
+                toggleYearRerankBtn.classList.add('active');
+                toggleYearFirstBtn.classList.remove('active');
+            }
+            render(currentColumns);
+        });
+
+        // Toggle Hover Global Tooltip
+        [
+            { el: toggleYearFirstBtn, text: "Year First Visited" },
+            { el: toggleYearRerankBtn, text: "Year Re-ranked" }
+        ].forEach(item => {
+            item.el.addEventListener('mouseenter', () => {
+                tooltip.textContent = item.text;
+                tooltip.style.opacity = '1';
+            });
+            item.el.addEventListener('mousemove', e => {
+                tooltip.style.left = (e.pageX + 15) + 'px';
+                tooltip.style.top = (e.pageY + 15) + 'px';
+            });
+            item.el.addEventListener('mouseleave', () => {
+                tooltip.style.opacity = '0';
+            });
         });
 
         // Run Tierlist Button Logic
@@ -1023,6 +1157,11 @@
                         imagePaths.push(info.path_to_logo_image);
                         if (info.price) imagePaths.push(`assets/png/${info.price}.png`);
                         if (info.vegan) imagePaths.push(`assets/png/Vegan.png`);
+                        if (info.year) {
+                            imagePaths.push(`assets/png/${info.year}.png`);
+                            imagePaths.push(`assets/png/${info.year}_highlighted.png`);
+                        }
+                        if (info.year_first_visited) imagePaths.push(`assets/png/${info.year_first_visited}.png`);
                     });
                 });
 
@@ -1041,6 +1180,7 @@
                 defaultZoom = currentZoom;
                 applyZoom();
 
+                currentColumns = columns;
                 render(columns);
             } catch (err) {
                 container.innerHTML = `
@@ -1133,6 +1273,24 @@
                                 const veganImg = baseVeganImg.cloneNode();
                                 veganImg.className = 'vegan-tag';
                                 wrapper.appendChild(veganImg);
+                            }
+                        }
+
+                        if (activeYearMode) {
+                            let yearToDisplay = activeYearMode === 'first' ? info.year_first_visited : info.year;
+                            if (yearToDisplay) {
+                                let suffix = "";
+                                const isForced = info.highlighted === "true" || info.highlighted === true;
+                                if (activeYearMode === 'rerank' && (info.year !== info.year_first_visited || isForced)) {
+                                    suffix = "_highlighted";
+                                }
+                                const yearPath = `assets/png/${yearToDisplay}${suffix}.png`;
+                                const baseYearImg = imageCache.get(yearPath);
+                                if (baseYearImg) {
+                                    const yearImg = baseYearImg.cloneNode();
+                                    yearImg.className = 'year-tag';
+                                    wrapper.appendChild(yearImg);
+                                }
                             }
                         }
 
@@ -1374,6 +1532,7 @@
         const editAddress = document.getElementById('edit-address');
         const editDescription = document.getElementById('edit-description');
         const editVegan = document.getElementById('edit-vegan');
+        const editHighlighted = document.getElementById('edit-highlighted');
 
         const editOriginalName = document.getElementById('edit-original-name');
         const editMode = document.getElementById('edit-mode');
@@ -1439,12 +1598,13 @@
                 yearFirst: editYearFirst.value,
                 address: editAddress.value.trim(),
                 description: editDescription.value.trim(),
-                vegan: editVegan.checked
+                vegan: editVegan.checked,
+                highlighted: editHighlighted.checked
             });
         }
 
         // Attach change listeners to all form inputs
-        [editName, editTier, editPrice, editYear, editYearFirst, editAddress, editDescription, editVegan].forEach(el => {
+        [editName, editTier, editPrice, editYear, editYearFirst, editAddress, editDescription, editVegan, editHighlighted].forEach(el => {
             el.addEventListener('input', checkFormChanged);
             el.addEventListener('change', checkFormChanged);
         });
@@ -1469,6 +1629,7 @@
             editAddress.value = info.address || '';
             editDescription.value = info.description || '';
             editVegan.checked = !!info.vegan;
+            editHighlighted.checked = info.highlighted === "true" || info.highlighted === true;
 
             initialFormState = getFormState();
             btnSave.disabled = true;
@@ -1498,6 +1659,7 @@
             editAddress.value = '';
             editDescription.value = '';
             editVegan.checked = false;
+            editHighlighted.checked = false;
 
             initialFormState = getFormState();
             btnSave.disabled = true;
@@ -1564,6 +1726,12 @@
                 newInfo.vegan = true;
             } else {
                 delete newInfo.vegan;
+            }
+
+            if (editHighlighted.checked) {
+                newInfo.highlighted = "true";
+            } else {
+                delete newInfo.highlighted;
             }
 
             // Handle potential file rename if name changed and in edit mode
@@ -1711,11 +1879,29 @@
             }
 
             if (newInfo.vegan) {
-                const baseVeganImg = imageCache.get(`assets/png/Vegan.png`);
+                const baseVeganImg = imageCache.get('assets/png/Vegan.png');
                 if (baseVeganImg) {
                     const veganImg = baseVeganImg.cloneNode();
                     veganImg.className = 'vegan-tag';
                     wrapper.appendChild(veganImg);
+                }
+            }
+
+            if (activeYearMode) {
+                let yearToDisplay = activeYearMode === 'first' ? newInfo.year_first_visited : newInfo.year;
+                if (yearToDisplay) {
+                    let suffix = "";
+                    const isForced = newInfo.highlighted === "true" || newInfo.highlighted === true;
+                    if (activeYearMode === 'rerank' && (newInfo.year !== newInfo.year_first_visited || isForced)) {
+                        suffix = "_highlighted";
+                    }
+                    const yearPath = `assets/png/${yearToDisplay}${suffix}.png`;
+                    const baseYearImg = imageCache.get(yearPath);
+                    if (baseYearImg) {
+                        const yearImg = baseYearImg.cloneNode();
+                        yearImg.className = 'year-tag';
+                        wrapper.appendChild(yearImg);
+                    }
                 }
             }
 
