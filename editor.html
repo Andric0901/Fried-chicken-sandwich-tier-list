@@ -656,6 +656,8 @@
                 <h2 id="modal-title">Edit Metadata</h2>
                 <form id="edit-form">
                     <input type="hidden" id="edit-original-name">
+                    <input type="hidden" id="edit-original-tier">
+                    <input type="hidden" id="edit-original-price">
                     <input type="hidden" id="edit-mode"> <!-- 'edit' or 'create' -->
                     <input type="hidden" id="edit-logo-path">
 
@@ -1300,6 +1302,8 @@
             modalImg.src = info.path_to_logo_image;
             editLogoPath.value = info.path_to_logo_image;
             editOriginalName.value = name;
+            document.getElementById('edit-original-tier').value = tier;
+            document.getElementById('edit-original-price').value = info.price || '1';
 
             editName.value = name;
             editTier.value = tier;
@@ -1363,7 +1367,7 @@
                 for (let t of ['S', 'A', 'B', 'C', 'D', 'E', 'F']) {
                     if (globalTierDict[t] && globalTierDict[t][origName]) {
                         newInfo = { ...globalTierDict[t][origName] };
-                        delete globalTierDict[t][origName];
+                        // Delay deletion until we know if it's a move or in-place update
                         break;
                     }
                 }
@@ -1440,26 +1444,51 @@
                 }
             }
 
-            // Insert into correct tier, sorted by price
+            // Insert into correct tier, keeping position if tier/price didn't change
             if (!globalTierDict[tier]) globalTierDict[tier] = {};
 
-            // Build new tier dict maintaining price sort (if new price > existing price)
-            const newTierItems = {};
-            let inserted = false;
-            const pVal = price || 0;
+            const origTier = document.getElementById('edit-original-tier').value;
+            const origPrice = document.getElementById('edit-original-price').value ? parseInt(document.getElementById('edit-original-price').value) : null;
 
-            for (const [k, v] of Object.entries(globalTierDict[tier])) {
-                const itemP = v.price || 0;
-                if (!inserted && itemP > pVal) {
-                    newTierItems[name] = newInfo;
-                    inserted = true;
+            const tierChanged = tier !== origTier;
+            const priceChanged = price !== origPrice;
+
+            if (mode === 'edit' && !tierChanged && !priceChanged) {
+                // REPLACE IN PLACE
+                const updatedTierItems = {};
+                for (const [k, v] of Object.entries(globalTierDict[tier])) {
+                    if (k === origName) {
+                        updatedTierItems[name] = newInfo;
+                    } else {
+                        updatedTierItems[k] = v;
+                    }
                 }
-                newTierItems[k] = v;
+                globalTierDict[tier] = updatedTierItems;
+            } else {
+                // MOVE/SORT (Price or Tier changed, or it's a new entry)
+
+                // If editing and moving, delete the old entry now
+                if (mode === 'edit') {
+                    delete globalTierDict[origTier][origName];
+                }
+
+                const newTierItems = {};
+                let inserted = false;
+                const pVal = price || 0;
+
+                for (const [k, v] of Object.entries(globalTierDict[tier])) {
+                    const itemP = v.price || 0;
+                    if (!inserted && itemP > pVal) {
+                        newTierItems[name] = newInfo;
+                        inserted = true;
+                    }
+                    newTierItems[k] = v;
+                }
+                if (!inserted) {
+                    newTierItems[name] = newInfo;
+                }
+                globalTierDict[tier] = newTierItems;
             }
-            if (!inserted) {
-                newTierItems[name] = newInfo;
-            }
-            globalTierDict[tier] = newTierItems;
 
             editModal.style.opacity = '0';
             setTimeout(() => { editModal.style.display = 'none'; }, 300);
