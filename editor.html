@@ -548,10 +548,64 @@
         .btn-save:hover {
             background: #6fdf6f;
         }
+
+        /* Loading Overlay */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+            flex-direction: column;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #loading-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 400px;
+            height: 10px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(255, 127, 127, 0.3);
+        }
+
+        #progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff7f7f, #ffbf7f);
+            transition: width 0.2s ease;
+        }
+
+        #progress-text {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #ccc;
+        }
     </style>
 </head>
 
 <body>
+    <div id="loading-overlay">
+        <div class="loading-content">
+            <h2>Loading Tier List...</h2>
+            <div class="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+            <div id="progress-text">0%</div>
+        </div>
+    </div>
 
     <div class="unassigned-btn-container">
         <button id="unassigned-btn" class="unassigned-btn">
@@ -739,6 +793,7 @@
 
         let globalTierDict = {};
         let unassignedLogos = []; // list of logo paths
+        const imageCache = new Map();
 
         // DOM elements for Modal and Dropdown
         const unassignedBtn = document.getElementById('unassigned-btn');
@@ -807,6 +862,24 @@
                 unassignedLogos = logosData.logos.filter(l => !allExtractedLogos.has(`logos/${l}`.toLowerCase()));
                 updateUnassignedDropdown();
 
+                // Collect ALL image paths
+                const imagePaths = [];
+
+                Object.values(globalTierDict).forEach(tierObj => {
+                    Object.values(tierObj).forEach(info => {
+                        imagePaths.push(info.path_to_logo_image);
+                        if (info.price) imagePaths.push(`assets/png/${info.price}.png`);
+                        if (info.vegan) imagePaths.push(`assets/png/Vegan.png`);
+                    });
+                });
+
+                // Preload everything before render
+                await loadImagesWithProgress(imagePaths);
+
+                // Fade out loading overlay
+                const overlay = document.getElementById('loading-overlay');
+                overlay.classList.add('fade-out');
+
                 // Dynamic Zoom Calculation
                 const tierRowWidth = 200 + 40 + (columns * 210); // label + gaps + content
                 const availableWidth = window.innerWidth - 40; // some margin
@@ -817,7 +890,12 @@
 
                 render(columns);
             } catch (err) {
-                container.innerHTML = `<div class="error"><h2>Error!</h2><p>${err.message}</p><p>Make sure editor_server.py is running on port 8000.</p></div>`;
+                container.innerHTML = `
+            <div class="error">
+                <h2>Error!</h2>
+                <p>${err.message}</p>
+                <p>Make sure editor_server.py is running on port 8000.</p>
+            </div>`;
             }
         }
 
@@ -876,27 +954,33 @@
                         wrapper.dataset.tier = tier;
                         wrapper.draggable = true;
 
-                        const img = document.createElement('img');
-                        img.src = info.path_to_logo_image;
-                        img.className = 'logo-item';
+                        const img = imageCache.get(info.path_to_logo_image);
+
+                        img.classList.add('logo-item');
                         img.alt = name;
-                        img.loading = "lazy";
-                        img.decoding = "async";
 
                         wrapper.appendChild(img);
 
                         if (info.price) {
-                            const priceImg = document.createElement('img');
-                            priceImg.src = `assets/png/${info.price}.png`;
-                            priceImg.className = 'price-tag';
-                            wrapper.appendChild(priceImg);
+                            const pricePath = `assets/png/${info.price}.png`;
+                            const basePriceImg = imageCache.get(pricePath);
+
+                            if (basePriceImg) {
+                                const priceImg = basePriceImg.cloneNode();
+                                priceImg.className = 'price-tag';
+                                wrapper.appendChild(priceImg);
+                            }
                         }
 
                         if (info.vegan) {
-                            const veganImg = document.createElement('img');
-                            veganImg.src = `assets/png/Vegan.png`;
-                            veganImg.className = 'vegan-tag';
-                            wrapper.appendChild(veganImg);
+                            const veganPath = `assets/png/Vegan.png`;
+                            const baseVeganImg = imageCache.get(veganPath);
+
+                            if (baseVeganImg) {
+                                const veganImg = baseVeganImg.cloneNode();
+                                veganImg.className = 'vegan-tag';
+                                wrapper.appendChild(veganImg);
+                            }
                         }
 
                         // Tooltip
@@ -1073,6 +1157,54 @@
                 saveIndicator.textContent = "Error saving!";
                 saveIndicator.className = "save-indicator error";
             }
+        }
+
+        // Progress bar
+        function loadImagesWithProgress(paths) {
+            return new Promise(resolve => {
+                const progressFill = document.getElementById('progress-fill');
+                const progressText = document.getElementById('progress-text');
+
+                const unique = [...new Set(paths)];
+                let loaded = 0;
+                const total = unique.length;
+
+                if (total === 0) {
+                    resolve();
+                    return;
+                }
+
+                unique.forEach(path => {
+                    const img = new Image();
+                    img.src = path;
+
+                    img.onload = async () => {
+                        try { await img.decode(); } catch { }
+
+                        imageCache.set(path, img);
+
+                        loaded++;
+                        const percent = Math.round((loaded / total) * 100);
+                        progressFill.style.width = percent + '%';
+                        progressText.textContent = percent + '%';
+
+                        if (loaded === total) {
+                            resolve();
+                        }
+                    };
+
+                    img.onerror = () => {
+                        loaded++;
+                        const percent = Math.round((loaded / total) * 100);
+                        progressFill.style.width = percent + '%';
+                        progressText.textContent = percent + '%';
+
+                        if (loaded === total) {
+                            resolve();
+                        }
+                    };
+                });
+            });
         }
 
         // Modal Logic
@@ -1370,26 +1502,27 @@
             wrapper.dataset.tier = tier;
             wrapper.innerHTML = '';
 
-            const img = document.createElement('img');
-            img.src = newInfo.path_to_logo_image;
+            const img = imageCache.get(newInfo.path_to_logo_image);
             img.className = 'logo-item';
             img.alt = name;
-            img.loading = "lazy";
-            img.decoding = "async";
             wrapper.appendChild(img);
 
             if (newInfo.price) {
-                const priceImg = document.createElement('img');
-                priceImg.src = `assets/png/${newInfo.price}.png`;
-                priceImg.className = 'price-tag';
-                wrapper.appendChild(priceImg);
+                const basePriceImg = imageCache.get(`assets/png/${newInfo.price}.png`);
+                if (basePriceImg) {
+                    const priceImg = basePriceImg.cloneNode();
+                    priceImg.className = 'price-tag';
+                    wrapper.appendChild(priceImg);
+                }
             }
 
             if (newInfo.vegan) {
-                const veganImg = document.createElement('img');
-                veganImg.src = `assets/png/Vegan.png`;
-                veganImg.className = 'vegan-tag';
-                wrapper.appendChild(veganImg);
+                const baseVeganImg = imageCache.get(`assets/png/Vegan.png`);
+                if (baseVeganImg) {
+                    const veganImg = baseVeganImg.cloneNode();
+                    veganImg.className = 'vegan-tag';
+                    wrapper.appendChild(veganImg);
+                }
             }
 
             // Move wrapper to correct position in DOM based on globalTierDict
