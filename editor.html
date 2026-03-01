@@ -847,8 +847,10 @@
 
                 if (!dataRes.ok || !logosRes.ok) throw new Error('Failed to fetch from server');
 
-                const data = await dataRes.json();
-                const logosData = await logosRes.json();
+                const [data, logosData] = await Promise.all([
+                    dataRes.json(),
+                    logosRes.json()
+                ]);
 
                 globalTierDict = data.tier_dict;
                 const columns = data.num_logos_per_row || 17;
@@ -1178,17 +1180,19 @@
 
                 unique.forEach(path => {
                     const img = new Image();
-                    img.src = path;
 
                     img.onload = async () => {
-                        try { await img.decode(); } catch { }
-
+                        try {
+                            if (img.decode) await img.decode();
+                        } catch (e) {
+                            console.warn("Decoding failed for", path, e);
+                        }
                         imageCache.set(path, img);
 
                         loaded++;
                         const percent = Math.round((loaded / total) * 100);
-                        progressFill.style.width = percent + '%';
-                        progressText.textContent = percent + '%';
+                        if (progressFill) progressFill.style.width = percent + '%';
+                        if (progressText) progressText.textContent = percent + '%';
 
                         if (loaded === total) {
                             resolve();
@@ -1196,15 +1200,18 @@
                     };
 
                     img.onerror = () => {
+                        console.error("Failed to load image:", path);
                         loaded++;
                         const percent = Math.round((loaded / total) * 100);
-                        progressFill.style.width = percent + '%';
-                        progressText.textContent = percent + '%';
+                        if (progressFill) progressFill.style.width = percent + '%';
+                        if (progressText) progressText.textContent = percent + '%';
 
                         if (loaded === total) {
                             resolve();
                         }
                     };
+
+                    img.src = path;
                 });
             });
         }

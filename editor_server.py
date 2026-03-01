@@ -34,11 +34,20 @@ def evaluate_num_logos_per_row(tier_dict: dict, min_val: int = 17, threshold: in
     return num_logos_per_row
 
 class EditorHandler(http.server.SimpleHTTPRequestHandler):
+    protocol_version = "HTTP/1.1"
+
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
-        self.send_header('Pragma', 'no-cache')
-        self.send_header('Expires', '0')
+        
+        # Only disable cache for API and HTML to ensure data stays fresh
+        # Allow assets and logos to be cached by the browser
+        if self.path.startswith('/api/') or self.path.endswith('.html') or self.path == '/':
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
+        else:
+            self.send_header('Cache-Control', 'public, max-age=3600')
+            
         super().end_headers()
 
     def do_GET(self):
@@ -48,15 +57,19 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
                 if os.path.exists('logos'):
                     logos = [f for f in os.listdir('logos') if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
                 
+                body = json.dumps({"logos": logos}).encode()
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_header('Content-Length', str(len(body)))
                 self.end_headers()
-                self.wfile.write(json.dumps({"logos": logos}).encode())
+                self.wfile.write(body)
             except Exception as e:
+                body = json.dumps({"error": str(e)}).encode()
                 self.send_response(500)
                 self.send_header('Content-type', 'application/json')
+                self.send_header('Content-Length', str(len(body)))
                 self.end_headers()
-                self.wfile.write(json.dumps({"error": str(e)}).encode())
+                self.wfile.write(body)
             return
 
         if self.path == '/api/data':
@@ -70,15 +83,19 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
                     "num_logos_per_row": num_logos_per_row
                 }
                 
+                body = json.dumps(response).encode()
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
+                self.send_header('Content-Length', str(len(body)))
                 self.end_headers()
-                self.wfile.write(json.dumps(response).encode())
+                self.wfile.write(body)
             except Exception as e:
+                body = json.dumps({"error": str(e)}).encode()
                 self.send_response(500)
                 self.send_header('Content-type', 'application/json')
+                self.send_header('Content-Length', str(len(body)))
                 self.end_headers()
-                self.wfile.write(json.dumps({"error": str(e)}).encode())
+                self.wfile.write(body)
             return
             
         return super().do_GET()
@@ -174,9 +191,14 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
         self.send_response(404)
         self.end_headers()
 
+class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    pass
+
 if __name__ == '__main__':
     # Start server in same directory as tier_dict.json
-    with socketserver.TCPServer(("", PORT), EditorHandler) as httpd:
+    # Allow address reuse to prevent "Address already in use" errors during quick restarts
+    socketserver.TCPServer.allow_reuse_address = True
+    with ThreadedTCPServer(("", PORT), EditorHandler) as httpd:
         print(f"Server starting at http://localhost:{PORT}/editor.html")
         print("To stop, press Ctrl+C")
         httpd.serve_forever()
