@@ -363,10 +363,19 @@ class TestApiUpdate(_ServerFixture):
         self.assertEqual(data.get("status"), "success")
 
     def test_update_persists_to_disk(self):
+        """
+        If this test fails with a StopIteration error, make sure
+        that there is at least one restaurant in any tier inside tier_dict.json.
+        """
         original = _load_tier_dict()
         # Add a sentinel key to one restaurant and post it
-        first_tier = next(iter(original))
-        first_name = next(iter(original[first_tier]))
+        first_tier = None
+        first_name = None
+        for tier in original:
+            if original[tier]:
+                first_tier = tier
+                first_name = next(iter(original[tier]))
+                break
         original[first_tier][first_name]["_test_sentinel"] = 42
 
         resp, _ = self._post("/api/update", payload=original)
