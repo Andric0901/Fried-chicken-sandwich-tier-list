@@ -69,7 +69,7 @@ def make_tier_indicator(tier):
         start = time.time()
     color = TIER_COLOUR_HEX_DICT[tier]
     image_width, image_height = DEFAULT_WIDTH, \
-        DEFAULT_WIDTH * TIER_NUM_ROWS[tier] + GAPS_BETWEEN_RESTAURANTS * (TIER_NUM_ROWS[tier] - 1)
+        max(DEFAULT_WIDTH, DEFAULT_WIDTH * TIER_NUM_ROWS[tier] + GAPS_BETWEEN_RESTAURANTS * (TIER_NUM_ROWS[tier] - 1))
     img = Image.new('RGB', (image_width, image_height), color)
     draw = ImageDraw.Draw(img)
     try:
@@ -91,7 +91,7 @@ def make_tier_background(tier):
     if DEBUG:
         start = time.time()
     background_width, background_height = BACKGROUND_WIDTH, \
-        DEFAULT_WIDTH * TIER_NUM_ROWS[tier] + GAPS_BETWEEN_RESTAURANTS * (TIER_NUM_ROWS[tier] - 1)
+        max(DEFAULT_WIDTH, DEFAULT_WIDTH * TIER_NUM_ROWS[tier] + GAPS_BETWEEN_RESTAURANTS * (TIER_NUM_ROWS[tier] - 1))
     img = Image.new('RGB', (background_width, background_height), BACKGROUND_COLOUR)
     if DEBUG:
         end = time.time()
@@ -217,8 +217,8 @@ def make_one_complete_tier(tier, with_year_tag: bool = False, with_year_first_vi
     tier_indicator = make_tier_indicator(tier)
     tier_restaurants = make_tier_restaurants(tier, with_year_tag=with_year_tag, with_year_first_visited_tag=with_year_first_visited_tag)
     tier_img = Image.new('RGB', (tier_indicator.size[0] + tier_restaurants.size[0] + DEFAULT_GAP,
-                                 DEFAULT_WIDTH * TIER_NUM_ROWS[tier] +
-                                 GAPS_BETWEEN_RESTAURANTS * (TIER_NUM_ROWS[tier] - 1)), (0, 0, 0))
+                                 max(DEFAULT_WIDTH, DEFAULT_WIDTH * TIER_NUM_ROWS[tier] +
+                                 GAPS_BETWEEN_RESTAURANTS * (TIER_NUM_ROWS[tier] - 1))), (0, 0, 0))
     tier_img.paste(tier_indicator, (0, 0))
     tier_img.paste(tier_restaurants, (tier_indicator.size[0] + DEFAULT_GAP, 0))
     if DEBUG:
