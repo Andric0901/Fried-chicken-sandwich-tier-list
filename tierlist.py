@@ -234,7 +234,9 @@ def make_tierlist(with_year_tag: bool = False, with_year_first_visited_tag: bool
     if with_year_tag and with_year_first_visited_tag:
         # This function should not be called with both booleans set to True
         raise ValueError('make_tierlist should not be called with both year tag booleans set to True')
-    sum_of_num_rows = sum(TIER_NUM_ROWS.values())
+    # sum of num rows is the sum of TIER_NUM_ROWS values + number of tiers where the value is 0 (round to 1)
+    # we round to 1 because we want the (empty) tier to still show up
+    sum_of_num_rows = sum(TIER_NUM_ROWS.values()) + len([tier for tier in TIER_NUM_ROWS if TIER_NUM_ROWS[tier] == 0])
     image_width, image_height = DEFAULT_WIDTH + BACKGROUND_WIDTH + 3 * DEFAULT_GAP, \
                                 sum_of_num_rows * DEFAULT_WIDTH + 8 * DEFAULT_GAP + \
                                 (sum_of_num_rows - 7) * GAPS_BETWEEN_RESTAURANTS
