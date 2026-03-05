@@ -1,19 +1,28 @@
-PYTHON=./venv/Scripts/python.exe
-PYTEST=./venv/Scripts/pytest.exe
+PYTHON=python
+PYTEST=pytest
+
+# Detect if we should use the venv path (Windows)
+ifneq (,$(wildcard ./venv/Scripts/pytest.exe))
+	PYTEST=./venv/Scripts/pytest.exe
+endif
 
 make:  # Set up the commit procedure with required test checks
 	touch pre-commit
 	echo '#!/bin/bash' > pre-commit
 	echo '$(PYTEST) -n auto tests.py' >> pre-commit
-	echo '$(PYTEST) editor_tests.py' >> pre-commit
-	echo '$(PYTEST) -n auto editor_dynamic_tests.py' >> pre-commit
 	chmod +x pre-commit
 	mv pre-commit .git/hooks
 
 clean:
 	rm -rf .git/hooks/pre-commit
 
-test:
-	$(PYTEST) editor_tests.py
-	$(PYTEST) -n auto editor_dynamic_tests.py
+test: test-editor test-dynamic test-general
+
+test-general:
 	$(PYTEST) -n auto tests.py
+
+test-editor:
+	$(PYTEST) editor_tests.py
+
+test-dynamic:
+	$(PYTEST) editor_dynamic_tests.py
