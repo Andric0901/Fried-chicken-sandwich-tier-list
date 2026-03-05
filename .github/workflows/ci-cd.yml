@@ -76,6 +76,8 @@ jobs:
         pip install -r requirements.txt
     - name: Install Playwright Browsers
       run: npx playwright install chromium --with-deps
+    - name: Set up Playwright
+      run: playwright install
     - name: Run Dynamic Browser Tests
       run: make test-dynamic
     - name: Upload test results
