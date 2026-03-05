@@ -52,9 +52,12 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
         
-        # Only disable cache for API and HTML to ensure data stays fresh
-        # Allow assets and logos to be cached by the browser
-        if self.path.startswith('/api/') or self.path.endswith('.html') or self.path == '/':
+        # Disable cache for API, editor files to ensure data and logic stays fresh
+        if (self.path.startswith('/api/') or 
+            self.path.endswith('.html') or 
+            self.path.endswith('.js') or 
+            self.path.endswith('.css') or 
+            self.path == '/'):
             self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
             self.send_header('Pragma', 'no-cache')
             self.send_header('Expires', '0')
