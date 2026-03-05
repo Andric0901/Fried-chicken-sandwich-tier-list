@@ -526,6 +526,8 @@ function handleDragLeave(e) {
 
 function rebuildTierDict() {
     const updatedDict = {};
+    const draggedName = draggedElement ? draggedElement.dataset.name : null;
+
     ['S', 'A', 'B', 'C', 'D', 'E', 'F'].forEach(tier => {
         updatedDict[tier] = {};
         const tierContainer = document.querySelector(`.tier-content[data-tier="${tier}"]`);
@@ -533,8 +535,11 @@ function rebuildTierDict() {
             const items = tierContainer.querySelectorAll('.logo-item-wrapper');
             items.forEach(item => {
                 const name = item.dataset.name;
+                const oldTier = item.getAttribute('data-tier');
+
                 // update the tier data on the DOM element too
                 item.dataset.tier = tier;
+                item.setAttribute('data-tier', tier);
 
                 let info = null;
                 for (let t of ['S', 'A', 'B', 'C', 'D', 'E', 'F']) {
@@ -543,7 +548,16 @@ function rebuildTierDict() {
                         break;
                     }
                 }
+
                 if (info) {
+                    // Use name comparison as it's more stable
+                    if (name === draggedName && oldTier && oldTier !== tier) {
+                        const currentYear = new Date().getFullYear();
+                        console.log(`[TierChange] ${name} moved from ${oldTier} to ${tier}. Updating year to ${currentYear}`);
+                        if (info.year !== currentYear) {
+                            info.year = currentYear;
+                        }
+                    }
                     updatedDict[tier][name] = info;
                 }
             });
@@ -559,6 +573,7 @@ async function handleDrop(e) {
     if (draggedElement) {
         rebuildTierDict();
         await saveToServer();
+        render(currentColumns);
     }
     return false;
 }
