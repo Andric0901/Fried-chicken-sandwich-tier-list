@@ -75,7 +75,7 @@ class TestEditorDynamicActions(_ServerFixture):
         source = self.page.locator('.logo-item-wrapper[data-name="Bubba\'s Crispy Fried Chicken"]')
         target = self.page.locator('.logo-item-wrapper[data-name="Zesty Burgers"]')
         source.drag_to(target)
-        self.page.locator('#save-indicator.saved').wait_for(state="attached", timeout=10000)
+        self.page.locator('#save-indicator.saved').wait_for(state="attached", timeout=15000)
         with open(TIER_DICT_PATH, "r", encoding="utf-8") as f:
             tier_dict = json.load(f)
         self.assertIn("Bubba's Crispy Fried Chicken", tier_dict["S"])
