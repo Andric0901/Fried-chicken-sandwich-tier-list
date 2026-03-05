@@ -546,15 +546,15 @@ class TestStaticFileServing(_ServerFixture):
         cc = resp.getheader("Cache-Control", "")
         self.assertIn("no-cache", cc)
 
-    def test_css_has_cache_header(self):
+    def test_css_has_no_cache_header(self):
         resp, _ = self._get("/editor.css")
         cc = resp.getheader("Cache-Control", "")
-        self.assertIn("public", cc)
+        self.assertIn("no-cache", cc)
 
-    def test_js_has_cache_header(self):
+    def test_js_has_no_cache_header(self):
         resp, _ = self._get("/editor.js")
         cc = resp.getheader("Cache-Control", "")
-        self.assertIn("public", cc)
+        self.assertIn("no-cache", cc)
 
 
 # ===========================================================================
