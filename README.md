@@ -6,14 +6,14 @@
 A small project to rank ALL the fried chicken sandwich restaurants in GTA (Greater Toronto Area). 
 
 # Current Tier List
-![Tier List](https://github.com/Andric0901/Fried-chicken-sandwich-tier-list/blob/main/tierlist_output/tierlist.png?raw=true)
+![Tier List](https://raw.githubusercontent.com/Andric0901/Fried-chicken-sandwich-tier-list/refs/heads/main/tierlist_output/tierlist.png)
 
 # Alternative Tier Lists
 ### Tier List with year tags of first visit
-![Tier List with year tags of first visit](https://github.com/Andric0901/Fried-chicken-sandwich-tier-list/blob/main/tierlist_output/tierlist_with_year_first_visited_tag.png?raw=true)
+![Tier List with year tags of first visit](https://raw.githubusercontent.com/Andric0901/Fried-chicken-sandwich-tier-list/refs/heads/main/tierlist_output/tierlist_with_year_first_visited_tag.png)
 
 ### Tier List with year tags when the ranks have been (re)evaluated
-![Tier List with year tags when the ranks have been (re)evaluated](https://github.com/Andric0901/Fried-chicken-sandwich-tier-list/blob/main/tierlist_output/tierlist_with_year_tag.png?raw=true)
+![Tier List with year tags when the ranks have been (re)evaluated](https://raw.githubusercontent.com/Andric0901/Fried-chicken-sandwich-tier-list/refs/heads/main/tierlist_output/tierlist_with_year_tag.png)
 
 # How to run
 If you want to play with this tierlist code (requires Python 3.12.3)...
