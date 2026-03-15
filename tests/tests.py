@@ -100,7 +100,7 @@ class TestLogos(unittest.TestCase):
 
 class TestTierDictJson(unittest.TestCase):
     def setUp(self):
-        self.f = open('tier_dict.json')
+        self.f = open('src/tierlist/tier_dict.json')
         self.d = dict(json.load(self.f))
         self.tiers = list(self.d.keys())
         self.restaurant_names = RESTAURANT_NAMES

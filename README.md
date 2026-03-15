@@ -31,7 +31,7 @@ Editor UI allows you to create your own version of the tierlist, as well as add 
 Tips for using the editor UI:
 
  1. To add your own restaurant logos, simply add the logo (png or jpg format required, 1:1 square aspect ratio recommended for better visual experience, future works planned to improve this) to the `logos` folder. This new restaurant will then show up in the "Unassigned" dropdown in the top left corner for you to modify the metadata. (There are some works planned in the future to natively support adding logos through the UI)
- 1. The editor UI automatically saves any changes to the local `tier_dict.json` file.
+ 1. The editor UI automatically saves any changes to the local `src/tierlist/tier_dict.json` file.
  1. Drag and drop any restaurant in the tierlist to move restaurants between tiers or reorder within a tier.
  1. Double click on any restaurant in the tierlist to open the metadata editor.
  1. Clicking the "Run tierlist.py" button on the top right corner will run `src/tierlist/tierlist.py` file to generate the tierlist images as shown above. You can find the newly generated images at the tierlist_output directory of this repository, if modified at all.

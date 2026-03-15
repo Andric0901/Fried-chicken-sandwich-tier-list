@@ -53,7 +53,7 @@ from editor_server import (
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
 
-TIER_DICT_PATH = os.path.join(ROOT_DIR, "tier_dict.json")
+TIER_DICT_PATH = os.path.join(ROOT_DIR, "src", "tierlist", "tier_dict.json")
 EDITOR_HTML_PATH = os.path.join(ROOT_DIR, "src", "editor", "editor.html")
 EDITOR_CSS_PATH = os.path.join(ROOT_DIR, "src", "editor", "editor.css")
 EDITOR_JS_PATH = os.path.join(ROOT_DIR, "src", "editor", "editor.js")
@@ -470,8 +470,8 @@ class TestApiRenameLogo(_ServerFixture):
     def test_rename_path_traversal_blocked(self):
         """Attempting to escape the logos/ directory should be rejected."""
         resp, _ = self._post("/api/rename_logo", payload={
-            "old_path": "logos/../tier_dict.json",
-            "new_path": "logos/../tier_dict_hacked.json",
+            "old_path": "logos/../src/tierlist/tier_dict.json",
+            "new_path": "logos/../src/tierlist/tier_dict_hacked.json",
         })
         self.assertEqual(resp.status, 400)
 

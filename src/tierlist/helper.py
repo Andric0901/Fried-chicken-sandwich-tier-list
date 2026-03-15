@@ -31,7 +31,7 @@ client = pymongo.MongoClient(connection_string, tlsCAFile=certifi.where())
 db = client["fried-chicken-sandwich-bot"]
 collection = db["gmaps_infos"]
 
-TIER_DICT = json.load(open('tier_dict.json'))
+TIER_DICT = json.load(open(Path(__file__).parent / 'tier_dict.json'))
 
 
 ##############################################

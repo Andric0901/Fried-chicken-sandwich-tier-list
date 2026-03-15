@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
-TIER_DICT_PATH = os.path.join(ROOT_DIR, "tier_dict.json")
+TIER_DICT_PATH = os.path.join(ROOT_DIR, "src", "tierlist", "tier_dict.json")
 
 class _ServerFixture(unittest.TestCase):
     """Base class that spins up a live EditorHandler server for integration tests."""
