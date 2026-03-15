@@ -23,6 +23,8 @@ Run with:
 import http.server
 import json
 import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src', 'editor')))
 import re
 import shutil
 import socketserver
@@ -49,12 +51,13 @@ from editor_server import (
 # ---------------------------------------------------------------------------
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
 
-TIER_DICT_PATH = os.path.join(BASE_DIR, "tier_dict.json")
-EDITOR_HTML_PATH = os.path.join(BASE_DIR, "editor.html")
-EDITOR_CSS_PATH = os.path.join(BASE_DIR, "editor.css")
-EDITOR_JS_PATH = os.path.join(BASE_DIR, "editor.js")
-LOGOS_DIR = os.path.join(BASE_DIR, "logos")
+TIER_DICT_PATH = os.path.join(ROOT_DIR, "src", "tierlist", "tier_dict.json")
+EDITOR_HTML_PATH = os.path.join(ROOT_DIR, "src", "editor", "editor.html")
+EDITOR_CSS_PATH = os.path.join(ROOT_DIR, "src", "editor", "editor.css")
+EDITOR_JS_PATH = os.path.join(ROOT_DIR, "src", "editor", "editor.js")
+LOGOS_DIR = os.path.join(ROOT_DIR, "logos")
 
 
 def _load_tier_dict():
@@ -76,7 +79,7 @@ class _ServerFixture(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Change cwd so the server can find tier_dict.json and logos/
-        os.chdir(BASE_DIR)
+        os.chdir(ROOT_DIR)
         socketserver.TCPServer.allow_reuse_address = True
         cls.server = ThreadedTCPServer(("127.0.0.1", 0), EditorHandler)
         cls.port = cls.server.server_address[1]
@@ -467,8 +470,8 @@ class TestApiRenameLogo(_ServerFixture):
     def test_rename_path_traversal_blocked(self):
         """Attempting to escape the logos/ directory should be rejected."""
         resp, _ = self._post("/api/rename_logo", payload={
-            "old_path": "logos/../tier_dict.json",
-            "new_path": "logos/../tier_dict_hacked.json",
+            "old_path": "logos/../src/tierlist/tier_dict.json",
+            "new_path": "logos/../src/tierlist/tier_dict_hacked.json",
         })
         self.assertEqual(resp.status, 400)
 
@@ -1037,7 +1040,7 @@ class TestDataConsistency(unittest.TestCase):
     def test_logo_files_exist_on_disk(self):
         for tier, restaurants in self.tier_dict.items():
             for name, info in restaurants.items():
-                logo_path = os.path.join(BASE_DIR, info["path_to_logo_image"])
+                logo_path = os.path.join(ROOT_DIR, info["path_to_logo_image"])
                 self.assertTrue(
                     os.path.isfile(logo_path),
                     f"Logo file missing on disk: {info['path_to_logo_image']}"

@@ -31,7 +31,7 @@ client = pymongo.MongoClient(connection_string, tlsCAFile=certifi.where())
 db = client["fried-chicken-sandwich-bot"]
 collection = db["gmaps_infos"]
 
-TIER_DICT = json.load(open('tier_dict.json'))
+TIER_DICT = json.load(open(Path(__file__).parent / 'tier_dict.json'))
 
 
 ##############################################
@@ -237,9 +237,9 @@ RESTAURANT_YEARS = sorted(list(set([TIER_DICT[tier][restaurant_name]["year"]
 create_missing_year_images()
 
 MANUAL_EMBED_RESTAURANTS = ["Bubba's Crispy Fried Chicken", "Foodie"]
-TIERLIST_IMAGE_NAME = 'tierlist.png'
-TIERLIST_IMAGE_NAME_WITH_YEAR_TAG = 'tierlist_with_year_tag.png'
-TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG = 'tierlist_with_year_first_visited_tag.png'
+TIERLIST_IMAGE_NAME = os.path.join('tierlist_output', 'tierlist.png')
+TIERLIST_IMAGE_NAME_WITH_YEAR_TAG = os.path.join('tierlist_output', 'tierlist_with_year_tag.png')
+TIERLIST_IMAGE_NAME_WITH_YEAR_FIRST_VISITED_TAG = os.path.join('tierlist_output', 'tierlist_with_year_first_visited_tag.png')
 TIMEZONE = pytz.timezone('America/Toronto')
 TIERS = ['S', 'A', 'B', 'C', 'D', 'E', 'F']
 
@@ -365,7 +365,7 @@ def get_thumbnail_file(current_page) -> discord.File:
     Returns:
         discord.File: The thumbnail file.
     """
-    thumbnail_path = Path(__file__).parent / RESTAURANT_PATH_TO_LOGO_IMAGES[current_page]
+    thumbnail_path = Path(__file__).parent.parent.parent / RESTAURANT_PATH_TO_LOGO_IMAGES[current_page]
     thumbnail_file = discord.File(thumbnail_path, 'image.jpg')
     return thumbnail_file
 

@@ -12,8 +12,11 @@ $ export PYTHONPATH="${PYTHONPATH}:/root/path"
 
 import json
 import os
+import sys
 import unittest
 import time
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src', 'tierlist')))
 
 from PIL import Image
 
@@ -97,7 +100,7 @@ class TestLogos(unittest.TestCase):
 
 class TestTierDictJson(unittest.TestCase):
     def setUp(self):
-        self.f = open('tier_dict.json')
+        self.f = open('src/tierlist/tier_dict.json')
         self.d = dict(json.load(self.f))
         self.tiers = list(self.d.keys())
         self.restaurant_names = RESTAURANT_NAMES

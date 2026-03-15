@@ -38,6 +38,13 @@ def evaluate_num_logos_per_row(tier_dict: dict, min_val: int = 17, threshold: in
 class EditorHandler(http.server.SimpleHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
+    def translate_path(self, path):
+        if path in ['/', '/editor.html', '/editor.css', '/editor.js']:
+            if path == '/':
+                path = '/editor.html'
+            path = '/src/editor' + path
+        return super().translate_path(path)
+
     def send_json_response(self, data, status=200):
         try:
             body = json.dumps(data).encode('utf-8')
@@ -79,7 +86,7 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
 
         if self.path == '/api/data':
             try:
-                with open('tier_dict.json', 'r', encoding='utf-8') as f:
+                with open('src/tierlist/tier_dict.json', 'r', encoding='utf-8') as f:
                     tier_dict = json.load(f)
                 
                 num_logos_per_row = evaluate_num_logos_per_row(tier_dict)
@@ -126,7 +133,7 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
                 # Run the tierlist.py file synchronously
                 # Use current interpreter to ensure same environment
                 result = subprocess.run(
-                    [sys.executable, 'tierlist.py'],
+                    [sys.executable, 'src/tierlist/tierlist.py'],
                     capture_output=True,
                     text=True,
                     check=False
@@ -146,7 +153,7 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
             try:
                 new_dict = json.loads(post_data.decode('utf-8'))
                 
-                with open('tier_dict.json', 'w', encoding='utf-8') as f:
+                with open('src/tierlist/tier_dict.json', 'w', encoding='utf-8') as f:
                     # dump with standard formatting to avoid big git diffs
                     json.dump(new_dict, f, indent=4)
                 
@@ -162,7 +169,7 @@ class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
 if __name__ == '__main__':
-    # Start server in same directory as tier_dict.json
+    # Start server in same directory as src/tierlist/tier_dict.json
     # Allow address reuse to prevent "Address already in use" errors during quick restarts
     socketserver.TCPServer.allow_reuse_address = True
     with ThreadedTCPServer(("", PORT), EditorHandler) as httpd:
