@@ -38,6 +38,13 @@ def evaluate_num_logos_per_row(tier_dict: dict, min_val: int = 17, threshold: in
 class EditorHandler(http.server.SimpleHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
+    def translate_path(self, path):
+        if path in ['/', '/editor.html', '/editor.css', '/editor.js']:
+            if path == '/':
+                path = '/editor.html'
+            path = '/src/editor' + path
+        return super().translate_path(path)
+
     def send_json_response(self, data, status=200):
         try:
             body = json.dumps(data).encode('utf-8')
@@ -126,7 +133,7 @@ class EditorHandler(http.server.SimpleHTTPRequestHandler):
                 # Run the tierlist.py file synchronously
                 # Use current interpreter to ensure same environment
                 result = subprocess.run(
-                    [sys.executable, 'tierlist.py'],
+                    [sys.executable, 'src/tierlist/tierlist.py'],
                     capture_output=True,
                     text=True,
                     check=False

@@ -1,5 +1,7 @@
 import json
 import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src', 'editor')))
 import threading
 import unittest
 from editor_server import EditorHandler, ThreadedTCPServer
@@ -8,7 +10,8 @@ from http.client import HTTPConnection
 from playwright.sync_api import sync_playwright
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TIER_DICT_PATH = os.path.join(BASE_DIR, "tier_dict.json")
+ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
+TIER_DICT_PATH = os.path.join(ROOT_DIR, "tier_dict.json")
 
 class _ServerFixture(unittest.TestCase):
     """Base class that spins up a live EditorHandler server for integration tests."""
@@ -18,7 +21,7 @@ class _ServerFixture(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        os.chdir(BASE_DIR)
+        os.chdir(ROOT_DIR)
         socketserver.TCPServer.allow_reuse_address = True
         cls.server = ThreadedTCPServer(("127.0.0.1", 0), EditorHandler)
         cls.port = cls.server.server_address[1]
@@ -98,7 +101,7 @@ class TestEditorDynamicActions(_ServerFixture):
         # Create a temporary logo to ensure the test always has something to pick
         wait_timeout = 15000
         temp_filename = "_temp_Test_Logo.jpg"
-        temp_logo_path = os.path.join(BASE_DIR, "logos", temp_filename)
+        temp_logo_path = os.path.join(ROOT_DIR, "logos", temp_filename)
         os.makedirs(os.path.dirname(temp_logo_path), exist_ok=True)
         with open(temp_logo_path, "wb") as f:
             f.write(b"\xff\xd8\xff") 
