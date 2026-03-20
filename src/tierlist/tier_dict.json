@@ -542,6 +542,22 @@
             "year": 2024,
             "year_first_visited": 2024
         },
+        "3 Brasseurs MicroBrewery": {
+            "path_to_logo_image": "logos/3 Brasseurs MicroBrewery.jpg",
+            "price": 3,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "275 Yonge St",
+            "description": "good buffalo sauced chicken sandwich and fries, you can literally see the beer brewing here!"
+        },
+        "Tha Phae Tavern": {
+            "path_to_logo_image": "logos/Tha Phae Tavern.jpg",
+            "price": 3,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "221 Richmond St W",
+            "description": "interesting take on the sandwich with sweet tamarind sauce"
+        },
         "STACK Smmmoked": {
             "path_to_logo_image": "logos/STACK Smmmoked.jpg",
             "price": 3,
