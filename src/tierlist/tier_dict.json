@@ -139,6 +139,14 @@
             "year": 2026,
             "year_first_visited": 2026
         },
+        "Dairy Queen Grill & Chill": {
+            "path_to_logo_image": "logos/Dairy Queen Grill & Chill.jpg",
+            "price": 1,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "1040 Broadview Ave",
+            "description": "Where Queen hides when King taps out"
+        },
         "Cabano's Cheeseburgers": {
             "path_to_logo_image": "logos/Cabano's Cheeseburgers.jpg",
             "price": 2,
