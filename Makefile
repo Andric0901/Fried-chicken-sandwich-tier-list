@@ -18,6 +18,10 @@ clean:
 
 test: test-editor test-dynamic test-general
 
+main:
+	git checkout main
+	git pull
+
 test-general:
 	$(PYTEST) -n auto tests/tests.py
 
