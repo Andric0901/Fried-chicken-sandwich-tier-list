@@ -729,6 +729,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "Tongdak": {
+            "path_to_logo_image": "logos/Tongdak.jpg",
+            "price": 1,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "50 Gerrard St E",
+            "description": "whole chicken deep fried but they forgot the balance, very unique fried batter but a bit greasy"
+        },
         "Super Chicken": {
             "path_to_logo_image": "logos/Super Chicken.jpg",
             "price": 1,
@@ -1042,6 +1050,14 @@
             "description": "They should be slapped instead",
             "year": 2023,
             "year_first_visited": 2023
+        },
+        "Koko Fino": {
+            "path_to_logo_image": "logos/Koko Fino.jpg",
+            "price": 1,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "3 Carlton St",
+            "description": "maybe not a fine chicken, maybe just a one-time mistake... extras are nice but dry chicken and not crispy"
         },
         "Simple Burger": {
             "path_to_logo_image": "logos/Simple Burger.jpg",
