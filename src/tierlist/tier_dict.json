@@ -502,6 +502,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "D Spot Dessert Cafe": {
+            "path_to_logo_image": "logos/D Spot Dessert Cafe.jpg",
+            "price": 2,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "828 Bay St",
+            "description": "Thankfully it's not in D tier, crispy chicken tenders that hit the spot"
+        },
         "Red Cranberries Restaurant": {
             "path_to_logo_image": "logos/Red Cranberries Restaurant.jpg",
             "price": 2,
