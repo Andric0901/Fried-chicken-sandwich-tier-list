@@ -937,6 +937,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "Mascot Brewery and Restaurant": {
+            "path_to_logo_image": "logos/Mascot Brewery and Restaurant.jpg",
+            "price": 3,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "220 King St W",
+            "description": "They hid the true flavour of the chicken with their mascot"
+        },
         "Insomnia Restaurant and Lounge": {
             "path_to_logo_image": "logos/Insomnia Restaurant and Lounge.jpg",
             "price": 4,
