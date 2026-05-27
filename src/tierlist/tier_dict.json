@@ -550,6 +550,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "La Petite Colline": {
+            "path_to_logo_image": "logos/La Petite Colline.jpg",
+            "price": 2,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "3355 Steeles Ave E Unit C 5 & 6",
+            "description": "The most French name for a Chinese restaurant, I wished there was a bit more chicken but overall a pretty nice sandwich"
+        },
         "Lazy Daisy's Cafe": {
             "path_to_logo_image": "logos/Lazy Daisy's Cafe.jpg",
             "price": 3,
