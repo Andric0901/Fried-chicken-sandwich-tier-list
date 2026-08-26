@@ -235,6 +235,15 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "The Hogtown Vegan": {
+            "path_to_logo_image": "logos/The Hogtown Vegan.jpg",
+            "price": 3,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "382 College St",
+            "description": "The unchicken that's worth hogging for",
+            "vegan": true
+        },
         "Duke of York": {
             "path_to_logo_image": "logos/Duke of York.jpg",
             "price": 4,
