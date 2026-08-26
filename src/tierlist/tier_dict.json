@@ -227,14 +227,6 @@
             "year": 2026,
             "year_first_visited": 2026
         },
-        "Burgers n' Fries Forever": {
-            "path_to_logo_image": "logos/Burgers n' Fries Forever.jpg",
-            "price": 3,
-            "address": "106 John St Unit 2",
-            "description": "Nothing lasts forever other than this burger",
-            "year": 2023,
-            "year_first_visited": 2023
-        },
         "JABS (Just Another Burger Spot)": {
             "path_to_logo_image": "logos/JABS (Just Another Burger Spot).jpg",
             "price": 3,
@@ -557,6 +549,14 @@
             "year_first_visited": 2026,
             "address": "3355 Steeles Ave E Unit C 5 & 6",
             "description": "The most French name for a Chinese restaurant, I wished there was a bit more chicken but overall a pretty nice sandwich"
+        },
+        "Burgers n' Fries Forever": {
+            "path_to_logo_image": "logos/Burgers n' Fries Forever.jpg",
+            "price": 2,
+            "address": "175 Bloor St E Unit 2-S",
+            "description": "The redesign comes at a cost.. still good but not like before",
+            "year": 2026,
+            "year_first_visited": 2023
         },
         "Lazy Daisy's Cafe": {
             "path_to_logo_image": "logos/Lazy Daisy's Cafe.jpg",
