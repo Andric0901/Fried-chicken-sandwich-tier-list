@@ -1115,6 +1115,14 @@
             "year": 2023,
             "year_first_visited": 2023
         },
+        "99 Grill Burger & Steak": {
+            "path_to_logo_image": "logos/99 Grill Burger & Steak.jpg",
+            "price": 2,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "692 Yonge St",
+            "description": "99% crispy with 1% meat, no chance I'm going back"
+        },
         "bb.q Chicken": {
             "path_to_logo_image": "logos/bb.q Chicken.jpg",
             "price": 3,
