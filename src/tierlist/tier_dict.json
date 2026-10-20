@@ -375,6 +375,14 @@
             "year": 2024,
             "year_first_visited": 2023
         },
+        "Chester Fried Chicken Express": {
+            "path_to_logo_image": "logos/Chester Fried Chicken Express.jpg",
+            "price": 1,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "23 Howard St",
+            "description": "Chester would love this, definition of well assembled chicken burger"
+        },
         "ChickQueen": {
             "path_to_logo_image": "logos/ChickQueen.jpg",
             "price": 1,
@@ -929,6 +937,14 @@
             "description": "A self-proclaimed Hero",
             "year": 2023,
             "year_first_visited": 2022
+        },
+        "Nene Chicken": {
+            "path_to_logo_image": "logos/Nene Chicken.jpg",
+            "price": 2,
+            "year": 2026,
+            "year_first_visited": 2026,
+            "address": "171 Dundas St W Lower Unit",
+            "description": "weaker toppings, crispy but under-seasoned chicken. Not a happy choice for sandwich"
         },
         "Monga Fried Chicken": {
             "path_to_logo_image": "logos/Monga Fried Chicken.jpg",
