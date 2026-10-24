@@ -1,8 +1,8 @@
-pymongo==4.15.0
-certifi==2026.4.22
+pymongo==4.19.0
+certifi==2026.10.23
 pytz==2026.2
 python-dotenv==1.2.2
-Pillow==12.3.0
+Pillow==13.0.0
 discord.py==2.7.1
 pytest==9.0.3
 pytest-xdist==3.8.0
