@@ -1017,6 +1017,14 @@
             "description": "A failed attempt at Ding-a-wing sandwich",
             "year": 2025,
             "year_first_visited": 2025
+        },
+        "Everyside - Social Eatery & Taphouse": {
+            "path_to_logo_image": "logos/Everyside - Social Eatery & Taphouse.jpg",
+            "price": 4,
+            "address": "120 Adelaide St W #100",
+            "description": "You might tap out of the restaurant with their nearly burnt fried chicken",
+            "year": 2026,
+            "year_first_visited": 2026
         }
     },
     "D": {
